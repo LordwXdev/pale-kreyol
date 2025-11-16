@@ -128,7 +128,6 @@ export default function QuizView({
       )}
     </div>
   );
-
   if (quizType === 'memory') {
     return (
       <div className="space-y-4 animate-fade-in">
