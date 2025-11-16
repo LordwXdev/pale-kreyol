@@ -169,6 +169,7 @@ export const lessons = [
       { creole: "Rivyè", english: "River", pronunciation: "ree-VYEH" },
       { creole: "Wout", english: "Road", pronunciation: "WOOT" },
     ]
+    
   },
   {
     id: 10,
