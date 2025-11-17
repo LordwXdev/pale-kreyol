@@ -6,3 +6,4 @@ export const quizTypes = [
   { id: 'speed', name: 'Speed Round', icon: Zap, color: 'from-yellow-500 to-yellow-600' },
   { id: 'memory', name: 'Memory Match', icon: Brain, color: 'from-green-500 to-green-600' }
 ];
+
