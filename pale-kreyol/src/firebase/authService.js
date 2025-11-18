@@ -17,6 +17,13 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { auth, db, setupRecaptcha, setAuthPersistence } from "./config";
+import {
+  signInWithEmailAndPassword,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence
+} from "firebase/auth";
+
 
 // Create Firestore user document on first registration
 const createUserDoc = async (user, extra = {}) => {
@@ -55,13 +62,17 @@ export const loginWithEmail = async (email, password, remember) => {
 };
 
 // Google login
-export const loginWithGoogle = async (remember) => {
-  await setAuthPersistence(remember);
-  const provider = new GoogleAuthProvider();
-  const cred = await signInWithPopup(auth, provider);
-  await createUserDoc(cred.user);
-  return cred.user;
+export const loginUser = async (email, password, rememberMe) => {
+  const persistenceType = rememberMe
+    ? browserLocalPersistence     // stays logged in even after closing app
+    : browserSessionPersistence;  // logs out after tab/session closes
+
+  await setPersistence(auth, persistenceType);
+
+  const userCredential = await signInWithEmailAndPassword(auth, email, password);
+  return userCredential.user;
 };
+
 
 // Password reset by email
 export const resetPassword = (email) => {

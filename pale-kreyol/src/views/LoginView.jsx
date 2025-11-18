@@ -12,7 +12,7 @@ export default function LoginView({ onSuccess, goRegister, goForgot }) {
     try {
       setLoading(true);
       setError("");
-      await loginWithEmail(email, password, remember);
+      await loginUser(email, password, rememberMe);
       onSuccess();
     } catch (e) {
       setError(e.message || "Login failed");

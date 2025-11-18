@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+
+// Pale Kreyòl Components
 import Navigation from './components/Navigation.jsx';
 import HomeView from './views/HomeView.jsx';
 import LessonsView from './views/LessonsView.jsx';
@@ -7,13 +9,90 @@ import QuizView from './views/QuizView.jsx';
 import ProgressView from './views/ProgressView.jsx';
 import SettingsView from './views/SettingsView.jsx';
 import { lessons } from './data/lessons.js';
+
+// Auth System
 import LoginView from "./views/LoginView.jsx";
 import RegisterView from "./views/RegisterView.jsx";
-import { auth } from "./firebase/config";
-import { onAuthStateChanged } from "firebase/auth";
+import ForgotPasswordView from "./views/ForgotPasswordView.jsx";
+import EmailVerificationGate from "./views/EmailVerificationGate.jsx";
+import PhoneVerifyView from "./views/PhoneVerifyView.jsx";
+import ProfileView from "./views/ProfileView.jsx";
 
+import { saveQuizProgress, saveQuizResult } from "./firebase/userService.js";
+import { useAuth } from "./context/AuthContext.jsx";
 
 export default function App() {
+
+  // -----------------------------------------------------------------------
+  // 🔐 AUTHENTICATION HANDLING (ALL DONE THROUGH useAuth)
+  // -----------------------------------------------------------------------
+
+  const { user, profile, loading } = useAuth();
+
+  // Screens shown BEFORE login
+  const [authScreen, setAuthScreen] = useState("login");
+
+  // Screens shown AFTER login
+  const [appScreen, setAppScreen] = useState("learning");
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-gray-500">
+        Loading...
+      </div>
+    );
+  }
+
+  // ------------------ NOT LOGGED IN → show LOGIN / REGISTER ------------------
+  if (!user) {
+    if (authScreen === "register") {
+      return (
+        <RegisterView
+          goLogin={() => setAuthScreen("login")}
+        />
+      );
+    }
+
+    if (authScreen === "forgot") {
+      return (
+        <ForgotPasswordView
+          goLogin={() => setAuthScreen("login")}
+        />
+      );
+    }
+
+    return (
+      <LoginView
+        onSuccess={() => setAppScreen("learning")}
+        goRegister={() => setAuthScreen("register")}
+        goForgot={() => setAuthScreen("forgot")}
+      />
+    );
+  }
+
+  // ------------------ EMAIL NOT VERIFIED → gate the app ------------------
+  return (
+    <EmailVerificationGate>
+
+      {/* ---------------------- APP AFTER LOGIN ---------------------- */}
+      <MainLearningApp
+        appScreen={appScreen}
+        setAppScreen={setAppScreen}
+        user={user}
+        profile={profile}
+      />
+
+    </EmailVerificationGate>
+  );
+}
+
+
+// ======================================================================
+// 🎯 MAIN LEARNING APPLICATION (your Pale Kreyòl UI)
+// ======================================================================
+function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
+
+  // --------------------------- ORIGINAL STATES ---------------------------
   const [currentView, setCurrentView] = useState('home');
   const [selectedLesson, setSelectedLesson] = useState(null);
   const [quizMode, setQuizMode] = useState(false);
@@ -29,8 +108,8 @@ export default function App() {
   const [flippedCards, setFlippedCards] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState(new Set());
   const [streak, setStreak] = useState(0);
-  
 
+  // --------------------------- SPEECH ---------------------------
   const speakWord = (text) => {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
@@ -41,14 +120,20 @@ export default function App() {
     }
   };
 
+  // ------------------------ SPEED QUIZ TIMER ------------------------
   useEffect(() => {
     if (quizType === 'speed' && quizMode && !answered && timeLeft > 0) {
-      const timer = setTimeout(() => setTimeLeft((t) => t - 1), 1000);
+      const timer = setTimeout(() => setTimeLeft(t => t - 1), 1000);
       return () => clearTimeout(timer);
-    } else if (timeLeft === 0 && !answered && quizType === 'speed') {
+    }
+    if (timeLeft === 0 && !answered && quizType === 'speed') {
       handleAnswer(null);
     }
   }, [timeLeft, quizMode, answered, quizType]);
+
+  // -------------------------------------------------------------------
+  // QUIZ FUNCTIONS (UNCHANGED FROM YOUR ORIGINAL CODE)
+  // -------------------------------------------------------------------
 
   const startQuiz = (type) => {
     setQuizType(type);
@@ -58,10 +143,11 @@ export default function App() {
     setAnswered(false);
     setSelectedAnswer(null);
     setTimeLeft(10);
+
     if (!selectedLesson) {
       setSelectedLesson(lessons[0]);
     }
-    if (type === 'memory') initMemoryGame();
+    if (type === "memory") initMemoryGame();
   };
 
   const initMemoryGame = () => {
@@ -78,16 +164,26 @@ export default function App() {
 
   const handleMemoryCardClick = (card) => {
     if (flippedCards.length === 2 || flippedCards.includes(card.id) || matchedPairs.has(card.id)) return;
+
     const newFlipped = [...flippedCards, card.id];
     setFlippedCards(newFlipped);
+
     if (newFlipped.length === 2) {
       const card1 = memoryCards.find(c => c.id === newFlipped[0]);
       const card2 = memoryCards.find(c => c.id === newFlipped[1]);
-      if ((card1.type === 'creole' && card2.text === card1.match) || (card2.type === 'creole' && card1.text === card2.match)) {
+
+      const match =
+        (card1.type === "creole" && card2.text === card1.match) ||
+        (card2.type === "creole" && card1.text === card2.match);
+
+      if (match) {
         setMatchedPairs(new Set([...matchedPairs, card1.id, card2.id]));
-        setScore((s)=>s+1);
+        setScore(s => s + 1);
         setFlippedCards([]);
-        if (matchedPairs.size + 2 === memoryCards.length) setTimeout(() => finishQuiz(), 500);
+
+        if (matchedPairs.size + 2 === memoryCards.length)
+          setTimeout(() => finishQuiz(), 500);
+
       } else {
         setTimeout(() => setFlippedCards([]), 1000);
       }
@@ -97,14 +193,24 @@ export default function App() {
   const handleAnswer = (answer) => {
     setSelectedAnswer(answer);
     setAnswered(true);
+
     const currentWord = selectedLesson.words[currentQuizIndex];
-    const correct = (quizType === 'listen') ? answer === currentWord.creole : answer === currentWord.english;
-    if (correct) { setScore((s)=>s+1); setStreak((st)=>st+1); } else { setStreak(0); }
+    const correct =
+      quizType === "listen"
+        ? answer === currentWord.creole
+        : answer === currentWord.english;
+
+    if (correct) {
+      setScore(s => s + 1);
+      setStreak(s => s + 1);
+    } else {
+      setStreak(0);
+    }
   };
 
   const handleNext = () => {
     if (currentQuizIndex < selectedLesson.words.length - 1) {
-      setCurrentQuizIndex((i)=>i+1);
+      setCurrentQuizIndex(i => i + 1);
       setAnswered(false);
       setSelectedAnswer(null);
       setTimeLeft(10);
@@ -113,39 +219,61 @@ export default function App() {
     }
   };
 
-  const finishQuiz = () => {
-    const points = score * (quizType === 'speed' ? 15 : 10);
-    setTotalPoints((p)=>p+points);
+  // -------------------------------------------------------------------
+  // 🔥 FINAL UPDATED finishQuiz() INCLUDING FIRESTORE SAVE
+  // -------------------------------------------------------------------
+  const finishQuiz = async () => {
+    const points = score * (quizType === "speed" ? 15 : 10);
+
+    // Save in Firestore
+    await saveQuizProgress(user.uid, {
+      lessonId: selectedLesson.id,
+      xpEarned: points,
+      streak
+    });
+
+    await saveQuizResult(user.uid, {
+      lessonId: selectedLesson.id,
+      quizType,
+      score,
+      totalQuestions: selectedLesson.words.length,
+    });
+
+    // Local updates
+    setTotalPoints(prev => prev + points);
     setCompletedLessons(new Set([...completedLessons, selectedLesson.id]));
     setQuizMode(false);
-    setCurrentView('lessons');
+    setCurrentView("lessons");
   };
 
+
+  // -------------------------------------------------------------------
+  // RESET LOCAL PROGRESS (NOT FIRESTORE)
+  // -------------------------------------------------------------------
   const resetAll = () => {
-    if (confirm('Are you sure you want to reset all progress?')) {
+    if (confirm("Reset all progress?")) {
       setCompletedLessons(new Set());
       setTotalPoints(0);
       setStreak(0);
     }
   };
-  const [user, setUser] = useState(null);
 
-useEffect(() => {
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  });
-}, []);
-
-
+  // -------------------------------------------------------------------
+  // MAIN UI
+  // -------------------------------------------------------------------
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       <div className="max-w-2xl mx-auto px-4 py-6 pb-24">
+
         <div className="mb-6">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Pale Kreyòl</h1>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Pale Kreyòl
+          </h1>
           <p className="text-gray-600 text-sm">Learn Haitian Creole with joy 🇭🇹</p>
         </div>
 
-        {!quizMode && currentView === 'home' && (
+        {/* Main Views */}
+        {!quizMode && currentView === 'home' &&
           <HomeView
             completedLessons={completedLessons}
             totalPoints={totalPoints}
@@ -154,23 +282,26 @@ useEffect(() => {
             setCurrentView={setCurrentView}
             startQuiz={startQuiz}
           />
-        )}
-        {!quizMode && currentView === 'lessons' && (
+        }
+
+        {!quizMode && currentView === 'lessons' &&
           <LessonsView
             completedLessons={completedLessons}
             setSelectedLesson={setSelectedLesson}
             setCurrentView={setCurrentView}
           />
-        )}
-        {!quizMode && currentView === 'lesson' && (
+        }
+
+        {!quizMode && currentView === 'lesson' &&
           <LessonView
             selectedLesson={selectedLesson}
             setCurrentView={setCurrentView}
             speakWord={speakWord}
             startQuiz={startQuiz}
           />
-        )}
-        {quizMode && (
+        }
+
+        {quizMode &&
           <QuizView
             quizType={quizType}
             selectedLesson={selectedLesson}
@@ -189,14 +320,30 @@ useEffect(() => {
             handleMemoryCardClick={handleMemoryCardClick}
             matchedPairs={matchedPairs}
           />
-        )}
-        {!quizMode && currentView === 'progress' && (
-          <ProgressView totalPoints={totalPoints} completedCount={completedLessons.size} streak={streak} />
-        )}
-        {!quizMode && currentView === 'settings' && <SettingsView resetAll={resetAll} />}
+        }
+
+        {!quizMode && currentView === 'progress' &&
+          <ProgressView
+            totalPoints={totalPoints}
+            completedCount={completedLessons.size}
+            streak={streak}
+          />
+        }
+
+        {!quizMode && currentView === 'settings' &&
+          <SettingsView
+            resetAll={resetAll}
+            setAppScreen={setAppScreen}
+          />
+        }
+
       </div>
 
-      <Navigation currentView={currentView} setCurrentView={setCurrentView} setQuizMode={setQuizMode} />
+      <Navigation
+        currentView={currentView}
+        setCurrentView={setCurrentView}
+        setQuizMode={setQuizMode}
+      />
     </div>
   );
 }
