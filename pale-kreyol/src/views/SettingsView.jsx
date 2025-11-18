@@ -1,47 +1,90 @@
-import React from 'react';
-import { logoutUser } from "../firebase/authService";
+import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { toggleDarkMode, resetAccountProgress } from "../firebase/userService";
 
-export default function SettingsView({ resetAll }) {
+export default function SettingsView() {
+  const { user, profile, logout } = useAuth();
+  const [loadingDark, setLoadingDark] = useState(false);
+  const [resetting, setResetting] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [error, setError] = useState("");
+
+  if (!user || !profile) return null;
+
+  const handleToggleDark = async () => {
+    try {
+      setLoadingDark(true);
+      await toggleDarkMode(user.uid, profile.darkMode);
+    } catch (e) {
+      setError(e.message || "Failed to toggle theme");
+    } finally {
+      setLoadingDark(false);
+    }
+  };
+
+  const handleReset = async () => {
+    if (!window.confirm("Reset all your progress?")) return;
+    try {
+      setResetting(true);
+      setMsg("");
+      setError("");
+      await resetAccountProgress(user.uid, { deleteResults: true });
+      setMsg("Progress reset.");
+    } catch (e) {
+      setError(e.message || "Failed to reset progress");
+    } finally {
+      setResetting(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    await logout();
+  };
+
   return (
-    <div className="space-y-6 animate-fade-in">
-      <h2 className="text-2xl font-bold">Settings</h2>
-      
-      <div className="bg-white rounded-xl p-4 shadow-sm">
-        <h3 className="font-semibold mb-3">About Pale Kreyòl</h3>
-        <p className="text-gray-600 text-sm mb-3">
-          Your interactive companion for learning Haitian Creole. Practice vocabulary, 
-          take quizzes, and track your progress!
-        </p>
-        <div className="text-xs text-gray-500 space-y-1">
-          <p>✨ 10 Complete lessons</p>
-          <p>📚 100+ vocabulary words</p>
-          <p>🎮 4 quiz modes</p>
-          <p>🗣️ Audio pronunciation</p>
+    <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-6 space-y-4">
+      <h2 className="text-2xl font-bold text-center mb-2">Settings</h2>
+
+      <div className="flex items-center justify-between">
+        <span>Dark mode</span>
+        <button
+          onClick={handleToggleDark}
+          disabled={loadingDark}
+          className="px-4 py-2 rounded-xl border"
+        >
+          {profile.darkMode ? "Disable" : "Enable"}
+        </button>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <span>Reset learning progress</span>
+        <button
+          onClick={handleReset}
+          disabled={resetting}
+          className="px-4 py-2 rounded-xl border border-red-400 text-red-600"
+        >
+          {resetting ? "Resetting..." : "Reset"}
+        </button>
+      </div>
+
+      {msg && (
+        <div className="text-sm text-green-700 bg-green-50 border border-green-200 p-2 rounded-lg">
+          {msg}
         </div>
-      </div>
+      )}
 
-      <div className="bg-blue-50 rounded-xl p-4">
-        <h3 className="font-semibold mb-2 text-blue-900">Learning Tips</h3>
-        <ul className="text-sm text-blue-800 space-y-2">
-          <li>• Practice daily for best results</li>
-          <li>• Use audio to improve pronunciation</li>
-          <li>• Try different quiz modes</li>
-          <li>• Review completed lessons regularly</li>
-        </ul>
-      </div>
+      {error && (
+        <div className="text-sm text-red-600 bg-red-50 border border-red-200 p-2 rounded-lg">
+          {error}
+        </div>
+      )}
 
       <button
-        onClick={resetAll}
-        className="w-full bg-red-50 text-red-600 font-medium py-3 rounded-xl hover:bg-red-100 transition-colors"
+        onClick={handleLogout}
+        className="w-full bg-gray-100 text-gray-800 py-3 rounded-xl mt-4"
       >
-        Reset Progress
+        Logout
       </button>
-      <button
-  onClick={logoutUser}
-  className="w-full bg-red-500 text-white py-3 rounded-xl"
->
-  Logout
-</button>
     </div>
   );
 }
