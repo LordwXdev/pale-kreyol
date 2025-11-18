@@ -1,89 +1,138 @@
-import React, { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
-import { updateProfile } from "../firebase/userService";
+import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext.jsx";
+import { updateUserProfile } from "../firebase/userService.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
+const storage = getStorage(); // uses default Firebase app
+
+const countries = [
+  { code: "HT", name: "Haiti" },
+  { code: "TW", name: "Taiwan" },
+  { code: "FR", name: "France" },
+  { code: "US", name: "United States" },
+];
 
 export default function ProfileView() {
   const { user, profile } = useAuth();
-  const [name, setName] = useState("");
-  const [country, setCountry] = useState("");
-  const [avatar, setAvatar] = useState("");
+
+  const [name, setName] = useState(profile?.name || "");
+  const [country, setCountry] = useState(profile?.country || "");
   const [saving, setSaving] = useState(false);
-  const [msg, setMsg] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  useEffect(() => {
-    if (!profile) return;
-    setName(profile.name || "");
-    setCountry(profile.country || "");
-    setAvatar(profile.avatar || "");
-  }, [profile]);
+  if (!user) return null;
 
-  if (!user || !profile) return null;
+  const avatarUrl =
+    profile?.avatar ||
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(
+      profile?.name || user.email || "User"
+    )}&background=3b82f6&color=ffffff`;
 
   const handleSave = async () => {
+    setError("");
+    setSuccess("");
+    setSaving(true);
     try {
-      setSaving(true);
-      setError("");
-      setMsg("");
-      await updateProfile(user.uid, { name, country, avatar });
-      setMsg("Profile updated");
+      await updateUserProfile(user.uid, { name, country });
+      setSuccess("Profile updated.");
     } catch (e) {
-      setError(e.message || "Failed to update profile");
-    } finally {
-      setSaving(false);
+      setError(e.message || "Failed to save.");
     }
+    setSaving(false);
+  };
+
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setError("");
+    setSuccess("");
+    setSaving(true);
+
+    try {
+      const avatarRef = ref(storage, `avatars/${user.uid}`);
+      await uploadBytes(avatarRef, file);
+      const url = await getDownloadURL(avatarRef);
+      await updateUserProfile(user.uid, { avatar: url });
+      setSuccess("Avatar updated.");
+    } catch (e) {
+      setError(e.message || "Failed to upload avatar.");
+    }
+
+    setSaving(false);
   };
 
   return (
-    <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-6 space-y-4">
-      <h2 className="text-2xl font-bold text-center">Profile</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md space-y-6">
 
-      <input
-        className="w-full border rounded-xl p-3"
-        type="text"
-        placeholder="Your name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        disabled={saving}
-      />
+        <h2 className="text-2xl font-bold text-center">Your profile</h2>
 
-      <input
-        className="w-full border rounded-xl p-3"
-        type="text"
-        placeholder="Country"
-        value={country}
-        onChange={(e) => setCountry(e.target.value)}
-        disabled={saving}
-      />
-
-      <input
-        className="w-full border rounded-xl p-3"
-        type="text"
-        placeholder="Avatar image URL"
-        value={avatar}
-        onChange={(e) => setAvatar(e.target.value)}
-        disabled={saving}
-      />
-
-      {msg && (
-        <div className="text-sm text-green-700 bg-green-50 border border-green-200 p-2 rounded-lg">
-          {msg}
+        {/* Avatar */}
+        <div className="flex flex-col items-center space-y-3">
+          <img
+            src={avatarUrl}
+            alt="avatar"
+            className="w-24 h-24 rounded-full object-cover border-4 border-blue-100"
+          />
+          <label className="text-sm text-blue-600 cursor-pointer">
+            Change avatar
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+              className="hidden"
+            />
+          </label>
         </div>
-      )}
 
-      {error && (
-        <div className="text-sm text-red-600 bg-red-50 border border-red-200 p-2 rounded-lg">
-          {error}
+        {/* Name */}
+        <div>
+          <label className="text-sm text-gray-600 font-medium">Name</label>
+          <input
+            className="mt-1 w-full border rounded-xl px-4 py-2"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Your name"
+          />
         </div>
-      )}
 
-      <button
-        onClick={handleSave}
-        disabled={saving}
-        className="w-full bg-blue-600 text-white py-3 rounded-xl"
-      >
-        {saving ? "Saving..." : "Save changes"}
-      </button>
+        {/* Country */}
+        <div>
+          <label className="text-sm text-gray-600 font-medium">Country</label>
+          <select
+            className="mt-1 w-full border rounded-xl px-4 py-2"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+          >
+            <option value="">Select country</option>
+            {countries.map((c) => (
+              <option key={c.code} value={c.name}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {error && (
+          <div className="text-sm text-red-700 bg-red-100 rounded-lg px-3 py-2">
+            {error}
+          </div>
+        )}
+        {success && (
+          <div className="text-sm text-green-700 bg-green-100 rounded-lg px-3 py-2">
+            {success}
+          </div>
+        )}
+
+        <button
+          onClick={handleSave}
+          disabled={saving}
+          className="w-full bg-blue-600 text-white rounded-xl py-3 font-semibold hover:bg-blue-700"
+        >
+          {saving ? "Saving..." : "Save changes"}
+        </button>
+      </div>
     </div>
   );
 }

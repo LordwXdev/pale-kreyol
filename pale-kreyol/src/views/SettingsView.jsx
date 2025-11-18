@@ -1,37 +1,47 @@
-import React, { useState } from "react";
-import { useAuth } from "../context/AuthContext";
-import { toggleDarkMode, resetAccountProgress } from "../firebase/userService";
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext.jsx";
+import { updateUserProfile, resetUserProgress } from "../firebase/userService.js";
 
-export default function SettingsView() {
+export default function SettingsView({ resetAll }) {
   const { user, profile, logout } = useAuth();
-  const [loadingDark, setLoadingDark] = useState(false);
+  const [dark, setDark] = useState(profile?.darkMode || false);
+  const [savingTheme, setSavingTheme] = useState(false);
   const [resetting, setResetting] = useState(false);
-  const [msg, setMsg] = useState("");
-  const [error, setError] = useState("");
 
-  if (!user || !profile) return null;
+  useEffect(() => {
+    // sync profile changes
+    setDark(profile?.darkMode || false);
+  }, [profile]);
 
-  const handleToggleDark = async () => {
+  useEffect(() => {
+    // apply dark mode to document
+    if (dark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [dark]);
+
+  const handleThemeToggle = async () => {
+    if (!user) return;
+    const newValue = !dark;
+    setDark(newValue);
+    setSavingTheme(true);
     try {
-      setLoadingDark(true);
-      await toggleDarkMode(user.uid, profile.darkMode);
-    } catch (e) {
-      setError(e.message || "Failed to toggle theme");
+      await updateUserProfile(user.uid, { darkMode: newValue });
     } finally {
-      setLoadingDark(false);
+      setSavingTheme(false);
     }
   };
 
-  const handleReset = async () => {
-    if (!window.confirm("Reset all your progress?")) return;
+  const handleResetAccount = async () => {
+    if (!user) return;
+    const ok = confirm("Reset all your XP, streak and lessons?");
+    if (!ok) return;
+    setResetting(true);
     try {
-      setResetting(true);
-      setMsg("");
-      setError("");
-      await resetAccountProgress(user.uid, { deleteResults: true });
-      setMsg("Progress reset.");
-    } catch (e) {
-      setError(e.message || "Failed to reset progress");
+      await resetUserProgress(user.uid);
+      if (resetAll) resetAll(); // also clear local state from App.jsx
     } finally {
       setResetting(false);
     }
@@ -42,47 +52,75 @@ export default function SettingsView() {
   };
 
   return (
-    <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-6 space-y-4">
-      <h2 className="text-2xl font-bold text-center mb-2">Settings</h2>
+    <div className="space-y-6 animate-fade-in">
+      <h2 className="text-2xl font-bold">Settings</h2>
 
-      <div className="flex items-center justify-between">
-        <span>Dark mode</span>
+      {/* Theme */}
+      <div className="bg-white rounded-xl p-4 shadow-sm flex items-center justify-between">
+        <div>
+          <h3 className="font-semibold">Dark mode</h3>
+          <p className="text-sm text-gray-500">
+            Make the interface darker and easier on your eyes.
+          </p>
+        </div>
         <button
-          onClick={handleToggleDark}
-          disabled={loadingDark}
-          className="px-4 py-2 rounded-xl border"
+          onClick={handleThemeToggle}
+          className={`w-14 h-8 rounded-full flex items-center px-1 transition-all ${
+            dark ? "bg-blue-600" : "bg-gray-300"
+          }`}
         >
-          {profile.darkMode ? "Disable" : "Enable"}
+          <div
+            className={`w-6 h-6 bg-white rounded-full shadow transform transition-transform ${
+              dark ? "translate-x-6" : "translate-x-0"
+            }`}
+          />
         </button>
       </div>
 
-      <div className="flex items-center justify-between">
-        <span>Reset learning progress</span>
-        <button
-          onClick={handleReset}
-          disabled={resetting}
-          className="px-4 py-2 rounded-xl border border-red-400 text-red-600">
-          {resetting ? "Resetting..." : "Reset"}
-        </button>
+      {/* Progress summary */}
+      <div className="bg-white rounded-xl p-4 shadow-sm grid grid-cols-3 gap-3 text-center">
+        <div>
+          <div className="text-xl font-bold">{profile?.xp || 0}</div>
+          <div className="text-xs text-gray-500">XP</div>
+        </div>
+        <div>
+          <div className="text-xl font-bold">{profile?.streak || 0}</div>
+          <div className="text-xs text-gray-500">Streak</div>
+        </div>
+        <div>
+          <div className="text-xl font-bold">
+            {profile?.completedLessons?.length || 0}
+          </div>
+          <div className="text-xs text-gray-500">Lessons</div>
+        </div>
       </div>
 
-      {msg && (
-        <div className="text-sm text-green-700 bg-green-50 border border-green-200 p-2 rounded-lg">
-          {msg}
-        </div>
-      )}
+      {/* Reset account */}
+      <button
+        onClick={handleResetAccount}
+        disabled={resetting}
+        className="w-full bg-red-50 text-red-600 border border-red-200 rounded-xl py-3 font-semibold hover:bg-red-100"
+      >
+        {resetting ? "Resetting..." : "Reset learning progress"}
+      </button>
 
-      {error && (
-        <div className="text-sm text-red-600 bg-red-50 border border-red-200 p-2 rounded-lg">
-          {error}
-        </div>
-      )}
-
+      {/* Logout */}
       <button
         onClick={handleLogout}
-        className="w-full bg-gray-100 text-gray-800 py-3 rounded-xl mt-4">
+        className="w-full bg-gray-800 text-white rounded-xl py-3 font-semibold hover:bg-black"
+      >
         Logout
       </button>
+
+      <style>{`
+        @keyframes fade-in {
+          from { opacity:0; transform: translateY(8px); }
+          to   { opacity:1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in .25s ease-out;
+        }
+      `}</style>
     </div>
   );
 }

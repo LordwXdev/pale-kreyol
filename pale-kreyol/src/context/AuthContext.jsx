@@ -1,4 +1,3 @@
-// src/context/AuthContext.jsx
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { subscribeToAuth, logout } from "../firebase/authService";
 import { subscribeToUserProfile } from "../firebase/userService";
@@ -10,16 +9,16 @@ export const AuthProvider = ({ children }) => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // auth listener
+  // Listen to Firebase Auth state
   useEffect(() => {
-    const unsub = subscribeToAuth(async (user) => {
+    const unsub = subscribeToAuth((user) => {
       setFirebaseUser(user);
       setLoading(false);
     });
     return unsub;
   }, []);
 
-  // profile listener
+  // Listen to Firestore user profile
   useEffect(() => {
     if (!firebaseUser) {
       setProfile(null);
@@ -31,16 +30,6 @@ export const AuthProvider = ({ children }) => {
     return unsub;
   }, [firebaseUser]);
 
-  // dark mode sync
-  useEffect(() => {
-    if (!profile) return;
-    if (profile.darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [profile]);
-
   const value = {
     user: firebaseUser,
     profile,
@@ -48,11 +37,7 @@ export const AuthProvider = ({ children }) => {
     logout,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);
