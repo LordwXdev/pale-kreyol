@@ -93,8 +93,8 @@ export const lessons = [
       { creole: "Nwa", english: "Black", pronunciation: "NWAH" },
       { creole: "Blan", english: "White", pronunciation: "BLAN" },
       { creole: "Woz", english: "Pink", pronunciation: "WOHZ" },
-      { creole: "Violet", english: "Purple", pronunciation: "vee-oh-LEH" },
-      { creole: "Oran", english: "Orange", pronunciation: "oh-RAN" },
+      { creole: "Vyolèt", english: "Purple", pronunciation: "vee-oh-LEH" },
+      { creole: "Oranj", english: "Orange", pronunciation: "oh-RAN" },
     ]
   },
   {
