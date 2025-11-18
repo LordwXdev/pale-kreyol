@@ -1,7 +1,14 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-
+//import { getAuth } from "firebase/auth";
+import {
+  getAuth,
+  RecaptchaVerifier,
+  browserLocalPersistence,
+  browserSessionPersistence,
+  setPersistence,
+} from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -16,5 +23,31 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+//const app = initializeApp(firebaseConfig);
+//export const auth = getAuth(app);
 const app = initializeApp(firebaseConfig);
+
 export const auth = getAuth(app);
+export const db = getFirestore(app);
+
+// Remember-me helper
+export const setAuthPersistence = async (remember) => {
+  await setPersistence(
+    auth,
+    remember ? browserLocalPersistence : browserSessionPersistence
+  );
+};
+
+// Setup invisible reCAPTCHA for phone auth
+export const setupRecaptcha = (containerId = "recaptcha-container") => {
+  if (!window.recaptchaVerifier) {
+    window.recaptchaVerifier = new RecaptchaVerifier(
+      auth,
+      containerId,
+      {
+        size: "invisible",
+      }
+    );
+  }
+  return window.recaptchaVerifier;
+};
