@@ -1,4 +1,5 @@
 import React from 'react';
+import { logoutUser } from "../firebase/authService";
 
 export default function SettingsView({ resetAll }) {
   return (
@@ -35,6 +36,12 @@ export default function SettingsView({ resetAll }) {
       >
         Reset Progress
       </button>
+      <button
+  onClick={logoutUser}
+  className="w-full bg-red-500 text-white py-3 rounded-xl"
+>
+  Logout
+</button>
     </div>
   );
 }

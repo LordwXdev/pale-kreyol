@@ -7,6 +7,11 @@ import QuizView from './views/QuizView.jsx';
 import ProgressView from './views/ProgressView.jsx';
 import SettingsView from './views/SettingsView.jsx';
 import { lessons } from './data/lessons.js';
+import LoginView from "./views/LoginView.jsx";
+import RegisterView from "./views/RegisterView.jsx";
+import { auth } from "./firebase/config";
+import { onAuthStateChanged } from "firebase/auth";
+
 
 export default function App() {
   const [currentView, setCurrentView] = useState('home');
@@ -24,6 +29,7 @@ export default function App() {
   const [flippedCards, setFlippedCards] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState(new Set());
   const [streak, setStreak] = useState(0);
+  
 
   const speakWord = (text) => {
     if ('speechSynthesis' in window) {
@@ -122,6 +128,14 @@ export default function App() {
       setStreak(0);
     }
   };
+  const [user, setUser] = useState(null);
+
+useEffect(() => {
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  });
+}, []);
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
