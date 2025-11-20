@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { sendPhoneCode, verifyPhoneCode } from "../firebase/authService";
+import { sendPhoneCode } from "../firebase/authService.js";
 import { updateUserProfile } from "../firebase/userService";
 import { useAuth } from "../context/AuthContext";
 

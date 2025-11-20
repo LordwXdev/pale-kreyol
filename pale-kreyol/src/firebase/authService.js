@@ -44,11 +44,21 @@ const createUserDoc = async (user) => {
 };
 
 export const registerWithEmail = async (email, password) => {
+  console.log("🔥 registerWithEmail() called");
+
   const cred = await createUserWithEmailAndPassword(auth, email, password);
+  console.log("✅ User created:", cred.user.uid);
+
   await createUserDoc(cred.user);
+  console.log("📄 User doc created");
+
+  console.log("📨 Attempting to send verification email...");
   await sendEmailVerification(cred.user);
+  console.log("✅ Verification email SENT");
+
   return cred.user;
 };
+
 
 export const loginWithEmail = async (email, password, rememberMe) => {
   const persistence = rememberMe
