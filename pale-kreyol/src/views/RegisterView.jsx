@@ -11,7 +11,7 @@ export default function RegisterView({ goLogin }) {
   const handleRegister = async () => {
     try {
       setLoading(true);
-      setError("");
+      setError(""); 
       setMsg("");
       await registerWithEmail(email, password);
       setMsg("Account created. Please check your email to verify.");
