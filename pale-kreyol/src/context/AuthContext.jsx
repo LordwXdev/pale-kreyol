@@ -1,41 +1,33 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { auth } from "../firebase/config";
+import { onAuthStateChanged } from "firebase/auth";
 
-const AuthContext = createContext(null);
+export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [firebaseUser, setFirebaseUser] = useState(null);
-  const [profile, setProfile] = useState(null);
-  const [loading, setLoading] = useState(true);
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
 
-  // Listen to Firebase Auth state
+  // Firebase listener
   useEffect(() => {
-    const unsub = subscribeToAuth((user) => {
-      setFirebaseUser(user);
-      setLoading(false);
+    const unsub = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
     });
-    return unsub;
+    return () => unsub();
   }, []);
 
-  // Listen to Firestore user profile
-  useEffect(() => {
-    if (!firebaseUser) {
-      setProfile(null);
-      return;
-    }
-    const unsub = subscribeToUserProfile(firebaseUser.uid, (data) => {
-      setProfile(data);
-    });
-    return unsub;
-  }, [firebaseUser]);
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        login: () => {},
+        logout: () => {},
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+}
 
-  const value = {
-    user: firebaseUser,
-    profile,
-    loading,
-    logout,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
-
-export const useAuth = () => useContext(AuthContext);
+export function useAuth() {
+  return useContext(AuthContext);
+}

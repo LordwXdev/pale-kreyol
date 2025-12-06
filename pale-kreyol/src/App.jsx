@@ -1,29 +1,41 @@
-import React, { useState, useEffect } from 'react';
+// src/App.jsx
+import React, { useState, useEffect } from "react";
+import { useAuth } from "./context/AuthContext";
 
-// Pale Kreyòl Components
-import Navigation from './components/Navigation.jsx';
-import HomeView from './views/HomeView.jsx';
-import LessonsView from './views/LessonsView.jsx';
-import LessonView from './views/LessonView.jsx';
-import QuizView from './views/QuizView.jsx';
-import ProgressView from './views/ProgressView.jsx';
-import SettingsView from './views/SettingsView.jsx';
-import { lessons } from './data/lessons.js';
+// Firebase (for resend verification)
+import { sendEmailVerification } from "firebase/auth";
 
+// Firestore progress helpers
+import { saveQuizProgress, saveQuizResult } from "./firebase/userService.js";
+
+// UI: Navigation + Learning Views
+import Navigation from "./components/Navigation.jsx";
+import HomeView from "./views/HomeView.jsx";
+import LessonsView from "./views/LessonsView.jsx";
+import LessonView from "./views/LessonView.jsx";
+import QuizView from "./views/QuizView.jsx";
+import ProgressView from "./views/ProgressView.jsx";
+import SettingsView from "./views/SettingsView.jsx";
+import { lessons } from "./data/lessons.js";
+
+// Auth screens
+import LoginView from "./views/LoginView.jsx";
+import RegisterView from "./views/RegisterView.jsx";
+import ForgotPasswordView from "./views/ForgotPasswordView.jsx";
+
+// ---------------------------------------------------------------------
+// MAIN APP
+// ---------------------------------------------------------------------
 export default function App() {
-
-  // -----------------------------------------------------------------------
-  // 🔐 AUTHENTICATION HANDLING (ALL DONE THROUGH useAuth)
-  // -----------------------------------------------------------------------
-
   const { user, profile, loading } = useAuth();
 
-  // Screens shown BEFORE login
-  const [authScreen, setAuthScreen] = useState("login");
+  // Which auth screen to show when user is NOT logged in
+  const [authScreen, setAuthScreen] = useState("login"); // 'login' | 'register' | 'forgot'
 
-  // Screens shown AFTER login
+  // Which general "mode" the app is in after login (you can expand later)
   const [appScreen, setAppScreen] = useState("learning");
 
+  // While Firebase is checking the existing session
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-gray-500">
@@ -32,57 +44,120 @@ export default function App() {
     );
   }
 
-  // ------------------ NOT LOGGED IN → show LOGIN / REGISTER ------------------
+  // -------------------------------------------------------------------
+  // NOT LOGGED IN → show authentication screens
+  // -------------------------------------------------------------------
   if (!user) {
     if (authScreen === "register") {
       return (
-        <RegisterView
-          goLogin={() => setAuthScreen("login")}
-        />
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
+          <RegisterView goLogin={() => setAuthScreen("login")} />
+        </div>
       );
     }
 
     if (authScreen === "forgot") {
       return (
-        <ForgotPasswordView
-          goLogin={() => setAuthScreen("login")}
-        />
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
+          <ForgotPasswordView goLogin={() => setAuthScreen("login")} />
+        </div>
       );
     }
 
+    // default: login
     return (
-      <LoginView
-        onSuccess={() => setAppScreen("learning")}
-        goRegister={() => setAuthScreen("register")}
-        goForgot={() => setAuthScreen("forgot")}
-      />
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
+        <LoginView
+          onSuccess={() => setAppScreen("learning")}
+          goRegister={() => setAuthScreen("register")}
+          goForgot={() => setAuthScreen("forgot")}
+        />
+      </div>
     );
   }
 
-  // ------------------ EMAIL NOT VERIFIED → gate the app ------------------
+  // -------------------------------------------------------------------
+  // LOGGED IN → gate app behind email verification
+  // -------------------------------------------------------------------
   return (
     <EmailVerificationGate>
-
-      {/* ---------------------- APP AFTER LOGIN ---------------------- */}
       <MainLearningApp
         appScreen={appScreen}
         setAppScreen={setAppScreen}
         user={user}
         profile={profile}
       />
-
     </EmailVerificationGate>
   );
 }
 
+// =====================================================================
+// 🎯 EMAIL VERIFICATION GATE
+// =====================================================================
+function EmailVerificationGate({ children }) {
+  const { user } = useAuth();
+  const [sending, setSending] = useState(false);
+  const [info, setInfo] = useState("");
 
-// ======================================================================
-// 🎯 MAIN LEARNING APPLICATION (your Pale Kreyòl UI)
-// ======================================================================
+  if (!user) return null;
+
+  // Already verified → let them use the app
+  if (user.emailVerified) {
+    return children;
+  }
+
+  const handleResend = async () => {
+    try {
+      setSending(true);
+      setInfo("");
+      await sendEmailVerification(user, {
+        url: "http://localhost:5173/verify", // adjust later for production
+        handleCodeInApp: true,
+      });
+      setInfo("Verification email sent. Please check your inbox (and spam).");
+    } catch (err) {
+      console.error("Error sending verification email:", err);
+      setInfo(err.message || "Failed to resend verification email.");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 px-4">
+      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-6 space-y-4 text-center">
+        <h2 className="text-2xl font-bold">Verify your email</h2>
+        <p className="text-sm text-gray-600">
+          We sent a verification link to: <br />
+          <span className="font-semibold">{user.email}</span>
+        </p>
+        <p className="text-xs text-gray-500">
+          Open the email and click the link, then refresh the page.
+        </p>
+
+        {info && (
+          <div className="text-sm text-blue-700 bg-blue-50 border border-blue-200 p-2 rounded-lg">
+            {info}
+          </div>
+        )}
+
+        <button
+          onClick={handleResend}
+          disabled={sending}
+          className="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition disabled:bg-gray-300 disabled:text-gray-500"
+        >
+          {sending ? "Sending..." : "Resend verification email"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// =====================================================================
+// 🎯 MAIN LEARNING APPLICATION (Pale Kreyòl UI)
+// =====================================================================
 function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
-
-  // --------------------------- ORIGINAL STATES ---------------------------
-  const [currentView, setCurrentView] = useState('home');
+  const [currentView, setCurrentView] = useState("home");
   const [selectedLesson, setSelectedLesson] = useState(null);
   const [quizMode, setQuizMode] = useState(false);
   const [quizType, setQuizType] = useState(null);
@@ -98,32 +173,30 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
   const [matchedPairs, setMatchedPairs] = useState(new Set());
   const [streak, setStreak] = useState(0);
 
-  // --------------------------- SPEECH ---------------------------
+  // ---------- SPEECH ----------
   const speakWord = (text) => {
-    if ('speechSynthesis' in window) {
+    if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'fr-FR';
+      utterance.lang = "fr-FR";
       utterance.rate = 0.8;
       window.speechSynthesis.speak(utterance);
     }
   };
 
-  // ------------------------ SPEED QUIZ TIMER ------------------------
+  // ---------- SPEED QUIZ TIMER ----------
   useEffect(() => {
-    if (quizType === 'speed' && quizMode && !answered && timeLeft > 0) {
-      const timer = setTimeout(() => setTimeLeft(t => t - 1), 1000);
+    if (quizType === "speed" && quizMode && !answered && timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft((t) => t - 1), 1000);
       return () => clearTimeout(timer);
     }
-    if (timeLeft === 0 && !answered && quizType === 'speed') {
+    if (timeLeft === 0 && !answered && quizType === "speed") {
       handleAnswer(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeLeft, quizMode, answered, quizType]);
 
-  // -------------------------------------------------------------------
-  // QUIZ FUNCTIONS (UNCHANGED FROM YOUR ORIGINAL CODE)
-  // -------------------------------------------------------------------
-
+  // ---------- QUIZ LOGIC ----------
   const startQuiz = (type) => {
     setQuizType(type);
     setQuizMode(true);
@@ -142,9 +215,19 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
   const initMemoryGame = () => {
     const words = selectedLesson.words.slice(0, 6);
     const cards = [];
-    words.forEach(word => {
-      cards.push({ id: `creole-${word.creole}`, text: word.creole, type: 'creole', match: word.english });
-      cards.push({ id: `english-${word.english}`, text: word.english, type: 'english', match: word.creole });
+    words.forEach((word) => {
+      cards.push({
+        id: `creole-${word.creole}`,
+        text: word.creole,
+        type: "creole",
+        match: word.english,
+      });
+      cards.push({
+        id: `english-${word.english}`,
+        text: word.english,
+        type: "english",
+        match: word.creole,
+      });
     });
     setMemoryCards(cards.sort(() => Math.random() - 0.5));
     setFlippedCards([]);
@@ -152,14 +235,19 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
   };
 
   const handleMemoryCardClick = (card) => {
-    if (flippedCards.length === 2 || flippedCards.includes(card.id) || matchedPairs.has(card.id)) return;
+    if (
+      flippedCards.length === 2 ||
+      flippedCards.includes(card.id) ||
+      matchedPairs.has(card.id)
+    )
+      return;
 
     const newFlipped = [...flippedCards, card.id];
     setFlippedCards(newFlipped);
 
     if (newFlipped.length === 2) {
-      const card1 = memoryCards.find(c => c.id === newFlipped[0]);
-      const card2 = memoryCards.find(c => c.id === newFlipped[1]);
+      const card1 = memoryCards.find((c) => c.id === newFlipped[0]);
+      const card2 = memoryCards.find((c) => c.id === newFlipped[1]);
 
       const match =
         (card1.type === "creole" && card2.text === card1.match) ||
@@ -167,12 +255,12 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
 
       if (match) {
         setMatchedPairs(new Set([...matchedPairs, card1.id, card2.id]));
-        setScore(s => s + 1);
+        setScore((s) => s + 1);
         setFlippedCards([]);
 
-        if (matchedPairs.size + 2 === memoryCards.length)
+        if (matchedPairs.size + 2 === memoryCards.length) {
           setTimeout(() => finishQuiz(), 500);
-
+        }
       } else {
         setTimeout(() => setFlippedCards([]), 1000);
       }
@@ -190,8 +278,8 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
         : answer === currentWord.english;
 
     if (correct) {
-      setScore(s => s + 1);
-      setStreak(s => s + 1);
+      setScore((s) => s + 1);
+      setStreak((s) => s + 1);
     } else {
       setStreak(0);
     }
@@ -199,7 +287,7 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
 
   const handleNext = () => {
     if (currentQuizIndex < selectedLesson.words.length - 1) {
-      setCurrentQuizIndex(i => i + 1);
+      setCurrentQuizIndex((i) => i + 1);
       setAnswered(false);
       setSelectedAnswer(null);
       setTimeLeft(10);
@@ -208,61 +296,54 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
     }
   };
 
-  // -------------------------------------------------------------------
-  // 🔥 FINAL UPDATED finishQuiz() INCLUDING FIRESTORE SAVE
-  // -------------------------------------------------------------------
+  // ---------- FINISH QUIZ (SAVE TO FIRESTORE + LOCAL STATE) ----------
   const finishQuiz = async () => {
     const points = score * (quizType === "speed" ? 15 : 10);
 
-    // Save in Firestore
-    await saveQuizProgress(user.uid, {
-      lessonId: selectedLesson.id,
-      xpEarned: points,
-      streak
-    });
+    if (user) {
+      await saveQuizProgress(user.uid, {
+        lessonId: selectedLesson.id,
+        xpEarned: points,
+        streak,
+      });
 
-    await saveQuizResult(user.uid, {
-      lessonId: selectedLesson.id,
-      quizType,
-      score,
-      totalQuestions: selectedLesson.words.length,
-    });
+      await saveQuizResult(user.uid, {
+        lessonId: selectedLesson.id,
+        quizType,
+        score,
+        totalQuestions: selectedLesson.words.length,
+      });
+    }
 
-    // Local updates
-    setTotalPoints(prev => prev + points);
+    setTotalPoints((prev) => prev + points);
     setCompletedLessons(new Set([...completedLessons, selectedLesson.id]));
     setQuizMode(false);
     setCurrentView("lessons");
   };
 
-
-  // -------------------------------------------------------------------
-  // RESET LOCAL PROGRESS (NOT FIRESTORE)
-  // -------------------------------------------------------------------
+  // ---------- RESET LOCAL PROGRESS ----------
   const resetAll = () => {
-    if (confirm("Reset all progress?")) {
+    if (confirm("Reset all local progress?")) {
       setCompletedLessons(new Set());
       setTotalPoints(0);
       setStreak(0);
     }
   };
 
-  // -------------------------------------------------------------------
-  // MAIN UI
-  // -------------------------------------------------------------------
+  // ---------- MAIN UI ----------
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       <div className="max-w-2xl mx-auto px-4 py-6 pb-24">
-
         <div className="mb-6">
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Pale Kreyòl
           </h1>
-          <p className="text-gray-600 text-sm">Learn Haitian Creole with joy 🇭🇹</p>
+          <p className="text-gray-600 text-sm">
+            Learn Haitian Creole with joy 🇭🇹
+          </p>
         </div>
 
-        {/* Main Views */}
-        {!quizMode && currentView === 'home' &&
+        {!quizMode && currentView === "home" && (
           <HomeView
             completedLessons={completedLessons}
             totalPoints={totalPoints}
@@ -271,26 +352,26 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
             setCurrentView={setCurrentView}
             startQuiz={startQuiz}
           />
-        }
+        )}
 
-        {!quizMode && currentView === 'lessons' &&
+        {!quizMode && currentView === "lessons" && (
           <LessonsView
             completedLessons={completedLessons}
             setSelectedLesson={setSelectedLesson}
             setCurrentView={setCurrentView}
           />
-        }
+        )}
 
-        {!quizMode && currentView === 'lesson' &&
+        {!quizMode && currentView === "lesson" && (
           <LessonView
             selectedLesson={selectedLesson}
             setCurrentView={setCurrentView}
             speakWord={speakWord}
             startQuiz={startQuiz}
           />
-        }
+        )}
 
-        {quizMode &&
+        {quizMode && (
           <QuizView
             quizType={quizType}
             selectedLesson={selectedLesson}
@@ -309,23 +390,19 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
             handleMemoryCardClick={handleMemoryCardClick}
             matchedPairs={matchedPairs}
           />
-        }
+        )}
 
-        {!quizMode && currentView === 'progress' &&
+        {!quizMode && currentView === "progress" && (
           <ProgressView
             totalPoints={totalPoints}
             completedCount={completedLessons.size}
             streak={streak}
           />
-        }
+        )}
 
-        {!quizMode && currentView === 'settings' &&
-          <SettingsView
-            resetAll={resetAll}
-            setAppScreen={setAppScreen}
-          />
-        }
-
+        {!quizMode && currentView === "settings" && (
+          <SettingsView resetAll={resetAll} setAppScreen={setAppScreen} />
+        )}
       </div>
 
       <Navigation
