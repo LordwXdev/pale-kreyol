@@ -1,14 +1,4 @@
 // src/firebase/userService.js
-import {
-  doc,
-  setDoc,
-  getDoc,
-  onSnapshot,
-  updateDoc,
-  increment,
-  arrayUnion,
-} from "firebase/firestore";
-import { db } from "./config";
 
 // Make sure a user document exists
 export const ensureUserDoc = async (uid, email = "") => {

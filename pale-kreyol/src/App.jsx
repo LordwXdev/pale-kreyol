@@ -10,17 +10,6 @@ import ProgressView from './views/ProgressView.jsx';
 import SettingsView from './views/SettingsView.jsx';
 import { lessons } from './data/lessons.js';
 
-// Auth System
-import LoginView from "./views/LoginView.jsx";
-import RegisterView from "./views/RegisterView.jsx";
-import ForgotPasswordView from "./views/ForgotPasswordView.jsx";
-import EmailVerificationGate from "./views/EmailVerificationGate.jsx";
-import PhoneVerifyView from "./views/PhoneVerifyView.jsx";
-import ProfileView from "./views/ProfileView.jsx";
-
-import { saveQuizProgress, saveQuizResult } from "./firebase/userService.js";
-import { useAuth } from "./context/AuthContext.jsx";
-
 export default function App() {
 
   // -----------------------------------------------------------------------

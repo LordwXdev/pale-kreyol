@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
-import { updateUserProfile, resetUserProgress } from "../firebase/userService.js";
 
 export default function SettingsView({ resetAll }) {
   const { user, profile, logout } = useAuth();
