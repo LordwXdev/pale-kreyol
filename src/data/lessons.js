@@ -18,6 +18,7 @@ export const lessons = [
       { creole: "Kenbe la", english: "Take care", pronunciation: "KEN-beh lah" },
     ]
   },
+  
   {
     id: 2,
     title: "Introductions",
