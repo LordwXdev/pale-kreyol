@@ -15,7 +15,9 @@ export const lessons = [
       { creole: "Wi", english: "Yes", pronunciation: "WEE" },
       { creole: "Non", english: "No", pronunciation: "NON" },
       { creole: "Orevwa", english: "Goodbye", pronunciation: "oh-reh-VWAH" },
-      { creole: "Kenbe la", english: "Take care", pronunciation: "KEN-beh lah" },
+      { creole: "Kenbe la", english: "Take care", pronunciation: "KEN-beh lah" }
+      { creole: "Kenbe la", english: "Take care", pronunciation: "KEN-beh lah" }
+      ,
     ]
   },
   
