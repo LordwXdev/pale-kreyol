@@ -7,3 +7,4 @@ export const quizTypes = [
   { id: 'memory', name: 'Memory Match', icon: Brain, color: 'from-green-500 to-green-600' }
 ];
 
+
