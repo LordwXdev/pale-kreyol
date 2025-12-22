@@ -18,6 +18,7 @@ import ProgressView from "./views/ProgressView.jsx";
 import SettingsView from "./views/SettingsView.jsx";
 import { lessons } from "./data/lessons.js";
 
+
 // Auth screens
 import LoginView from "./views/LoginView.jsx";
 import RegisterView from "./views/RegisterView.jsx";
