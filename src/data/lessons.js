@@ -37,6 +37,7 @@ export const lessons = [
       { creole: "Mwen soti nan..", english: "I'm from..", pronunciation: "mwen soh-TEE nan" },
     ]
   },
+  
   {
     id: 3,
     title: "Numbers 1-20",
