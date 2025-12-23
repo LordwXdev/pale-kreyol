@@ -34,7 +34,6 @@ export const lessons = [
       { creole: "Mwen byen", english: "I'm fine", pronunciation: "mwen bee-YEN" },
       { creole: "Ànchante", english: "Nice to meet you", pronunciation: "an-shan-TEH" },
       { creole: "Ki kote ou soti?", english: "Where are you from?", pronunciation: "kee KOH-teh oo soh-TEE" },
-      { creole: "Mwen soti nan..", english: "I'm from..", pronunciation: "mwen soh-TEE nan" },
     ]
   },
   
