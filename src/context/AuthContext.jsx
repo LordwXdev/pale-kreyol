@@ -15,6 +15,7 @@ export function AuthProvider({ children }) {
       setLoading(false);
     });
 
+
     return () => unsub();
   }, []);
 
