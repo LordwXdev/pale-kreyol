@@ -22,6 +22,7 @@ export function AuthProvider({ children }) {
 
   const logoutUser = () => signOut(auth);
 
+  
   return (
     <AuthContext.Provider
       value={{
