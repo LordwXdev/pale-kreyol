@@ -6,7 +6,7 @@ import { useAuth } from "./context/AuthContext";
 import { sendEmailVerification } from "firebase/auth";
 
 // Firestore progress helpers
-import { saveQuizProgress, saveQuizResult } from "./firebase/userService.js";
+import { saveQuizProgress, saveQuizResult } from "./firebase/UserService.js";
 
 // UI: Navigation + Learning Views
 import Navigation from "./components/Navigation.jsx";
