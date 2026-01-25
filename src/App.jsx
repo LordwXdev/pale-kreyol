@@ -6,6 +6,7 @@ import { auth, db } from "./firebase/config";
 // Firebase (for resend verification)
 import { sendEmailVerification } from "firebase/auth";
 import { saveQuizProgress, saveQuizResult } from "./firebase/UserService.js";
+import { resendVerificationEmail } from "./firebase/authService";
 
 // UI: Navigation + Learning Views
 import Navigation from "./components/Navigation.jsx";
@@ -15,6 +16,9 @@ import LessonView from "./views/LessonView.jsx";
 import QuizView from "./views/QuizView.jsx";
 import ProgressView from "./views/ProgressView.jsx";
 import SettingsView from "./views/SettingsView.jsx";
+import DialogsView from "./views/DialogsView.jsx";
+import DialogDetailView from "./views/DialogDetailView.jsx";
+import GrammarView from "./views/GrammarView.jsx";
 import { lessons } from "./data/lessons.js";
 
 // Auth screens
@@ -87,14 +91,14 @@ export default function App() {
   // LOGGED IN → gate app behind email verification
   // -------------------------------------------------------------------
   return (
-    <EmailVerificationGate>
+    //<EmailVerificationGate>
       <MainLearningApp
         appScreen={appScreen}
         setAppScreen={setAppScreen}
         user={user}
         profile={profile}
       />
-    </EmailVerificationGate>
+    //</EmailVerificationGate>
   );
 }
 
@@ -121,16 +125,19 @@ function EmailVerificationGate({ children }) {
       setInfo("");
       setError("");
       
-      const actionCodeSettings = {
-        url: window.location.origin + '/verify',
-        handleCodeInApp: false,
-      };
-      
-      await sendEmailVerification(user, actionCodeSettings);
-      setInfo("Verification email sent! Check your inbox and spam folder.");
+      await resendVerificationEmail(user);
+      setInfo("✓ Verification email sent! Check your inbox and spam folder.");
     } catch (err) {
       console.error("Error sending verification email:", err);
-      setError(err.message || "Failed to resend verification email.");
+      
+      if (err.message === "Email already verified") {
+        setInfo("✓ Your email is already verified! Refreshing...");
+        setTimeout(() => window.location.reload(), 1000);
+      } else if (err.code === 'auth/too-many-requests') {
+        setError("⚠️ Too many requests. Please wait a few minutes before trying again.");
+      } else {
+        setError(`❌ ${err.message || "Failed to send verification email. Please try again."}`);
+      }
     } finally {
       setSending(false);
     }
@@ -140,17 +147,19 @@ function EmailVerificationGate({ children }) {
     try {
       setCheckingVerification(true);
       setError("");
+      setInfo("");
       
       await user.reload();
       
       if (user.emailVerified) {
-        setInfo("Email verified! Redirecting...");
+        setInfo("✓ Email verified! Redirecting...");
         setTimeout(() => window.location.reload(), 1000);
       } else {
         setError("Email not verified yet. Please check your inbox and click the verification link.");
       }
     } catch (err) {
-      setError("Error checking verification status.");
+      console.error("Error checking verification:", err);
+      setError("Error checking verification status. Please try again.");
     } finally {
       setCheckingVerification(false);
     }
@@ -158,16 +167,28 @@ function EmailVerificationGate({ children }) {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 px-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-6 space-y-4 text-center">
+      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 space-y-6 text-center">
         <div className="text-6xl mb-4">📧</div>
-        <h2 className="text-2xl font-bold">Verify your email</h2>
-        <p className="text-sm text-gray-600">
-          We sent a verification link to: <br />
-          <span className="font-semibold">{user.email}</span>
-        </p>
-        <p className="text-xs text-gray-500">
-          Click the link in the email to verify your account.
-        </p>
+        
+        <div className="space-y-2">
+          <h2 className="text-2xl font-bold text-gray-800">Verify your email</h2>
+          <p className="text-sm text-gray-600">
+            We sent a verification link to:
+          </p>
+          <p className="font-semibold text-gray-800 bg-gray-50 p-2 rounded-lg">
+            {user.email}
+          </p>
+        </div>
+
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-left space-y-2">
+          <p className="font-semibold text-blue-900">📝 What to do:</p>
+          <ol className="list-decimal list-inside space-y-1 text-blue-800">
+            <li>Check your email inbox</li>
+            <li>Look for an email from Firebase/noreply</li>
+            <li>Click the verification link</li>
+            <li>Come back here and click "I've verified"</li>
+          </ol>
+        </div>
 
         {info && (
           <div className="text-sm text-green-700 bg-green-50 border border-green-200 p-3 rounded-lg">
@@ -181,21 +202,21 @@ function EmailVerificationGate({ children }) {
           </div>
         )}
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <button
             onClick={handleCheckVerification}
             disabled={checkingVerification}
-            className="w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition disabled:bg-gray-300"
+            className="w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
           >
-            {checkingVerification ? "Checking..." : "I've verified my email"}
+            {checkingVerification ? "Checking..." : "✓ I've verified my email"}
           </button>
 
           <button
             onClick={handleResend}
             disabled={sending}
-            className="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition disabled:bg-gray-300"
+            className="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
           >
-            {sending ? "Sending..." : "Resend verification email"}
+            {sending ? "Sending..." : "📧 Resend verification email"}
           </button>
 
           <button
@@ -206,10 +227,16 @@ function EmailVerificationGate({ children }) {
           </button>
         </div>
 
-        <div className="pt-4 border-t">
+        <div className="pt-4 border-t space-y-2">
           <p className="text-xs text-gray-500">
-            💡 Check your spam folder if you don't see the email
+            💡 <strong>Not receiving emails?</strong>
           </p>
+          <ul className="text-xs text-gray-500 text-left space-y-1">
+            <li>• Check your spam/junk folder</li>
+            <li>• Wait 2-3 minutes (emails can be delayed)</li>
+            <li>• Make sure {user.email} is correct</li>
+            <li>• Try resending the email</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -222,6 +249,7 @@ function EmailVerificationGate({ children }) {
 function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
   const [currentView, setCurrentView] = useState("home");
   const [selectedLesson, setSelectedLesson] = useState(null);
+  const [selectedDialog, setSelectedDialog] = useState(null);
   const [quizMode, setQuizMode] = useState(false);
   const [quizType, setQuizType] = useState(null);
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
@@ -229,6 +257,7 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
   const [answered, setAnswered] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [completedLessons, setCompletedLessons] = useState(new Set());
+  const [completedDialogs, setCompletedDialogs] = useState(new Set());
   const [totalPoints, setTotalPoints] = useState(0);
   const [timeLeft, setTimeLeft] = useState(10);
   const [memoryCards, setMemoryCards] = useState([]);
@@ -382,6 +411,7 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
   const resetAll = () => {
     if (confirm("Reset all local progress?")) {
       setCompletedLessons(new Set());
+      setCompletedDialogs(new Set());
       setTotalPoints(0);
       setStreak(0);
     }
@@ -445,6 +475,31 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
             flippedCards={flippedCards}
             handleMemoryCardClick={handleMemoryCardClick}
             matchedPairs={matchedPairs}
+          />
+        )}
+
+        {!quizMode && currentView === "dialogs" && (
+          <DialogsView
+            completedDialogs={completedDialogs}
+            setSelectedDialog={setSelectedDialog}
+            setCurrentView={setCurrentView}
+          />
+        )}
+
+        {!quizMode && currentView === "dialog" && selectedDialog && (
+          <DialogDetailView
+            selectedDialog={selectedDialog}
+            setCurrentView={setCurrentView}
+            completedDialogs={completedDialogs}
+            setCompletedDialogs={setCompletedDialogs}
+            speakWord={speakWord}
+          />
+        )}
+
+        {!quizMode && currentView === "grammar" && selectedDialog && (
+          <GrammarView
+            selectedDialog={selectedDialog}
+            setCurrentView={setCurrentView}
           />
         )}
 
