@@ -4,8 +4,6 @@ import { useAuth } from "./context/AuthContext";
 
 // Firebase (for resend verification)
 import { sendEmailVerification } from "firebase/auth";
-
-// Firestore progress helpers
 import { saveQuizProgress, saveQuizResult } from "./firebase/UserService.js";
 
 // UI: Navigation + Learning Views
