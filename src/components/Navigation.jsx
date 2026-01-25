@@ -1,5 +1,6 @@
 import React from 'react';
 import { Home, BookOpen, Trophy, Settings } from 'lucide-react';
+import { auth, db } from "../firebase/config";
 
 export default function Navigation({ currentView, setCurrentView, setQuizMode }) {
   return (

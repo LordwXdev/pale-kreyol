@@ -3,6 +3,7 @@ import LessonCard from '../components/LessonCard.jsx';
 import { Star } from 'lucide-react';
 import { lessons } from '../data/lessons.js';
 import { quizTypes } from '../data/quizzes.js';
+import { auth, db } from "../firebase/config";
 
 export default function HomeView({ completedLessons, totalPoints, streak, setSelectedLesson, setCurrentView, startQuiz }) {
   return (

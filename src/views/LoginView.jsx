@@ -14,7 +14,7 @@ export default function LoginView({ onSuccess, goRegister, goForgot }) {
       setError("");
 
       await loginWithEmail(email, password, rememberMe);
-      onSuccess(); // move into the app
+      onSuccess();
     } catch (e) {
       setError(e.message || "Login failed");
     } finally {
@@ -54,6 +54,7 @@ export default function LoginView({ onSuccess, goRegister, goForgot }) {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         disabled={loading}
+        onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
       />
 
       <div className="flex items-center gap-2">
@@ -76,7 +77,7 @@ export default function LoginView({ onSuccess, goRegister, goForgot }) {
       )}
 
       <button
-        className="w-full bg-blue-600 text-white p-3 rounded-xl"
+        className="w-full bg-blue-600 text-white p-3 rounded-xl hover:bg-blue-700 transition"
         disabled={loading}
         onClick={handleLogin}
       >
@@ -84,7 +85,7 @@ export default function LoginView({ onSuccess, goRegister, goForgot }) {
       </button>
 
       <button
-        className="w-full bg-red-500 text-white p-3 rounded-xl"
+        className="w-full bg-red-500 text-white p-3 rounded-xl hover:bg-red-600 transition"
         disabled={loading}
         onClick={handleGoogle}
       >

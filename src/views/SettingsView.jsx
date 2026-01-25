@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
+import { auth, db } from "../firebase/config";
 
 export default function SettingsView({ resetAll }) {
   const { user, profile, logout } = useAuth();

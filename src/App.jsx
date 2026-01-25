@@ -1,6 +1,7 @@
 // src/App.jsx
 import React, { useState, useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
+import { auth, db } from "./firebase/config";
 
 // Firebase (for resend verification)
 import { sendEmailVerification } from "firebase/auth";
@@ -16,11 +17,11 @@ import ProgressView from "./views/ProgressView.jsx";
 import SettingsView from "./views/SettingsView.jsx";
 import { lessons } from "./data/lessons.js";
 
-
 // Auth screens
 import LoginView from "./views/LoginView.jsx";
 import RegisterView from "./views/RegisterView.jsx";
 import ForgotPasswordView from "./views/ForgotPasswordView.jsx";
+import VerifySuccessView from "./views/VerifySuccessView.jsx";
 
 // ---------------------------------------------------------------------
 // MAIN APP
@@ -29,9 +30,9 @@ export default function App() {
   const { user, profile, loading } = useAuth();
 
   // Which auth screen to show when user is NOT logged in
-  const [authScreen, setAuthScreen] = useState("login"); // 'login' | 'register' | 'forgot'
+  const [authScreen, setAuthScreen] = useState("login");
 
-  // Which general "mode" the app is in after login (you can expand later)
+  // Which general "mode" the app is in after login
   const [appScreen, setAppScreen] = useState("learning");
 
   // While Firebase is checking the existing session
@@ -76,6 +77,13 @@ export default function App() {
   }
 
   // -------------------------------------------------------------------
+  // LOGGED IN → Handle verification success page
+  // -------------------------------------------------------------------
+  if (window.location.pathname === '/verify') {
+    return <VerifySuccessView />;
+  }
+
+  // -------------------------------------------------------------------
   // LOGGED IN → gate app behind email verification
   // -------------------------------------------------------------------
   return (
@@ -91,12 +99,14 @@ export default function App() {
 }
 
 // =====================================================================
-// 🎯 EMAIL VERIFICATION GATE
+// EMAIL VERIFICATION GATE
 // =====================================================================
 function EmailVerificationGate({ children }) {
-  const { user } = useAuth();
+  const { user, logoutUser } = useAuth();
   const [sending, setSending] = useState(false);
   const [info, setInfo] = useState("");
+  const [error, setError] = useState("");
+  const [checkingVerification, setCheckingVerification] = useState(false);
 
   if (!user) return null;
 
@@ -109,51 +119,105 @@ function EmailVerificationGate({ children }) {
     try {
       setSending(true);
       setInfo("");
-      await sendEmailVerification(user, {
-        url: "http://localhost:5173/verify", // adjust later for production
-        handleCodeInApp: true,
-      });
-      setInfo("Verification email sent. Please check your inbox (and spam).");
+      setError("");
+      
+      const actionCodeSettings = {
+        url: window.location.origin + '/verify',
+        handleCodeInApp: false,
+      };
+      
+      await sendEmailVerification(user, actionCodeSettings);
+      setInfo("Verification email sent! Check your inbox and spam folder.");
     } catch (err) {
       console.error("Error sending verification email:", err);
-      setInfo(err.message || "Failed to resend verification email.");
+      setError(err.message || "Failed to resend verification email.");
     } finally {
       setSending(false);
+    }
+  };
+
+  const handleCheckVerification = async () => {
+    try {
+      setCheckingVerification(true);
+      setError("");
+      
+      await user.reload();
+      
+      if (user.emailVerified) {
+        setInfo("Email verified! Redirecting...");
+        setTimeout(() => window.location.reload(), 1000);
+      } else {
+        setError("Email not verified yet. Please check your inbox and click the verification link.");
+      }
+    } catch (err) {
+      setError("Error checking verification status.");
+    } finally {
+      setCheckingVerification(false);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 px-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-6 space-y-4 text-center">
+        <div className="text-6xl mb-4">📧</div>
         <h2 className="text-2xl font-bold">Verify your email</h2>
         <p className="text-sm text-gray-600">
           We sent a verification link to: <br />
           <span className="font-semibold">{user.email}</span>
         </p>
         <p className="text-xs text-gray-500">
-          Open the email and click the link, then refresh the page.
+          Click the link in the email to verify your account.
         </p>
 
         {info && (
-          <div className="text-sm text-blue-700 bg-blue-50 border border-blue-200 p-2 rounded-lg">
+          <div className="text-sm text-green-700 bg-green-50 border border-green-200 p-3 rounded-lg">
             {info}
           </div>
         )}
 
-        <button
-          onClick={handleResend}
-          disabled={sending}
-          className="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition disabled:bg-gray-300 disabled:text-gray-500"
-        >
-          {sending ? "Sending..." : "Resend verification email"}
-        </button>
+        {error && (
+          <div className="text-sm text-red-700 bg-red-50 border border-red-200 p-3 rounded-lg">
+            {error}
+          </div>
+        )}
+
+        <div className="space-y-2">
+          <button
+            onClick={handleCheckVerification}
+            disabled={checkingVerification}
+            className="w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition disabled:bg-gray-300"
+          >
+            {checkingVerification ? "Checking..." : "I've verified my email"}
+          </button>
+
+          <button
+            onClick={handleResend}
+            disabled={sending}
+            className="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition disabled:bg-gray-300"
+          >
+            {sending ? "Sending..." : "Resend verification email"}
+          </button>
+
+          <button
+            onClick={logoutUser}
+            className="w-full bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition"
+          >
+            Logout
+          </button>
+        </div>
+
+        <div className="pt-4 border-t">
+          <p className="text-xs text-gray-500">
+            💡 Check your spam folder if you don't see the email
+          </p>
+        </div>
       </div>
     </div>
   );
 }
 
 // =====================================================================
-// 🎯 MAIN LEARNING APPLICATION (Pale Kreyòl UI)
+// MAIN LEARNING APPLICATION
 // =====================================================================
 function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
   const [currentView, setCurrentView] = useState("home");
@@ -172,7 +236,6 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
   const [matchedPairs, setMatchedPairs] = useState(new Set());
   const [streak, setStreak] = useState(0);
 
-  // ---------- SPEECH ----------
   const speakWord = (text) => {
     if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel();
@@ -183,7 +246,6 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
     }
   };
 
-  // ---------- SPEED QUIZ TIMER ----------
   useEffect(() => {
     if (quizType === "speed" && quizMode && !answered && timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft((t) => t - 1), 1000);
@@ -192,10 +254,8 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
     if (timeLeft === 0 && !answered && quizType === "speed") {
       handleAnswer(null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeLeft, quizMode, answered, quizType]);
 
-  // ---------- QUIZ LOGIC ----------
   const startQuiz = (type) => {
     setQuizType(type);
     setQuizMode(true);
@@ -295,7 +355,6 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
     }
   };
 
-  // ---------- FINISH QUIZ (SAVE TO FIRESTORE + LOCAL STATE) ----------
   const finishQuiz = async () => {
     const points = score * (quizType === "speed" ? 15 : 10);
 
@@ -320,7 +379,6 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
     setCurrentView("lessons");
   };
 
-  // ---------- RESET LOCAL PROGRESS ----------
   const resetAll = () => {
     if (confirm("Reset all local progress?")) {
       setCompletedLessons(new Set());
@@ -329,7 +387,6 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
     }
   };
 
-  // ---------- MAIN UI ----------
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       <div className="max-w-2xl mx-auto px-4 py-6 pb-24">

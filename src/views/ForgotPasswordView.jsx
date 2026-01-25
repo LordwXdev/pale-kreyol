@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { resetPassword } from "../firebase/authService";
+import { auth, db } from "../firebase/config";
 
 export default function ForgotPasswordView({ goLogin }) {
   const [email, setEmail] = useState("");

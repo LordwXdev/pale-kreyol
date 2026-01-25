@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChevronRight, Volume2 } from 'lucide-react';
 import { quizTypes } from '../data/quizzes.js';
+import { auth, db } from "../firebase/config";
 
 export default function LessonView({ selectedLesson, setCurrentView, speakWord, startQuiz }) {
   if (!selectedLesson) return null;

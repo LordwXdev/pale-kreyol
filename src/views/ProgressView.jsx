@@ -1,6 +1,7 @@
 import React from 'react';
 import { Award, Trophy, Zap, BookOpen } from 'lucide-react';
 import { lessons } from '../data/lessons.js';
+import { auth, db } from "../firebase/config";
 
 export default function ProgressView({ totalPoints, completedCount, streak }) {
   return (

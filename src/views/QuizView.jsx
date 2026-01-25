@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, Check, Volume2, Zap } from 'lucide-react';
 import { lessons } from '../data/lessons.js';
+import { auth, db } from "../firebase/config";
 
 // Tailwind JIT needs static class names (no "hover:border-${scheme}-500")
 const schemeClasses = {

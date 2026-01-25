@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client"; 
 import App from "./App.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import { auth, db } from "./firebase/config";
 
 import "./index.css";
 

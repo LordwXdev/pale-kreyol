@@ -10,15 +10,11 @@ import {
   setPersistence,
   browserLocalPersistence,
   browserSessionPersistence,
+  signInWithPhoneNumber,
+  RecaptchaVerifier,
 } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "./config";
-
-import {
-  signInWithPhoneNumber,
-  RecaptchaVerifier,
-  PhoneAuthProvider
-} from "firebase/auth";
 
 // ---------------------------
 // CREATE USER DOCUMENT
@@ -51,7 +47,14 @@ const createUserDoc = async (user) => {
 export const registerWithEmail = async (email, password) => {
   const cred = await createUserWithEmailAndPassword(auth, email, password);
   await createUserDoc(cred.user);
-  await sendEmailVerification(cred.user);
+  
+  // Send verification email with proper action URL
+  const actionCodeSettings = {
+    url: window.location.origin + '/verify',
+    handleCodeInApp: false,
+  };
+  
+  await sendEmailVerification(cred.user, actionCodeSettings);
   return cred.user;
 };
 
@@ -90,7 +93,7 @@ export const loginWithGoogle = async (rememberMe) => {
 };
 
 // ---------------------------
-// PASSWORD RESET (THE ONE YOU WERE MISSING)
+// PASSWORD RESET
 // ---------------------------
 export const resetPassword = async (email) => {
   return sendPasswordResetEmail(auth, email);
@@ -108,19 +111,36 @@ export const subscribeToAuth = (callback) =>
   onAuthStateChanged(auth, callback);
 
 // ---------------------------
-// PHONE VERIFICATION (FOR LATER)
+// PHONE VERIFICATION
 // ---------------------------
 let recaptchaVerifier;
 
-export const sendPhoneCode = async (phoneNumber, recaptchaId = "recaptcha-container") => {
+export const setupRecaptcha = (containerId = "recaptcha-container") => {
   if (!recaptchaVerifier) {
     recaptchaVerifier = new RecaptchaVerifier(
-      recaptchaId,
-      { size: "invisible" },
+      containerId,
+      { 
+        size: "normal",
+        callback: (response) => {
+          // reCAPTCHA solved
+        },
+        "expired-callback": () => {
+          // Reset reCAPTCHA
+        }
+      },
       auth
     );
   }
+  return recaptchaVerifier;
+};
 
+export const sendPhoneCode = async (phoneNumber, recaptchaVerifier) => {
   const confirmation = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
   return confirmation;
+};
+
+export const verifyPhoneCode = async (confirmationResult, code) => {
+  const result = await confirmationResult.confirm(code);
+  await createUserDoc(result.user);
+  return result.user;
 };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { auth, db } from "../firebase/config";
 
 const storage = getStorage(); // uses default Firebase app
 

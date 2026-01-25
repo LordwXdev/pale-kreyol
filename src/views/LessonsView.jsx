@@ -1,6 +1,7 @@
 import React from 'react';
 import { lessons } from '../data/lessons.js';
 import LessonCard from '../components/LessonCard.jsx';
+import { auth, db } from "../firebase/config";
 
 export default function LessonsView({ completedLessons, setSelectedLesson, setCurrentView }) {
   return (

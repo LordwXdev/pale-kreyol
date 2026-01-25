@@ -1,4 +1,5 @@
 // src/firebase/userService.js
+import { auth, db } from "./config";
 
 // Make sure a user document exists
 export const ensureUserDoc = async (uid, email = "") => {

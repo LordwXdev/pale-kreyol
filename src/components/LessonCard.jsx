@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChevronRight } from 'lucide-react';
+import { auth, db } from "../firebase/config";
 
 export default function LessonCard({ lesson, onClick, completed }) {
   return (
