@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "functions": {
+    "api/ai/chat.js": { "maxDuration": 30 },
+    "api/stripe/webhook.js": { "maxDuration": 10 },
+    "api/stripe/create-checkout.js": { "maxDuration": 10 }
+  }
+}

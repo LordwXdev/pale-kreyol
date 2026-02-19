@@ -1,15 +1,14 @@
 // src/App.jsx
 import React, { useState, useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
-import { auth, db } from "./firebase/config";
 
-// Firebase (for resend verification)
-import { sendEmailVerification } from "firebase/auth";
-import { saveQuizProgress, saveQuizResult } from "./firebase/UserService.js";
+import { saveQuizProgress, saveQuizResult, saveDialogProgress } from "./firebase/UserService.js";
 import { resendVerificationEmail } from "./firebase/authService";
 
-// UI: Navigation + Learning Views
 import Navigation from "./components/Navigation.jsx";
+import XPBar, { XPNotification } from "./components/XPBar.jsx";
+import LessonCompleteModal from "./components/LessonCompleteModal.jsx";
+
 import HomeView from "./views/HomeView.jsx";
 import LessonsView from "./views/LessonsView.jsx";
 import LessonView from "./views/LessonView.jsx";
@@ -19,27 +18,20 @@ import SettingsView from "./views/SettingsView.jsx";
 import DialogsView from "./views/DialogsView.jsx";
 import DialogDetailView from "./views/DialogDetailView.jsx";
 import GrammarView from "./views/GrammarView.jsx";
-import { lessons } from "./data/lessons.js";
+import AITutorView from "./views/AITutorView.jsx";
+import { SubscriptionView, AdminView } from "./views/LeaderboardView.jsx";
 
-// Auth screens
+import { lessons } from "./data/lessons.js";
+import { dialogs } from "./data/dialogs.js";
 import LoginView from "./views/LoginView.jsx";
 import RegisterView from "./views/RegisterView.jsx";
 import ForgotPasswordView from "./views/ForgotPasswordView.jsx";
 import VerifySuccessView from "./views/VerifySuccessView.jsx";
 
-// ---------------------------------------------------------------------
-// MAIN APP
-// ---------------------------------------------------------------------
 export default function App() {
   const { user, profile, loading } = useAuth();
-
-  // Which auth screen to show when user is NOT logged in
   const [authScreen, setAuthScreen] = useState("login");
 
-  // Which general "mode" the app is in after login
-  const [appScreen, setAppScreen] = useState("learning");
-
-  // While Firebase is checking the existing session
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-gray-500">
@@ -48,31 +40,21 @@ export default function App() {
     );
   }
 
-  // -------------------------------------------------------------------
-  // NOT LOGGED IN → show authentication screens
-  // -------------------------------------------------------------------
   if (!user) {
-    if (authScreen === "register") {
-      return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
-          <RegisterView goLogin={() => setAuthScreen("login")} />
-        </div>
-      );
-    }
-
-    if (authScreen === "forgot") {
-      return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
-          <ForgotPasswordView goLogin={() => setAuthScreen("login")} />
-        </div>
-      );
-    }
-
-    // default: login
+    if (authScreen === "register") return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
+        <RegisterView goLogin={() => setAuthScreen("login")} />
+      </div>
+    );
+    if (authScreen === "forgot") return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
+        <ForgotPasswordView goLogin={() => setAuthScreen("login")} />
+      </div>
+    );
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
         <LoginView
-          onSuccess={() => setAppScreen("learning")}
+          onSuccess={() => {}}
           goRegister={() => setAuthScreen("register")}
           goForgot={() => setAuthScreen("forgot")}
         />
@@ -80,211 +62,62 @@ export default function App() {
     );
   }
 
-  // -------------------------------------------------------------------
-  // LOGGED IN → Handle verification success page
-  // -------------------------------------------------------------------
-  if (window.location.pathname === '/verify') {
-    return <VerifySuccessView />;
-  }
+  if (window.location.pathname === "/verify") return <VerifySuccessView />;
 
-  // -------------------------------------------------------------------
-  // LOGGED IN → gate app behind email verification
-  // -------------------------------------------------------------------
-  return (
-    //<EmailVerificationGate>
-      <MainLearningApp
-        appScreen={appScreen}
-        setAppScreen={setAppScreen}
-        user={user}
-        profile={profile}
-      />
-    //</EmailVerificationGate>
-  );
+  return <MainLearningApp user={user} profile={profile} />;
 }
 
-// =====================================================================
-// EMAIL VERIFICATION GATE
-// =====================================================================
-function EmailVerificationGate({ children }) {
-  const { user, logoutUser } = useAuth();
-  const [sending, setSending] = useState(false);
-  const [info, setInfo] = useState("");
-  const [error, setError] = useState("");
-  const [checkingVerification, setCheckingVerification] = useState(false);
+// ─────────────────────────────────────────────────────────────────────────────
+function MainLearningApp({ user, profile }) {
+  const { isAdmin } = useAuth();
 
-  if (!user) return null;
-
-  // Already verified → let them use the app
-  if (user.emailVerified) {
-    return children;
-  }
-
-  const handleResend = async () => {
-    try {
-      setSending(true);
-      setInfo("");
-      setError("");
-      
-      await resendVerificationEmail(user);
-      setInfo("✓ Verification email sent! Check your inbox and spam folder.");
-    } catch (err) {
-      console.error("Error sending verification email:", err);
-      
-      if (err.message === "Email already verified") {
-        setInfo("✓ Your email is already verified! Refreshing...");
-        setTimeout(() => window.location.reload(), 1000);
-      } else if (err.code === 'auth/too-many-requests') {
-        setError("⚠️ Too many requests. Please wait a few minutes before trying again.");
-      } else {
-        setError(`❌ ${err.message || "Failed to send verification email. Please try again."}`);
-      }
-    } finally {
-      setSending(false);
-    }
-  };
-
-  const handleCheckVerification = async () => {
-    try {
-      setCheckingVerification(true);
-      setError("");
-      setInfo("");
-      
-      await user.reload();
-      
-      if (user.emailVerified) {
-        setInfo("✓ Email verified! Redirecting...");
-        setTimeout(() => window.location.reload(), 1000);
-      } else {
-        setError("Email not verified yet. Please check your inbox and click the verification link.");
-      }
-    } catch (err) {
-      console.error("Error checking verification:", err);
-      setError("Error checking verification status. Please try again.");
-    } finally {
-      setCheckingVerification(false);
-    }
-  };
-
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 px-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 space-y-6 text-center">
-        <div className="text-6xl mb-4">📧</div>
-        
-        <div className="space-y-2">
-          <h2 className="text-2xl font-bold text-gray-800">Verify your email</h2>
-          <p className="text-sm text-gray-600">
-            We sent a verification link to:
-          </p>
-          <p className="font-semibold text-gray-800 bg-gray-50 p-2 rounded-lg">
-            {user.email}
-          </p>
-        </div>
-
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-left space-y-2">
-          <p className="font-semibold text-blue-900">📝 What to do:</p>
-          <ol className="list-decimal list-inside space-y-1 text-blue-800">
-            <li>Check your email inbox</li>
-            <li>Look for an email from Firebase/noreply</li>
-            <li>Click the verification link</li>
-            <li>Come back here and click "I've verified"</li>
-          </ol>
-        </div>
-
-        {info && (
-          <div className="text-sm text-green-700 bg-green-50 border border-green-200 p-3 rounded-lg">
-            {info}
-          </div>
-        )}
-
-        {error && (
-          <div className="text-sm text-red-700 bg-red-50 border border-red-200 p-3 rounded-lg">
-            {error}
-          </div>
-        )}
-
-        <div className="space-y-3">
-          <button
-            onClick={handleCheckVerification}
-            disabled={checkingVerification}
-            className="w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
-          >
-            {checkingVerification ? "Checking..." : "✓ I've verified my email"}
-          </button>
-
-          <button
-            onClick={handleResend}
-            disabled={sending}
-            className="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
-          >
-            {sending ? "Sending..." : "📧 Resend verification email"}
-          </button>
-
-          <button
-            onClick={logoutUser}
-            className="w-full bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition"
-          >
-            Logout
-          </button>
-        </div>
-
-        <div className="pt-4 border-t space-y-2">
-          <p className="text-xs text-gray-500">
-            💡 <strong>Not receiving emails?</strong>
-          </p>
-          <ul className="text-xs text-gray-500 text-left space-y-1">
-            <li>• Check your spam/junk folder</li>
-            <li>• Wait 2-3 minutes (emails can be delayed)</li>
-            <li>• Make sure {user.email} is correct</li>
-            <li>• Try resending the email</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// =====================================================================
-// MAIN LEARNING APPLICATION
-// =====================================================================
-function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
+  // ── Navigation ────────────────────────────────────────────────────
   const [currentView, setCurrentView] = useState("home");
   const [selectedLesson, setSelectedLesson] = useState(null);
   const [selectedDialog, setSelectedDialog] = useState(null);
   const [quizMode, setQuizMode] = useState(false);
+
+  // ── Quiz state ────────────────────────────────────────────────────
   const [quizType, setQuizType] = useState(null);
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [completedLessons, setCompletedLessons] = useState(new Set());
-  const [completedDialogs, setCompletedDialogs] = useState(new Set());
-  const [totalPoints, setTotalPoints] = useState(0);
   const [timeLeft, setTimeLeft] = useState(10);
   const [memoryCards, setMemoryCards] = useState([]);
   const [flippedCards, setFlippedCards] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState(new Set());
   const [streak, setStreak] = useState(0);
 
-  const speakWord = (text) => {
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "fr-FR";
-      utterance.rate = 0.8;
-      window.speechSynthesis.speak(utterance);
-    }
+  // ── Progress — synced FROM Firestore profile ──────────────────────
+  // These are derived from profile (live Firestore) so they always stay
+  // in sync across sessions and page refreshes.
+  const completedLessons = new Set(profile?.completedLessons || []);
+  const completedDialogs = new Set(profile?.completedDialogs || []);
+  const totalPoints = profile?.xp || 0;
+  const currentStreak = profile?.streak || 0;
+
+  // ── Lesson complete modal ─────────────────────────────────────────
+  const [modal, setModal] = useState(null);
+  // modal shape: { lesson, xpEarned, score, totalQuestions, newBadges }
+
+  // ── XP notification ───────────────────────────────────────────────
+  const [xpNotif, setXpNotif] = useState({ visible: false, amount: 0, reason: "" });
+  const showXP = (amount, reason) => {
+    setXpNotif({ visible: true, amount, reason });
+    setTimeout(() => setXpNotif((n) => ({ ...n, visible: false })), 3000);
   };
 
+  // ── Speed quiz timer ──────────────────────────────────────────────
   useEffect(() => {
     if (quizType === "speed" && quizMode && !answered && timeLeft > 0) {
-      const timer = setTimeout(() => setTimeLeft((t) => t - 1), 1000);
-      return () => clearTimeout(timer);
+      const t = setTimeout(() => setTimeLeft((v) => v - 1), 1000);
+      return () => clearTimeout(t);
     }
-    if (timeLeft === 0 && !answered && quizType === "speed") {
-      handleAnswer(null);
-    }
+    if (timeLeft === 0 && !answered && quizType === "speed") handleAnswer(null);
   }, [timeLeft, quizMode, answered, quizType]);
 
+  // ── Start quiz ────────────────────────────────────────────────────
   const startQuiz = (type) => {
     setQuizType(type);
     setQuizMode(true);
@@ -293,10 +126,7 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
     setAnswered(false);
     setSelectedAnswer(null);
     setTimeLeft(10);
-
-    if (!selectedLesson) {
-      setSelectedLesson(lessons[0]);
-    }
+    if (!selectedLesson) setSelectedLesson(lessons[0]);
     if (type === "memory") initMemoryGame();
   };
 
@@ -304,18 +134,8 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
     const words = selectedLesson.words.slice(0, 6);
     const cards = [];
     words.forEach((word) => {
-      cards.push({
-        id: `creole-${word.creole}`,
-        text: word.creole,
-        type: "creole",
-        match: word.english,
-      });
-      cards.push({
-        id: `english-${word.english}`,
-        text: word.english,
-        type: "english",
-        match: word.creole,
-      });
+      cards.push({ id: `creole-${word.creole}`, text: word.creole, type: "creole", match: word.english });
+      cards.push({ id: `english-${word.english}`, text: word.english, type: "english", match: word.creole });
     });
     setMemoryCards(cards.sort(() => Math.random() - 0.5));
     setFlippedCards([]);
@@ -323,32 +143,21 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
   };
 
   const handleMemoryCardClick = (card) => {
-    if (
-      flippedCards.length === 2 ||
-      flippedCards.includes(card.id) ||
-      matchedPairs.has(card.id)
-    )
-      return;
-
+    if (flippedCards.length === 2 || flippedCards.includes(card.id) || matchedPairs.has(card.id)) return;
     const newFlipped = [...flippedCards, card.id];
     setFlippedCards(newFlipped);
-
     if (newFlipped.length === 2) {
-      const card1 = memoryCards.find((c) => c.id === newFlipped[0]);
-      const card2 = memoryCards.find((c) => c.id === newFlipped[1]);
-
+      const c1 = memoryCards.find((c) => c.id === newFlipped[0]);
+      const c2 = memoryCards.find((c) => c.id === newFlipped[1]);
       const match =
-        (card1.type === "creole" && card2.text === card1.match) ||
-        (card2.type === "creole" && card1.text === card2.match);
-
+        (c1.type === "creole" && c2.text === c1.match) ||
+        (c2.type === "creole" && c1.text === c2.match);
       if (match) {
-        setMatchedPairs(new Set([...matchedPairs, card1.id, card2.id]));
+        const next = new Set([...matchedPairs, c1.id, c2.id]);
+        setMatchedPairs(next);
         setScore((s) => s + 1);
         setFlippedCards([]);
-
-        if (matchedPairs.size + 2 === memoryCards.length) {
-          setTimeout(() => finishQuiz(), 500);
-        }
+        if (next.size === memoryCards.length) setTimeout(() => finishQuiz(), 500);
       } else {
         setTimeout(() => setFlippedCards([]), 1000);
       }
@@ -358,19 +167,13 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
   const handleAnswer = (answer) => {
     setSelectedAnswer(answer);
     setAnswered(true);
-
     const currentWord = selectedLesson.words[currentQuizIndex];
     const correct =
       quizType === "listen"
         ? answer === currentWord.creole
         : answer === currentWord.english;
-
-    if (correct) {
-      setScore((s) => s + 1);
-      setStreak((s) => s + 1);
-    } else {
-      setStreak(0);
-    }
+    if (correct) { setScore((s) => s + 1); setStreak((s) => s + 1); }
+    else { setStreak(0); }
   };
 
   const handleNext = () => {
@@ -384,56 +187,120 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
     }
   };
 
+  // ── Finish quiz — saves to Firestore + shows modal ────────────────
   const finishQuiz = async () => {
-    const points = score * (quizType === "speed" ? 15 : 10);
+    const finalScore = quizType === "memory" ? memoryCards.length / 2 : score;
+    const totalQ = quizType === "memory" ? memoryCards.length / 2 : selectedLesson.words.length;
+    const xpEarned = finalScore * (quizType === "speed" ? 15 : 10);
 
+    let newBadges = [];
     if (user) {
-      await saveQuizProgress(user.uid, {
-        lessonId: selectedLesson.id,
-        xpEarned: points,
-        streak,
-      });
-
-      await saveQuizResult(user.uid, {
-        lessonId: selectedLesson.id,
-        quizType,
-        score,
-        totalQuestions: selectedLesson.words.length,
-      });
+      try {
+        // saveQuizProgress now writes completedLessons to Firestore via arrayUnion
+        const result = await saveQuizProgress(user.uid, {
+          lessonId: selectedLesson.id,
+          xpEarned,
+          streak,
+        });
+        await saveQuizResult(user.uid, {
+          lessonId: selectedLesson.id,
+          quizType,
+          score: finalScore,
+          totalQuestions: totalQ,
+        });
+        newBadges = result?.newBadges || [];
+      } catch (e) {
+        console.error("Error saving progress:", e);
+      }
     }
 
-    setTotalPoints((prev) => prev + points);
-    setCompletedLessons(new Set([...completedLessons, selectedLesson.id]));
     setQuizMode(false);
+
+    // Show lesson complete modal
+    setModal({
+      lesson: selectedLesson,
+      xpEarned,
+      score: finalScore,
+      totalQuestions: totalQ,
+      newBadges,
+    });
+  };
+
+  // ── Modal actions ─────────────────────────────────────────────────
+  const handleModalContinue = () => {
+    setModal(null);
     setCurrentView("lessons");
   };
 
+  const handleModalPracticeDialog = () => {
+    const lesson = modal?.lesson;
+    setModal(null);
+    if (!lesson) { setCurrentView("dialogs"); return; }
+    const linked = dialogs.find((d) => d.lessonId === lesson.id);
+    if (linked) {
+      setSelectedDialog(linked);
+      setCurrentView("dialog");
+    } else {
+      setCurrentView("dialogs");
+    }
+  };
+
+  // ── Speech ────────────────────────────────────────────────────────
+  const speakWord = (text) => {
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "fr-FR";
+      u.rate = 0.8;
+      window.speechSynthesis.speak(u);
+    }
+  };
+
   const resetAll = () => {
-    if (confirm("Reset all local progress?")) {
-      setCompletedLessons(new Set());
-      setCompletedDialogs(new Set());
-      setTotalPoints(0);
-      setStreak(0);
+    if (confirm("Reset all progress? This cannot be undone.")) {
+      const { resetUserProgress } = require("./firebase/UserService");
+      resetUserProgress(user?.uid);
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+
+      {/* XP notification */}
+      <XPNotification amount={xpNotif.amount} reason={xpNotif.reason} visible={xpNotif.visible} />
+
+      {/* Lesson complete modal */}
+      {modal && (
+        <LessonCompleteModal
+          lesson={modal.lesson}
+          xpEarned={modal.xpEarned}
+          score={modal.score}
+          totalQuestions={modal.totalQuestions}
+          newBadges={modal.newBadges}
+          onContinue={handleModalContinue}
+          onPracticeDialog={handleModalPracticeDialog}
+          onClose={handleModalContinue}
+        />
+      )}
+
       <div className="max-w-2xl mx-auto px-4 py-6 pb-24">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Pale Kreyòl
-          </h1>
-          <p className="text-gray-600 text-sm">
-            Learn Haitian Creole with joy 🇭🇹
-          </p>
+        {/* Header */}
+        <div className="mb-6 flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Pale Kreyòl
+            </h1>
+            <p className="text-gray-600 text-sm">Learn Haitian Creole with joy 🇭🇹</p>
+          </div>
+          {profile && <XPBar xp={profile.xp || 0} compact />}
         </div>
 
+        {/* Views */}
         {!quizMode && currentView === "home" && (
           <HomeView
             completedLessons={completedLessons}
             totalPoints={totalPoints}
-            streak={streak}
+            streak={currentStreak}
             setSelectedLesson={setSelectedLesson}
             setCurrentView={setCurrentView}
             startQuiz={startQuiz}
@@ -443,6 +310,7 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
         {!quizMode && currentView === "lessons" && (
           <LessonsView
             completedLessons={completedLessons}
+            completedDialogs={completedDialogs}
             setSelectedLesson={setSelectedLesson}
             setCurrentView={setCurrentView}
           />
@@ -481,6 +349,7 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
         {!quizMode && currentView === "dialogs" && (
           <DialogsView
             completedDialogs={completedDialogs}
+            completedLessons={completedLessons}
             setSelectedDialog={setSelectedDialog}
             setCurrentView={setCurrentView}
           />
@@ -491,28 +360,44 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
             selectedDialog={selectedDialog}
             setCurrentView={setCurrentView}
             completedDialogs={completedDialogs}
-            setCompletedDialogs={setCompletedDialogs}
+            setCompletedDialogs={() => {
+              // Save dialog completion to Firestore
+              if (user && selectedDialog) {
+                saveDialogProgress(user.uid, selectedDialog.id);
+              }
+            }}
             speakWord={speakWord}
           />
         )}
 
         {!quizMode && currentView === "grammar" && selectedDialog && (
-          <GrammarView
-            selectedDialog={selectedDialog}
-            setCurrentView={setCurrentView}
-          />
+          <GrammarView selectedDialog={selectedDialog} setCurrentView={setCurrentView} />
         )}
 
         {!quizMode && currentView === "progress" && (
           <ProgressView
             totalPoints={totalPoints}
             completedCount={completedLessons.size}
-            streak={streak}
+            completedLessons={completedLessons}
+            completedDialogs={completedDialogs}
+            streak={currentStreak}
           />
         )}
 
         {!quizMode && currentView === "settings" && (
-          <SettingsView resetAll={resetAll} setAppScreen={setAppScreen} />
+          <SettingsView resetAll={resetAll} setAppScreen={() => {}} />
+        )}
+
+        {!quizMode && currentView === "ai-tutor" && (
+          <AITutorView setCurrentView={setCurrentView} />
+        )}
+
+        {!quizMode && currentView === "subscription" && (
+          <SubscriptionView setCurrentView={setCurrentView} />
+        )}
+
+        {!quizMode && currentView === "admin" && (
+          <AdminView setCurrentView={setCurrentView} />
         )}
       </div>
 
@@ -520,6 +405,7 @@ function MainLearningApp({ user, profile, appScreen, setAppScreen }) {
         currentView={currentView}
         setCurrentView={setCurrentView}
         setQuizMode={setQuizMode}
+        isAdmin={isAdmin}
       />
     </div>
   );
