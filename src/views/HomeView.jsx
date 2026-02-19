@@ -172,7 +172,7 @@ export default function HomeView({
           Continue Learning
         </h3>
         <div className="space-y-3">
-          {lessons.slice(0, 3).map((lesson) => (
+          {lessons.slice(0, 2).map((lesson) => (
             <LessonCard
               key={lesson.id}
               lesson={lesson}
@@ -183,26 +183,7 @@ export default function HomeView({
         </div>
       </div>
 
-      {/* Quick Practice (unchanged) */}
-      <div>
-        <h3 className="text-lg font-bold mb-3">Quick Practice</h3>
-        <div className="grid grid-cols-2 gap-3">
-          {quizTypes.map((type) => (
-            <button
-              key={type.id}
-              onClick={() => {
-                const randomLesson = lessons[Math.floor(Math.random() * lessons.length)];
-                setSelectedLesson(randomLesson);
-                startQuiz(type.id);
-              }}
-              className={`bg-gradient-to-br ${type.color} text-white p-4 rounded-xl hover:opacity-90 transition-opacity`}
-            >
-              <type.icon size={32} className="mb-2 mx-auto" />
-              <div className="font-semibold text-sm">{type.name}</div>
-            </button>
-          ))}
-        </div>
-      </div>
+      
 
       {/* ── ALPHABET SECTION ─────────────────────────────────────────── */}
       <Section title="Alphabet & Pronunciation" icon="🔤">
@@ -391,6 +372,26 @@ export default function HomeView({
           </div>
         )}
       </Section>
+      {/* Quick Practice (unchanged) */}
+      <div>
+        <h3 className="text-lg font-bold mb-3">Quick Practice</h3>
+        <div className="grid grid-cols-2 gap-3">
+          {quizTypes.map((type) => (
+            <button
+              key={type.id}
+              onClick={() => {
+                const randomLesson = lessons[Math.floor(Math.random() * lessons.length)];
+                setSelectedLesson(randomLesson);
+                startQuiz(type.id);
+              }}
+              className={`bg-gradient-to-br ${type.color} text-white p-4 rounded-xl hover:opacity-90 transition-opacity`}
+            >
+              <type.icon size={32} className="mb-2 mx-auto" />
+              <div className="font-semibold text-sm">{type.name}</div>
+            </button>
+          ))}
+        </div>
+      </div>
 
     </div>
   );
