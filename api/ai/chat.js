@@ -1,45 +1,36 @@
-// api/ai/chat.js — Vercel Edge Function (streaming AI tutor)
-import OpenAI from "openai";
+// api/ai/chat.js — Vercel Serverless Function (Node.js runtime)
+// Uses fetch directly instead of openai SDK — fully edge/serverless compatible
 
-export const config = { runtime: "edge" };
+export default async function handler(req, res) {
+  // CORS
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
-async function verifyToken(req) {
-  const auth = req.headers.get("authorization") || "";
-  const token = auth.replace("Bearer ", "");
-  if (!token) return null;
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const res = await fetch(
-    `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${process.env.VITE_FIREBASE_API_KEY}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ idToken: token }),
-    }
-  );
-  if (!res.ok) return null;
-  const data = await res.json();
-  return data.users?.[0] || null;
-}
+  // Verify Firebase token
+  const token = (req.headers.authorization || "").replace("Bearer ", "");
+  if (!token) return res.status(401).json({ error: "Unauthorized" });
 
-export default async function handler(req) {
-  if (req.method === "OPTIONS") {
-    return new Response(null, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST,OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type,Authorization",
-      },
-    });
+  try {
+    const verifyRes = await fetch(
+      `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${process.env.VITE_FIREBASE_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken: token }),
+      }
+    );
+    if (!verifyRes.ok) return res.status(401).json({ error: "Unauthorized" });
+    const verifyData = await verifyRes.json();
+    if (!verifyData.users?.[0]) return res.status(401).json({ error: "Unauthorized" });
+  } catch {
+    return res.status(401).json({ error: "Token verification failed" });
   }
 
-  if (req.method !== "POST") return new Response("Method not allowed", { status: 405 });
-
-  const firebaseUser = await verifyToken(req);
-  if (!firebaseUser) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
-
-  const { messages, scenario, userLevel = 1 } = await req.json();
-
-  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const { messages, scenario, userLevel = 1 } = req.body;
 
   const systemPrompt = `You are "Manman Kreyol", a warm and encouraging Haitian Creole (Kreyòl ayisyen) language tutor.
 The student is level ${userLevel} (${userLevel <= 3 ? "beginner" : userLevel <= 7 ? "intermediate" : "advanced"}).
@@ -54,33 +45,61 @@ RULES:
 
 SCENARIO: ${scenario || "General Haitian Creole conversation practice"}`;
 
-  const stream = await openai.chat.completions.create({
-    model: "gpt-4o",
-    messages: [{ role: "system", content: systemPrompt }, ...messages],
-    stream: true,
-    max_tokens: 400,
-    temperature: 0.7,
+  // Stream from OpenAI using fetch
+  const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: "gpt-4o",
+      messages: [{ role: "system", content: systemPrompt }, ...messages],
+      stream: true,
+      max_tokens: 400,
+      temperature: 0.7,
+    }),
   });
 
-  const encoder = new TextEncoder();
-  const readable = new ReadableStream({
-    async start(controller) {
-      for await (const chunk of stream) {
-        const text = chunk.choices[0]?.delta?.content || "";
-        if (text) {
-          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
+  if (!openaiRes.ok) {
+    const err = await openaiRes.json();
+    return res.status(500).json({ error: err.error?.message || "OpenAI error" });
+  }
+
+  // Stream SSE back to client
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+
+  const reader = openaiRes.body.getReader();
+  const decoder = new TextDecoder();
+
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      const chunk = decoder.decode(value);
+      const lines = chunk.split("\n").filter((l) => l.startsWith("data: "));
+
+      for (const line of lines) {
+        const data = line.replace("data: ", "");
+        if (data === "[DONE]") {
+          res.write("data: [DONE]\n\n");
+          break;
+        }
+        try {
+          const parsed = JSON.parse(data);
+          const text = parsed.choices?.[0]?.delta?.content || "";
+          if (text) {
+            res.write(`data: ${JSON.stringify({ text })}\n\n`);
+          }
+        } catch {
+          // skip malformed chunks
         }
       }
-      controller.enqueue(encoder.encode("data: [DONE]\n\n"));
-      controller.close();
-    },
-  });
-
-  return new Response(readable, {
-    headers: {
-      "Content-Type": "text/event-stream",
-      "Cache-Control": "no-cache",
-      "Access-Control-Allow-Origin": "*",
-    },
-  });
+    }
+  } finally {
+    res.end();
+  }
 }
