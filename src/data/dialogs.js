@@ -1,722 +1,1123 @@
 // src/data/dialogs.js
+// STAGE 1 — BEGINNER | Dialogs 1–30
+// Full app format: conversation, vocabulary, comprehensionQuestions, grammar, exercises, pronunciationPractice
 
 export const dialogs = [
+
+  // ── BASICS & SURVIVAL (Dialogs 1–10) ──────────────────────────────
+
   {
-    id: 1,
-    title: "Meeting on the Way to Nasyon",
-    category: "beginner",
-    icon: "👋",
-    lessonId: 1,
-    description: "Lwi meets Mari on the way to Nasyonvil",
-    characters: [
-      { name: "LWI", avatar: "👨" },
-      { name: "MARI", avatar: "👩" }
-    ],
+    id: 1, lessonId: 1, category: "beginner", icon: "👋",
+    title: "Meeting a Neighbor",
+    description: "A and B greet each other on the street in the morning",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
     conversation: [
-      {
-        speaker: "LWI",
-        creole: "Bonjou, ti dam. Ki jan ou ye?",
-        english: "Hello, ma'am. How are you?",
-        pronunciation: "bon-JOO, tee dahm. kee-JAN oo YEH"
-      },
-      {
-        speaker: "MARI",
-        creole: "M' byen, wi.",
-        english: "I'm fine, yes.",
-        pronunciation: "m bee-YEN, wee"
-      },
-      {
-        speaker: "LWI",
-        creole: "Se pitit-ou?",
-        english: "Is that your child?",
-        pronunciation: "seh pee-TEET oo"
-      },
-      {
-        speaker: "MARI",
-        creole: "Wi se pitit-mwen.",
-        english: "Yes, it's my child.",
-        pronunciation: "wee seh pee-TEET mwen"
-      },
-      {
-        speaker: "LWI",
-        creole: "Ki jan li rele?",
-        english: "What's his name?",
-        pronunciation: "kee-JAN lee reh-LEH"
-      },
-      {
-        speaker: "MARI",
-        creole: "Li rele Sadrak.",
-        english: "His name is Sadrak.",
-        pronunciation: "lee reh-LEH sah-DRAK"
-      },
-      {
-        speaker: "LWI",
-        creole: "M' rele Lwi. E ou-menm, ki jan ou rele?",
-        english: "My name is Lwi. And you? What's your name?",
-        pronunciation: "m reh-LEH loo-WEE. eh oo-MENM, kee-JAN oo reh-LEH"
-      },
-      {
-        speaker: "MARI",
-        creole: "M' rele Mari.",
-        english: "My name is Mari.",
-        pronunciation: "m reh-LEH mah-REE"
-      }
-    ],
-    grammar: [
-      {
-        title: "1. Personal Pronouns",
-        explanation: "In Creole, personal pronouns have only one form. For example, yo is used for they, them, or their.",
-        table: {
-          headers: ["Creole", "English (Subject)", "English (Object)", "English (Possessive)"],
-          rows: [
-            ["mwen", "I", "me", "my"],
-            ["ou", "you", "you", "your"],
-            ["li", "he/she/it", "him/her/it", "his/her/its"],
-            ["nou", "we/you (plural)", "us/you", "our/your"],
-            ["yo", "they", "them", "their"]
-          ]
-        },
-        examples: [
-          {
-            creole: "Li rele Sadrak.",
-            english: "He/She is called Sadrak.",
-            explanation: "Li can mean he, she, or it"
-          },
-          {
-            creole: "Yo byen.",
-            english: "They are fine.",
-            explanation: "Yo is used for they/them/their"
-          }
-        ]
-      },
-      {
-        title: "2. Uses of Pronouns",
-        explanation: "When a pronoun precedes a predicate (verb, adjective, or adverb), it functions as the subject.",
-        examples: [
-          {
-            creole: "Li rele Mari.",
-            english: "She is called Mari.",
-            explanation: "Li is the subject before the verb 'rele'"
-          },
-          {
-            creole: "Ki jan ou ye?",
-            english: "How are you?",
-            explanation: "Ou is the subject before 'ye'"
-          }
-        ]
-      },
-      {
-        title: "3. Identification with 'se'",
-        explanation: "To identify or point to someone, use the construction 'se...' (It's...).",
-        examples: [
-          {
-            creole: "Se mwen.",
-            english: "It's me.",
-            explanation: "Se + pronoun for identification"
-          },
-          {
-            creole: "Se pitit-mwen.",
-            english: "It's my child.",
-            explanation: "Se + noun for identification"
-          }
-        ]
-      }
-    ],
-    comprehensionQuestions: [
-      {
-        question: "Ki moun k'ap pale ak Mari?",
-        translation: "Who is speaking with Mari?",
-        options: ["Lwi", "Sadrak", "Papa", "Grann"],
-        correct: "Lwi"
-      },
-      {
-        question: "Ki jan madam-nan rele?",
-        translation: "What's the woman's name?",
-        options: ["Lwi", "Mari", "Sadrak", "Ann"],
-        correct: "Mari"
-      },
-      {
-        question: "Ki jan msye-a rele?",
-        translation: "What's the man's name?",
-        options: ["Sadrak", "Papa", "Lwi", "Jan"],
-        correct: "Lwi"
-      },
-      {
-        question: "Ki jan pitit-la rele?",
-        translation: "What's the child's name?",
-        options: ["Lwi", "Mari", "Sadrak", "Jan"],
-        correct: "Sadrak"
-      }
-    ],
-    exercises: [
-      {
-        type: "fill-blank",
-        instruction: "Complete the sentences using pronouns",
-        questions: [
-          {
-            creole: "Bonjou, ki jan ___ ye?",
-            answer: "ou",
-            translation: "Hello, how are you?"
-          },
-          {
-            creole: "M' byen, wi. E ___-menm?",
-            answer: "ou",
-            translation: "I'm fine, yes. And you?"
-          },
-          {
-            creole: "Ki jan ___ rele?",
-            answer: "li",
-            translation: "What's his/her name?"
-          },
-          {
-            creole: "Se pitit-___.",
-            answer: "mwen",
-            translation: "It's my child."
-          }
-        ]
-      },
-      {
-        type: "match-pairs",
-        instruction: "Match Creole with English",
-        pairs: [
-          { creole: "mwen", english: "I/me/my" },
-          { creole: "ou", english: "you/your" },
-          { creole: "li", english: "he/she/it/him/her/his/her" },
-          { creole: "nou", english: "we/us/our" },
-          { creole: "yo", english: "they/them/their" }
-        ]
-      }
+      { speaker: "A", creole: "Bonjou! Kijan ou ye jodi a?",                  english: "Good morning! How are you today?",                  pronunciation: "bon-JOO! kee-JAN oo YEH joh-DEE ah?" },
+      { speaker: "B", creole: "Bonjou! Mwen byen, mèsi. E ou menm?",          english: "Good morning! I am fine, thank you. And you?",      pronunciation: "bon-JOO! mwen bee-YEN, MEHR-see. eh oo MENM?" },
+      { speaker: "A", creole: "M ap boule. Tan an bèl jodi a, non?",          english: "I am doing okay. The weather is nice today, right?", pronunciation: "m ap boo-LEH. tan AN bel joh-DEE ah, NON?" },
+      { speaker: "B", creole: "Wi vre! Ou pral kote konsa maten an?",         english: "Yes indeed! Where are you going this morning?",      pronunciation: "wee vreh! oo PRAL koh-TEH kon-SAH mah-TEN an?" },
+      { speaker: "A", creole: "Mwen pral al travay. Ou rete lakay jodi a?",   english: "I am going to work. Are you staying home today?",    pronunciation: "mwen PRAL al trah-VAY. oo reh-TEH lah-KAY joh-DEE ah?" },
+      { speaker: "B", creole: "Wi, mwen gen yon ti travay pou fè lakay.",     english: "Yes, I have some work to do at home.",               pronunciation: "wee, mwen gen yon tee trah-VAY poo FEH lah-KAY." },
+      { speaker: "A", creole: "Dakò. Pase yon bon jounen, zanmi!",            english: "Okay. Have a good day, friend!",                    pronunciation: "dah-KO. pah-SEH yon bon joo-NEN, zan-MEE!" },
+      { speaker: "B", creole: "Mèsi anpil. Ou menm tou. Bon travay!",        english: "Thank you very much. Same to you. Good work!",      pronunciation: "MEHR-see an-PEEL. oo MENM too. bon trah-VAY!" },
+      { speaker: "A", creole: "Mèsi. N a wè pita aswè.",                     english: "Thanks. See you later this evening.",               pronunciation: "MEHR-see. n ah WEH pee-TAH ah-SWEH." },
+      { speaker: "B", creole: "Wi. Bonswa lè ou tounen. Orevwa!",            english: "Yes. Good evening when you return. Goodbye!",       pronunciation: "wee. bon-SWAH leh oo too-NEN. oh-reh-VWAH!" },
     ],
     vocabulary: [
-      { creole: "Bonjou", english: "Good morning/Hello", pronunciation: "bon-JOO" },
-      { creole: "Ti dam", english: "Ma'am/Little lady", pronunciation: "tee dahm" },
-      { creole: "Ki jan ou ye?", english: "How are you?", pronunciation: "kee-JAN oo YEH" },
-      { creole: "M' byen", english: "I'm fine", pronunciation: "m bee-YEN" },
-      { creole: "Wi", english: "Yes", pronunciation: "WEE" },
-      { creole: "Pitit", english: "Child", pronunciation: "pee-TEET" },
-      { creole: "Se", english: "It's/is", pronunciation: "seh" },
-      { creole: "Ki jan li rele?", english: "What's his/her name?", pronunciation: "kee-JAN lee reh-LEH" },
-      { creole: "M' rele", english: "My name is", pronunciation: "m reh-LEH" },
-      { creole: "E ou-menm", english: "And you", pronunciation: "eh oo-MENM" }
-    ],
-    pronunciationPractice: [
-      { phrase: "Bonjou, ti dam", translation: "Hello, ma'am" },
-      { phrase: "Ki jan ou ye?", translation: "How are you?" },
-      { phrase: "M' byen, wi", translation: "I'm fine, yes" },
-      { phrase: "Se pitit-ou?", translation: "Is that your child?" },
-      { phrase: "Ki jan li rele?", translation: "What's his/her name?" },
-      { phrase: "M' rele Lwi", translation: "My name is Lwi" }
-    ]
-  },
-  {
-    id: 2,
-    title: "Give Me Your News",
-    category: "beginner",
-    icon: "💬",
-    lessonId: 2,
-    description: "Lwi and Mari meet several days after their first encounter",
-    characters: [
-      { name: "LWI", avatar: "👨" },
-      { name: "MARI", avatar: "👩" }
-    ],
-    conversation: [
-      {
-        speaker: "LWI",
-        creole: "Bonjou, Mari. Ki jan ou ye jodi-a?",
-        english: "Hello, Mari. How are you today?",
-        pronunciation: "bon-JOO, mah-REE. kee-JAN oo yeh joh-DEE-ah"
-      },
-      {
-        speaker: "MARI",
-        creole: "M' byen, wi. E ou-menm? Ban m nouvel-ou, non.",
-        english: "I'm fine. How about you? Give me your news.",
-        pronunciation: "m bee-YEN, wee. eh oo-MENM? ban m noo-VEL-oo, non"
-      },
-      {
-        speaker: "LWI",
-        creole: "M' pa pi mal. M'ap kenbe. E Sadrak?",
-        english: "I'm not bad at all. I'm getting along. How about Sadrak?",
-        pronunciation: "m pah pee MAHL. m-ap KEN-beh. eh sah-DRAK"
-      },
-      {
-        speaker: "MARI",
-        creole: "Sadrak la, wi. L'ap boule.",
-        english: "Sadrak is all right. He's managing.",
-        pronunciation: "sah-DRAK lah, wee. l-ap boo-LEH"
-      },
-      {
-        speaker: "LWI",
-        creole: "E lot timoun-yo? Yo byen tou?",
-        english: "And the other children? Are they fine too?",
-        pronunciation: "eh lot tee-MOON-yo? yo bee-YEN too"
-      },
-      {
-        speaker: "MARI",
-        creole: "Wi, monchè. Y'al lekòl.",
-        english: "Yes, dear. They're going to school.",
-        pronunciation: "wee, mon-SHEH. y-al leh-KOHL"
-      },
-      {
-        speaker: "LWI",
-        creole: "Bon, mache, m'ale. N'a wè, tande?",
-        english: "Okay, dear. I'm going. See you, okay?",
-        pronunciation: "bon, mah-SHEH, m-ah-LEH. n-ah WEH, tan-DEH"
-      },
-      {
-        speaker: "MARI",
-        creole: "Men wi, n'a wè lot semènn, si Dye vle.",
-        english: "Of course, see you next week, God willing.",
-        pronunciation: "men wee, n-ah WEH lot seh-MEN, see djeh VLEH"
-      }
-    ],
-    grammar: [
-      {
-        title: "1. Short Forms of Pronouns",
-        explanation: "When pronouns occur in subject position (before the predicate), they can show short forms.",
-        table: {
-          headers: ["Full Form", "Short Form", "Example"],
-          rows: [
-            ["mwen", "m'", "M' byen (I'm fine)"],
-            ["ou", "(w)", "Ou ap kenbe (You're getting along)"],
-            ["li", "l'", "L'ap boule (He's/She's managing)"],
-            ["nou", "n'", "N'a wè (We'll see)"],
-            ["yo", "y'", "Y'al lekòl (They're going to school)"]
-          ]
-        },
-        examples: [
-          {
-            creole: "M' byen / Mwen byen",
-            english: "I'm fine",
-            explanation: "Both forms are correct"
-          },
-          {
-            crecreole: "L'ap boule",
-            english: "He's/She's managing",
-            explanation: "L' is used before 'ap'"
-          },
-          {
-            creole: "N'a wè",
-            english: "We'll see",
-            explanation: "N' is used before 'a'"
-          }
-        ]
-      },
-      {
-        title: "2. Expressing 'I'm fine' - Variations",
-        explanation: "Creole has many expressions for saying you're okay or getting along.",
-        examples: [
-          {
-            creole: "M' byen.",
-            english: "I'm fine.",
-            explanation: "Most common"
-          },
-          {
-            creole: "M' pa pi mal.",
-            english: "I'm not bad. / I'm no worse.",
-            explanation: "Literally: I'm not worse"
-          },
-          {
-            creole: "M'ap boule.",
-            english: "I'm managing.",
-            explanation: "Informal expression"
-          },
-          {
-            creole: "M'ap kenbe.",
-            english: "I'm getting along.",
-            explanation: "Literally: I'm holding on"
-          },
-          {
-            creole: "M' la.",
-            english: "I'm here. / I'm okay.",
-            explanation: "Very casual"
-          }
-        ]
-      },
-      {
-        title: "3. Emphatics (menm, wi, non)",
-        explanation: "Creole doesn't have word stress like English. Instead, emphatic words are used.",
-        examples: [
-          {
-            creole: "E ou-menm, ki jan ou ye?",
-            english: "And YOU, how are you?",
-            explanation: "'-menm' adds emphasis: 'yourself'"
-          },
-          {
-            creole: "M' byen, wi.",
-            english: "I'm fine, YES.",
-            explanation: "'wi' emphasizes positive statements"
-          },
-          {
-            creole: "M' pa mal, non.",
-            english: "I'm not bad, NO.",
-            explanation: "'non' emphasizes negative statements"
-          }
-        ]
-      }
+      { creole: "Bonjou",        english: "Good morning",       pronunciation: "bon-JOO" },
+      { creole: "Kijan ou ye?",  english: "How are you?",       pronunciation: "kee-JAN oo YEH" },
+      { creole: "Mwen byen",     english: "I am fine",          pronunciation: "mwen bee-YEN" },
+      { creole: "M ap boule",    english: "I am doing okay",    pronunciation: "m ap boo-LEH" },
+      { creole: "Bonswa",        english: "Good evening",       pronunciation: "bon-SWAH" },
+      { creole: "Orevwa",        english: "Goodbye",            pronunciation: "oh-reh-VWAH" },
+      { creole: "N a wè pita",   english: "See you later",      pronunciation: "n ah WEH pee-TAH" },
     ],
     comprehensionQuestions: [
-      {
-        question: "Ki jan Mari ye?",
-        translation: "How is Mari?",
-        options: ["Li byen", "Li malad", "Li fatige", "Li fache"],
-        correct: "Li byen"
-      },
-      {
-        question: "Ki jan Lwi ye?",
-        translation: "How is Lwi?",
-        options: ["Li pa pi mal", "Li malad", "Li fatige", "Li kontan"],
-        correct: "Li pa pi mal"
-      },
-      {
-        question: "Kote lot timoun-yo ale?",
-        translation: "Where are the other children going?",
-        options: ["Lekòl", "Mache", "Legliz", "Kay"],
-        correct: "Lekòl"
-      },
-      {
-        question: "Ki lè yo pral wè ankò?",
-        translation: "When will they see each other again?",
-        options: ["Lot semènn", "Demen", "Jodi-a", "Yè"],
-        correct: "Lot semènn"
-      }
+      { question: "Kijan B ye?",           translation: "How is B?",            options: ["Mwen bien", "Mwen tris", "Mwen malad", "Mwen fatige"],  correct: "Mwen bien" },
+      { question: "Ki kote A pral?",       translation: "Where is A going?",    options: ["Al travay", "Al lekòl", "Al mache", "Al legliz"],       correct: "Al travay" },
+      { question: "Kisa B di pou orevwa?", translation: "What does B say goodbye?", options: ["Orevwa", "Bòn nwit", "Salut", "Padon"],            correct: "Orevwa" },
     ],
-    exercises: [
-      {
-        type: "fill-blank",
-        instruction: "Complete using short pronoun forms",
-        questions: [
-          {
-            creole: "___' byen, wi.",
-            answer: "M",
-            translation: "I'm fine, yes."
-          },
-          {
-            creole: "___'ap boule.",
-            answer: "L",
-            translation: "He's/She's managing."
-          },
-          {
-            creole: "___'a wè.",
-            answer: "N",
-            translation: "We'll see."
-          },
-          {
-            creole: "___'al lekòl.",
-            answer: "Y",
-            translation: "They're going to school."
-          }
-        ]
-      },
-      {
-        type: "match-pairs",
-        instruction: "Match expressions with meanings",
-        pairs: [
-          { creole: "M' byen", english: "I'm fine" },
-          { creole: "M' pa pi mal", english: "I'm not bad" },
-          { creole: "M'ap kenbe", english: "I'm getting along" },
-          { creole: "M'ap boule", english: "I'm managing" },
-          { creole: "M' la", english: "I'm here/okay" }
-        ]
-      }
+    grammar: [{ title: "Greetings by time of day", explanation: "Use Bonjou in the morning, Bonswa in the evening, Bòn nwit at night.", examples: [{ creole: "Bonjou", english: "Morning greeting", explanation: "Until noon" }, { creole: "Bonswa", english: "Evening greeting", explanation: "From evening" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Complete the sentences", questions: [{ creole: "___ ! Kijan ou ye?", answer: "Bonjou", translation: "Good morning! How are you?" }, { creole: "Mwen ___, mèsi.", answer: "byen", translation: "I am fine, thank you." }] }],
+    pronunciationPractice: [{ phrase: "Bonjou! Kijan ou ye?", translation: "Good morning! How are you?" }, { phrase: "Mwen bien, mèsi anpil.", translation: "I am fine, thank you very much." }],
+  },
+
+  {
+    id: 2, lessonId: 2, category: "beginner", icon: "🙋",
+    title: "First Meeting",
+    description: "Two strangers introduce themselves for the first time",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Salut! Mwen rele Marie. E ou, ki non ou?",              english: "Hi! My name is Marie. And you, what is your name?",       pronunciation: "sah-LOO! mwen reh-LEH mah-REE. eh oo, kee NON oo?" },
+      { speaker: "B", creole: "Bonjou! Non mwen se Pierre. Kontan rankontre ou.",      english: "Hello! My name is Pierre. Nice to meet you.",             pronunciation: "bon-JOO! non mwen seh PYEHR. kon-TAN ran-kon-TREH oo." },
+      { speaker: "A", creole: "Kontan rankontre ou tou. Ou soti kote?",               english: "Nice to meet you too. Where are you from?",               pronunciation: "kon-TAN ran-kon-TREH oo too. oo soh-TEE koh-TEH?" },
+      { speaker: "B", creole: "Mwen soti Ayiti. Mwen rete Pòtoprens. E ou?",          english: "I am from Haiti. I live in Port-au-Prince. And you?",      pronunciation: "mwen soh-TEE ah-YEE-tee. mwen reh-TEH por-oh-PRENS. eh oo?" },
+      { speaker: "A", creole: "Mwen soti Kanada men mwen rete Ayiti kounye a.",        english: "I am from Canada but I live in Haiti now.",                pronunciation: "mwen soh-TEE kah-NAH-dah men mwen reh-TEH ah-YEE-tee koo-NYEH ah." },
+      { speaker: "B", creole: "Ou pale kreyòl trè bien! Kijan ou aprann?",             english: "You speak Creole very well! How did you learn?",           pronunciation: "oo pah-LEH kreh-YOL treh BYEN! kee-JAN oo ah-PRAN?" },
+      { speaker: "A", creole: "Mèsi! Mwen etidye pandan de zan. Ki laj ou?",           english: "Thank you! I studied for two years. How old are you?",     pronunciation: "MEHR-see! mwen eh-tee-DYEH pan-DAN deh ZAN. kee LAJ oo?" },
+      { speaker: "B", creole: "Mwen gen trant ane. E ou menm, ki laj ou?",             english: "I am thirty years old. And you, how old are you?",        pronunciation: "mwen gen TRANT ah-NEH. eh oo MENM, kee LAJ oo?" },
+      { speaker: "A", creole: "Mwen gen vennuit ane. Ou travay kòm kisa?",             english: "I am twenty-eight. What do you work as?",                 pronunciation: "mwen gen ven-WEET ah-NEH. oo trah-VAY kom kee-SAH?" },
+      { speaker: "B", creole: "Mwen se pwofesè nan yon lekòl.",                        english: "I am a teacher at a school.",                             pronunciation: "mwen seh pwoh-feh-SEH nan yon leh-KOL." },
+      { speaker: "A", creole: "Bèl travay! Yon plezi te rankontre ou, Pierre.",        english: "Beautiful work! A pleasure to have met you, Pierre.",     pronunciation: "bel trah-VAY! yon pleh-ZEE teh ran-kon-TREH oo, PYEHR." },
+      { speaker: "B", creole: "Mèsi Marie. N a wè pi devan.",                         english: "Thank you Marie. We will see each other again.",           pronunciation: "MEHR-see mah-REE. n ah WEH pee deh-VAN." },
     ],
     vocabulary: [
-      { creole: "Jodi-a", english: "Today", pronunciation: "joh-DEE-ah" },
-      { creole: "Ban m nouvel-ou", english: "Give me your news", pronunciation: "ban m noo-VEL-oo" },
-      { creole: "M' pa pi mal", english: "I'm not bad", pronunciation: "m pah pee MAHL" },
-      { creole: "M'ap kenbe", english: "I'm getting along", pronunciation: "m-ap KEN-beh" },
-      { creole: "M'ap boule", english: "I'm managing", pronunciation: "m-ap boo-LEH" },
-      { creole: "M' la", english: "I'm here/okay", pronunciation: "m lah" },
-      { creole: "Lot timoun-yo", english: "The other children", pronunciation: "lot tee-MOON-yo" },
-      { creole: "Monchè", english: "Dear", pronunciation: "mon-SHEH" },
-      { creole: "Lekòl", english: "School", pronunciation: "leh-KOHL" },
-      { creole: "N'a wè", english: "We'll see / See you", pronunciation: "n-ah WEH" },
-      { creole: "Lot semènn", english: "Next week", pronunciation: "lot seh-MEN" },
-      { creole: "Si Dye vle", english: "God willing", pronunciation: "see djeh VLEH" }
+      { creole: "Mwen rele…",        english: "My name is…",         pronunciation: "mwen reh-LEH" },
+      { creole: "Ki non ou?",        english: "What is your name?",  pronunciation: "kee NON oo" },
+      { creole: "Mwen soti…",        english: "I am from…",          pronunciation: "mwen soh-TEE" },
+      { creole: "Mwen rete…",        english: "I live in…",          pronunciation: "mwen reh-TEH" },
+      { creole: "Ki laj ou?",        english: "How old are you?",    pronunciation: "kee LAJ oo" },
+      { creole: "Mwen se pwofesè",   english: "I am a teacher",      pronunciation: "mwen seh pwoh-feh-SEH" },
     ],
-    pronunciationPractice: [
-      { phrase: "Ki jan ou ye jodi-a?", translation: "How are you today?" },
-      { phrase: "M' pa pi mal", translation: "I'm not bad" },
-      { phrase: "M'ap kenbe", translation: "I'm getting along" },
-      { phrase: "L'ap boule", translation: "He's/She's managing" },
-      { phrase: "Y'al lekòl", translation: "They're going to school" },
-      { phrase: "N'a wè lot semènn", translation: "See you next week" }
-    ]
+    comprehensionQuestions: [
+      { question: "Ki jan A rele?",       translation: "What is A's name?",        options: ["Marie", "Pierre", "Jean", "Sophie"],     correct: "Marie" },
+      { question: "Ki peyi B soti?",      translation: "What country is B from?",  options: ["Ayiti", "Kanada", "Lafrans", "Etazini"], correct: "Ayiti" },
+      { question: "Kisa B travay kòm?",   translation: "What does B work as?",     options: ["Pwofesè", "Doktè", "Avoka", "Enfimyè"], correct: "Pwofesè" },
+    ],
+    grammar: [{ title: "Introducing yourself", explanation: "Use 'Mwen rele…' or 'Non mwen se…' for your name, 'Mwen soti…' for origin, 'Mwen gen X ane' for age.", examples: [{ creole: "Mwen rele Jean.", english: "My name is Jean.", explanation: "" }, { creole: "Mwen soti Ayiti.", english: "I am from Haiti.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Complete the introduction", questions: [{ creole: "Mwen ___ Marie.", answer: "rele", translation: "My name is Marie." }, { creole: "Mwen ___ Ayiti.", answer: "soti", translation: "I am from Haiti." }] }],
+    pronunciationPractice: [{ phrase: "Mwen rele Marie.", translation: "My name is Marie." }, { phrase: "Kontan rankontre ou.", translation: "Nice to meet you." }],
   },
+
   {
-    id: 3,
+    id: 3, lessonId: 3, category: "beginner", icon: "🔤",
+    title: "Learning to Spell",
+    description: "A student asks the teacher about Creole pronunciation",
+    characters: [{ name: "Elèv", avatar: "🧑" }, { name: "Pwofesè", avatar: "👩‍🏫" }],
+    conversation: [
+      { speaker: "Elèv",    creole: "Pwofesè, mwen pa konprann kijan yo pwononse lèt 'è'.",    english: "Teacher, I don't understand how to pronounce the letter 'è'.",    pronunciation: "pwoh-feh-SEH, mwen pah kon-PRAN kee-JAN yo pwoh-non-SEH let EH." },
+      { speaker: "Pwofesè", creole: "Bon kesyon. Lèt 'è' pwononse tankou 'eh' an anglè.",       english: "Good question. The letter 'è' is pronounced like 'eh' in English.", pronunciation: "bon keh-SYON. let EH pwoh-non-SEH tan-KOO 'eh' an an-GLEH." },
+      { speaker: "Elèv",    creole: "Tankou nan mo 'fèt'? Mwen di li kòrèk?",                   english: "Like in the word 'fèt'? Am I saying it correctly?",               pronunciation: "tan-KOO nan MOH 'FET'? mwen dee lee koh-REK?" },
+      { speaker: "Pwofesè", creole: "Prèske! Repete apre mwen: fèt, nèf, sèt.",                english: "Almost! Repeat after me: fèt, nèf, sèt.",                        pronunciation: "PRES-keh! reh-peh-TEH ah-PREH mwen: FET, NEF, SET." },
+      { speaker: "Elèv",    creole: "Fèt, nèf, sèt. Kòrèk kounye a?",                          english: "Fèt, nèf, sèt. Correct now?",                                    pronunciation: "FET, NEF, SET. koh-REK koo-NYEH ah?" },
+      { speaker: "Pwofesè", creole: "Wi! Trè bien. Kijan ou espele non ou?",                    english: "Yes! Very good. How do you spell your name?",                    pronunciation: "WEE! treh BYEN. kee-JAN oo es-peh-LEH NON oo?" },
+      { speaker: "Elèv",    creole: "M-A-R-I-E. Se konsa mwen espele li.",                      english: "M-A-R-I-E. That is how I spell it.",                             pronunciation: "M-A-R-I-E. seh kon-SAH mwen es-peh-LEH lee." },
+      { speaker: "Pwofesè", creole: "Ekselan! Repete alfabe a apre mwen: A, B, CH, D, E, È.",   english: "Excellent! Repeat the alphabet after me: A, B, CH, D, E, È.",    pronunciation: "ek-seh-LAN! reh-peh-TEH al-fah-BEH ah ah-PREH mwen." },
+      { speaker: "Elèv",    creole: "A, B, CH, D, E, È. Mwen renmen kreyòl!",                   english: "A, B, CH, D, E, È. I love Creole!",                              pronunciation: "A, B, CH, D, E, EH. mwen ren-MEN kreh-YOL!" },
+      { speaker: "Pwofesè", creole: "Pafè! Ou pwononse trè bien. Kontinye pratike.",             english: "Perfect! You pronounce very well. Keep practicing.",              pronunciation: "pah-FEH! oo pwoh-non-SEH treh BYEN. kon-tee-NYEH prah-tee-KEH." },
+      { speaker: "Elèv",    creole: "Mèsi pwofesè. Mwen pral pratike chak jou.",                english: "Thank you teacher. I will practice every day.",                   pronunciation: "MEHR-see pwoh-feh-SEH. mwen PRAL prah-tee-KEH shak JOO." },
+      { speaker: "Pwofesè", creole: "Trè bien. Pasyans ak travay di pral ede ou.",               english: "Very good. Patience and hard work will help you.",                pronunciation: "treh BYEN. pah-SYANS ak trah-VAY dee PRAL eh-DEH oo." },
+    ],
+    vocabulary: [
+      { creole: "Alfabe",     english: "Alphabet",   pronunciation: "al-fah-BEH" },
+      { creole: "Pwononse",   english: "Pronounce",  pronunciation: "pwoh-non-SEH" },
+      { creole: "Repete",     english: "Repeat",     pronunciation: "reh-peh-TEH" },
+      { creole: "Espele",     english: "Spell",      pronunciation: "es-peh-LEH" },
+      { creole: "Kòrèk",      english: "Correct",    pronunciation: "koh-REK" },
+      { creole: "Pratike",    english: "Practice",   pronunciation: "prah-tee-KEH" },
+    ],
+    comprehensionQuestions: [
+      { question: "Kijan yo pwononse lèt 'è'?",  translation: "How is 'è' pronounced?",     options: ["tankou 'eh'", "tankou 'ay'", "tankou 'ee'", "tankou 'oh'"],  correct: "tankou 'eh'" },
+      { question: "Kisa elèv la renmen?",         translation: "What does the student love?", options: ["Kreyòl", "Anglè", "Fransè", "Espanyòl"],                   correct: "Kreyòl" },
+      { question: "Kisa pwofesè di pou ede?",    translation: "What does the teacher say helps?", options: ["Pasyans ak travay di", "Dòmi anpil", "Gade televizyon", "Jwe"], correct: "Pasyans ak travay di" },
+    ],
+    grammar: [{ title: "Special Creole letters", explanation: "Haitian Creole uses accent marks. 'è' sounds like 'eh', 'ò' sounds like 'aw', 'ou' sounds like 'oo'.", examples: [{ creole: "fèt", english: "birthday/born", explanation: "è = 'eh' sound" }, { creole: "kòk", english: "rooster", explanation: "ò = 'aw' sound" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Choose the correct word", questions: [{ creole: "Lèt 'è' pwononse tankou ___.", answer: "'eh'", translation: "The letter 'è' is pronounced like 'eh'." }] }],
+    pronunciationPractice: [{ phrase: "Fèt, nèf, sèt.", translation: "Birthday, nine, seven." }, { phrase: "Repete apre mwen.", translation: "Repeat after me." }],
+  },
+
+  {
+    id: 4, lessonId: 4, category: "beginner", icon: "🔢",
+    title: "Counting at the Market",
+    description: "A buyer and seller negotiate quantities and prices at the market",
+    characters: [{ name: "Achte", avatar: "🛍️" }, { name: "Vandè", avatar: "🧺" }],
+    conversation: [
+      { speaker: "Achte", creole: "Bonjou! Konbyen fig ou gen jodi a?",              english: "Good morning! How many bananas do you have today?",       pronunciation: "bon-JOO! kon-BYEN FEEG oo gen joh-DEE ah?" },
+      { speaker: "Vandè", creole: "Mwen gen ven fig. Ou vle konbyen?",               english: "I have twenty bananas. How many do you want?",           pronunciation: "mwen gen VEN FEEG. oo vleh kon-BYEN?" },
+      { speaker: "Achte", creole: "Mwen vle dis fig. Konbyen yo koute?",             english: "I want ten bananas. How much do they cost?",             pronunciation: "mwen vleh DEES FEEG. kon-BYEN yo koo-TEH?" },
+      { speaker: "Vandè", creole: "Twa dola pou senk fig. Se sis dola pou dis.",     english: "Three dollars for five bananas. Six dollars for ten.",    pronunciation: "TWAH doh-LAH poo SANK FEEG. seh SEES doh-LAH poo DEES." },
+      { speaker: "Achte", creole: "Mwen gen yon biyè dis dola. Ou ka fè chanjman?", english: "I have a ten dollar bill. Can you make change?",          pronunciation: "mwen gen yon bee-YEH DEES doh-LAH. oo kah feh shan-JMAN?" },
+      { speaker: "Vandè", creole: "Wi. Men kat dola chanjman ou.",                   english: "Yes. Here is your four dollars change.",                 pronunciation: "WEE. men KAT doh-LAH shan-JMAN oo." },
+      { speaker: "Achte", creole: "Mèsi. E konbyen mango ou gen?",                  english: "Thanks. And how many mangos do you have?",               pronunciation: "MEHR-see. eh kon-BYEN MAN-go oo gen?" },
+      { speaker: "Vandè", creole: "Mwen gen trèz mango. De dola pou youn.",          english: "I have thirteen mangos. Two dollars each.",              pronunciation: "mwen gen TREZ MAN-go. DEH doh-LAH poo YOON." },
+      { speaker: "Achte", creole: "Ban m twa mango. Men sis dola.",                  english: "Give me three mangos. Here is six dollars.",             pronunciation: "ban m TWAH MAN-go. men SEES doh-LAH." },
+      { speaker: "Vandè", creole: "Mèsi anpil. Bon apeti!",                          english: "Thank you very much. Enjoy your meal!",                  pronunciation: "MEHR-see an-PEEL. bon ah-peh-TEE!" },
+      { speaker: "Achte", creole: "Mèsi. N a wè denmen.",                            english: "Thanks. See you tomorrow.",                              pronunciation: "MEHR-see. n ah WEH den-MEN." },
+    ],
+    vocabulary: [
+      { creole: "Konbyen?",   english: "How many? / How much?", pronunciation: "kon-BYEN" },
+      { creole: "Dis",        english: "Ten",                   pronunciation: "DEES" },
+      { creole: "Ven",        english: "Twenty",                pronunciation: "VEN" },
+      { creole: "Dola",       english: "Dollar",                pronunciation: "doh-LAH" },
+      { creole: "Chanjman",   english: "Change (money)",        pronunciation: "shan-JMAN" },
+      { creole: "Biyè",       english: "Bill / Banknote",       pronunciation: "bee-YEH" },
+    ],
+    comprehensionQuestions: [
+      { question: "Konbyen fig achte a vle?",  translation: "How many bananas does the buyer want?", options: ["Dis", "Senk", "Ven", "Trèz"],          correct: "Dis" },
+      { question: "Konbyen koute dis fig?",    translation: "How much do ten bananas cost?",         options: ["Sis dola", "Twa dola", "Dis dola", "De dola"], correct: "Sis dola" },
+      { question: "Konbyen mango vandè a gen?", translation: "How many mangos does the seller have?", options: ["Trèz", "Dis", "Ven", "Sèt"],           correct: "Trèz" },
+    ],
+    grammar: [{ title: "Asking 'how much' and 'how many'", explanation: "In Creole, 'Konbyen' is used for both 'how much' (price) and 'how many' (quantity).", examples: [{ creole: "Konbyen yo koute?", english: "How much do they cost?", explanation: "Asking price" }, { creole: "Konbyen fig ou gen?", english: "How many bananas do you have?", explanation: "Asking quantity" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Fill in the numbers", questions: [{ creole: "Twa dola pou ___ fig.", answer: "senk", translation: "Three dollars for five bananas." }] }],
+    pronunciationPractice: [{ phrase: "Konbyen yo koute?", translation: "How much do they cost?" }, { phrase: "Men kat dola chanjman ou.", translation: "Here is your four dollars change." }],
+  },
+
+  {
+    id: 5, lessonId: 5, category: "beginner", icon: "📅",
+    title: "Planning the Week",
+    description: "Two friends plan when to meet during the week",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Jodi a se ki jou?",                                   english: "What day is today?",                                pronunciation: "joh-DEE ah seh kee JOO?" },
+      { speaker: "B", creole: "Jodi a se mèkredi. Demen se jedi.",                  english: "Today is Wednesday. Tomorrow is Thursday.",          pronunciation: "joh-DEE ah seh mek-reh-DEE. deh-MEN seh zheh-DEE." },
+      { speaker: "A", creole: "Nou nan ki mwa kounye a?",                            english: "What month are we in now?",                          pronunciation: "noo nan kee MWAH koo-NYEH ah?" },
+      { speaker: "B", creole: "Nou nan mwa Janvye. Se kòmansman ane a.",             english: "We are in January. It's the beginning of the year.", pronunciation: "noo nan MWAH jan-VYEH. seh koh-mans-MAN ah-NEH ah." },
+      { speaker: "A", creole: "Ki jou ou lib pou nou rankontre semèn pwochen?",      english: "Which day are you free to meet next week?",          pronunciation: "kee JOO oo LEEB poo noo ran-kon-TREH seh-MEN pwoh-SHEN?" },
+      { speaker: "B", creole: "Mwen lib lendi ak vandredi.",                         english: "I am free Monday and Friday.",                       pronunciation: "mwen LEEB len-DEE ak van-dreh-DEE." },
+      { speaker: "A", creole: "Vandredi pi bon pou mwen. Ki lè?",                    english: "Friday is better for me. What time?",                pronunciation: "van-dreh-DEE pee BON poo mwen. kee LEH?" },
+      { speaker: "B", creole: "An midi. Restorans la ouvè depi dis è maten.",        english: "At noon. The restaurant opens from ten in the morning.", pronunciation: "an mee-DEE. res-toh-RAN lah oo-VEH deh-PEE DEES eh mah-TEN." },
+      { speaker: "A", creole: "Pafè. Nou pral fete yon bagay espesyal?",             english: "Perfect. Are we celebrating something special?",     pronunciation: "pah-FEH. noo PRAL feh-TEH yon bah-GAY es-peh-SYAL?" },
+      { speaker: "B", creole: "Wi! Se anivèsè maryaj nou. Trant Janvye.",           english: "Yes! It's our wedding anniversary. January thirtieth.", pronunciation: "WEE! seh ah-nee-vehr-SEH mah-RYAJ noo. TRANT jan-VYEH." },
+      { speaker: "A", creole: "Bèl! Konbyen ane nou marye deja?",                    english: "Beautiful! How many years have we been married?",    pronunciation: "BEL! kon-BYEN ah-NEH noo mah-RYEH deh-JAH?" },
+      { speaker: "B", creole: "Dis zan deja! Tan pase vit.",                         english: "Ten years already! Time passes quickly.",            pronunciation: "DEES ZAN deh-JAH! tan pah-SEH VEET." },
+    ],
+    vocabulary: [
+      { creole: "Jou",       english: "Day",          pronunciation: "JOO" },
+      { creole: "Semèn",     english: "Week",         pronunciation: "seh-MEN" },
+      { creole: "Mwa",       english: "Month",        pronunciation: "MWAH" },
+      { creole: "Ane",       english: "Year",         pronunciation: "ah-NEH" },
+      { creole: "Jodi a",    english: "Today",        pronunciation: "joh-DEE ah" },
+      { creole: "Demen",     english: "Tomorrow",     pronunciation: "deh-MEN" },
+      { creole: "Vandredi",  english: "Friday",       pronunciation: "van-dreh-DEE" },
+    ],
+    comprehensionQuestions: [
+      { question: "Ki jou yo pral rankontre?",   translation: "What day will they meet?",     options: ["Vandredi", "Lendi", "Mèkredi", "Samdi"],    correct: "Vandredi" },
+      { question: "Nou nan ki mwa?",             translation: "What month are we in?",        options: ["Janvye", "Fevriye", "Desanm", "Me"],         correct: "Janvye" },
+      { question: "Sa yo pral selebre?",         translation: "What will they celebrate?",    options: ["Anivèsè maryaj", "Fèt nesans", "Nwèl", "Fèt nasyonal"], correct: "Anivèsè maryaj" },
+    ],
+    grammar: [{ title: "Days of the week in Creole", explanation: "The days follow a pattern from French. Lendi (Mon), Madi (Tue), Mèkredi (Wed), Jedi (Thu), Vandredi (Fri), Samdi (Sat), Dimanch (Sun).", examples: [{ creole: "Jodi a se lendi.", english: "Today is Monday.", explanation: "" }, { creole: "Demen se madi.", english: "Tomorrow is Tuesday.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Complete the sentences", questions: [{ creole: "Jodi a se ___.", answer: "mèkredi", translation: "Today is Wednesday." }, { creole: "Demen se ___.", answer: "jedi", translation: "Tomorrow is Thursday." }] }],
+    pronunciationPractice: [{ phrase: "Jodi a se ki jou?", translation: "What day is today?" }, { phrase: "Mwen lib lendi ak vandredi.", translation: "I am free Monday and Friday." }],
+  },
+
+  {
+    id: 6, lessonId: 6, category: "beginner", icon: "⏰",
+    title: "What Time Is It?",
+    description: "A asks for the time and realizes they are late for work",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Eskize m, ki lè li ye kounye a?",                      english: "Excuse me, what time is it now?",                    pronunciation: "es-kee-ZEH m, kee LEH lee YEH koo-NYEH ah?" },
+      { speaker: "B", creole: "Li ye sèt è e mwaye.",                                 english: "It is half past seven.",                             pronunciation: "lee YEH SET eh eh MWAH-yeh." },
+      { speaker: "A", creole: "Ayy! Mwen an reta pou travay mwen.",                   english: "Oh no! I am late for work.",                         pronunciation: "AYY! mwen an reh-TAH poo trah-VAY mwen." },
+      { speaker: "B", creole: "Ki lè ou te sipoze rive?",                             english: "What time were you supposed to arrive?",             pronunciation: "kee LEH oo teh see-poh-ZEH REE-veh?" },
+      { speaker: "A", creole: "Mwen te sipoze rive a sèt è ekzak.",                   english: "I was supposed to arrive at exactly seven o'clock.",  pronunciation: "mwen teh see-poh-ZEH REE-veh ah SET eh ek-ZAK." },
+      { speaker: "B", creole: "Ale vit! Pran taksi. Li pi vit pase bis la.",           english: "Go quickly! Take a taxi. It is faster than the bus.", pronunciation: "ah-LEH VEET! PRAN tak-SEE. lee pee VEET pah-SEH BEES lah." },
+      { speaker: "A", creole: "Ou gen rezon. Mwen souvan an reta maten.",             english: "You are right. I am often late in the morning.",     pronunciation: "oo gen reh-ZON. mwen soo-VAN an reh-TAH mah-TEN." },
+      { speaker: "B", creole: "Leve bonè demen. Mete reveye.",                        english: "Wake up early tomorrow. Set an alarm.",              pronunciation: "leh-VEH boh-NEH deh-MEN. meh-TEH reh-VEH-yeh." },
+      { speaker: "A", creole: "Wi. Mwen pral kouche bonè aswè a.",                    english: "Yes. I will go to bed early tonight.",               pronunciation: "WEE. mwen PRAL koo-SHEH boh-NEH ah-SWEH ah." },
+      { speaker: "B", creole: "Bon lide. Depi ki lè ou travay jodi a?",               english: "Good idea. From what time do you work today?",      pronunciation: "bon LEE-deh. deh-PEE kee LEH oo trah-VAY joh-DEE ah?" },
+      { speaker: "A", creole: "Depi sèt è jis twa è aprèmidi.",                       english: "From seven until three in the afternoon.",           pronunciation: "deh-PEE SET eh zhees TWAH eh ah-preh-mee-DEE." },
+      { speaker: "B", creole: "Pran swen. N a wè talè.",                              english: "Take care. See you soon.",                           pronunciation: "PRAN SWEN. n ah WEH tah-LEH." },
+    ],
+    vocabulary: [
+      { creole: "Ki lè li ye?",  english: "What time is it?",   pronunciation: "kee LEH lee YEH" },
+      { creole: "An reta",       english: "Late",               pronunciation: "an reh-TAH" },
+      { creole: "Bonè",          english: "Early",              pronunciation: "boh-NEH" },
+      { creole: "Kounye a",      english: "Now",                pronunciation: "koo-NYEH ah" },
+      { creole: "Talè",          english: "Soon",               pronunciation: "tah-LEH" },
+      { creole: "Aprèmidi",      english: "Afternoon",          pronunciation: "ah-preh-mee-DEE" },
+    ],
+    comprehensionQuestions: [
+      { question: "Ki lè li ye?",            translation: "What time is it?",          options: ["Sèt è e mwaye", "Wit è", "Sis è", "Dis è"],     correct: "Sèt è e mwaye" },
+      { question: "Poukisa A an reta?",      translation: "Why is A late?",            options: ["Li te kouche ta", "Li te malad", "Li pèdi", "Li te nan mache"], correct: "Li te kouche ta" },
+      { question: "Kisa B rekòmande?",       translation: "What does B recommend?",    options: ["Pran taksi", "Kouri", "Pran bis", "Mache"],      correct: "Pran taksi" },
+    ],
+    grammar: [{ title: "Telling time in Creole", explanation: "Use 'Li ye X è' for hours. Add 'e mwaye' for half past. Add 'e ka' for quarter past.", examples: [{ creole: "Li ye twa è.", english: "It is three o'clock.", explanation: "" }, { creole: "Li ye twa è e mwaye.", english: "It is half past three.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Tell the time", questions: [{ creole: "Li ye sèt è e ___.", answer: "mwaye", translation: "It is half past seven." }] }],
+    pronunciationPractice: [{ phrase: "Ki lè li ye kounye a?", translation: "What time is it now?" }, { phrase: "Mwen an reta pou travay.", translation: "I am late for work." }],
+  },
+
+  {
+    id: 7, lessonId: 7, category: "beginner", icon: "🌍",
+    title: "Where Are You From?",
+    description: "A local meets a tourist visiting Haiti for the first time",
+    characters: [{ name: "Lokal", avatar: "🧑" }, { name: "Touris", avatar: "✈️" }],
+    conversation: [
+      { speaker: "Lokal",  creole: "Bonjou! Ou se touris isit?",                       english: "Hello! Are you a tourist here?",                     pronunciation: "bon-JOO! oo seh too-REES ee-SEET?" },
+      { speaker: "Touris", creole: "Wi, mwen touris. Mwen soti Etazini.",               english: "Yes, I am a tourist. I am from the United States.",  pronunciation: "WEE, mwen too-REES. mwen soh-TEE eh-tah-ZEE-nee." },
+      { speaker: "Lokal",  creole: "Ou Ameriken! Ou vini nan Ayiti premye fwa?",        english: "You are American! Is this your first time in Haiti?", pronunciation: "oo ah-meh-ree-KEN! oo vee-NEE nan ah-YEE-tee PREH-myeh FWAH?" },
+      { speaker: "Touris", creole: "Wi, premye fwa. Peyi a bèl anpil.",                 english: "Yes, first time. The country is very beautiful.",     pronunciation: "WEE, PREH-myeh FWAH. peh-YEE ah BEL an-PEEL." },
+      { speaker: "Lokal",  creole: "Mèsi! Ou pale kreyòl? Kote ou aprann?",            english: "Thank you! You speak Creole? Where did you learn?",  pronunciation: "MEHR-see! oo pah-LEH kreh-YOL? koh-TEH oo ah-PRAN?" },
+      { speaker: "Touris", creole: "Mwen etidye yon ti kras anvan vwayaj la.",          english: "I studied a little before the trip.",                pronunciation: "mwen eh-tee-DYEH yon tee KRAS an-VAN vwah-YAJ lah." },
+      { speaker: "Lokal",  creole: "Trè bien! Ou gen zanmi ki Ayisyen?",                english: "Very good! Do you have Haitian friends?",            pronunciation: "treh BYEN! oo gen zan-MEE kee ah-yee-SYEN?" },
+      { speaker: "Touris", creole: "Wi, yon zanmi mwen soti Pòtoprens. Li ban m kèk mo.", english: "Yes, a friend of mine is from Port-au-Prince. She taught me some words.", pronunciation: "WEE, yon zan-MEE mwen soh-TEE por-oh-PRENS. lee ban m KEK MOH." },
+      { speaker: "Lokal",  creole: "Bèl! Ou vle wè ki kote nan Ayiti?",               english: "Great! Where in Haiti do you want to see?",          pronunciation: "BEL! oo vleh WEH kee KOH-teh nan ah-YEE-tee?" },
+      { speaker: "Touris", creole: "Mwen vle ale Jakmèl ak Okay. Yo bèl?",             english: "I want to go to Jacmel and Aux Cayes. Are they beautiful?", pronunciation: "mwen vleh ah-LEH jak-MEL ak oh-KAY. yo BEL?" },
+      { speaker: "Lokal",  creole: "Trè bèl! Plaj yo ekstraodinè. Bon vwayaj!",        english: "Very beautiful! The beaches are extraordinary. Safe travels!", pronunciation: "treh BEL! PLAJ yo ek-strah-or-dee-NEH. bon vwah-YAJ!" },
+      { speaker: "Touris", creole: "Mèsi anpil pou konsèy ou.",                        english: "Thank you very much for your advice.",               pronunciation: "MEHR-see an-PEEL poo kon-SEY oo." },
+    ],
+    vocabulary: [
+      { creole: "Touris",       english: "Tourist",            pronunciation: "too-REES" },
+      { creole: "Peyi",         english: "Country",            pronunciation: "peh-YEE" },
+      { creole: "Etazini",      english: "United States",      pronunciation: "eh-tah-ZEE-nee" },
+      { creole: "Ayiti",        english: "Haiti",              pronunciation: "ah-YEE-tee" },
+      { creole: "Vwayaj",       english: "Trip / Travel",      pronunciation: "vwah-YAJ" },
+      { creole: "Plaj",         english: "Beach",              pronunciation: "PLAJ" },
+    ],
+    comprehensionQuestions: [
+      { question: "Ki peyi touris la soti?",   translation: "What country is the tourist from?",  options: ["Etazini", "Kanada", "Lafrans", "Brezil"],  correct: "Etazini" },
+      { question: "Eske se premye fwa touris la nan Ayiti?", translation: "Is it the tourist's first time in Haiti?", options: ["Wi", "Non"],            correct: "Wi" },
+      { question: "Ki kote touris la vle ale?", translation: "Where does the tourist want to go?", options: ["Jakmèl ak Okay", "Pòtoprens sèlman", "Kanada", "Etazini"], correct: "Jakmèl ak Okay" },
+    ],
+    grammar: [{ title: "Nationalities in Creole", explanation: "Add 'yen' or 'en' to country names to form nationalities. Ayiti → Ayisyen. Amerik → Ameriken. Lafrans → Fransè.", examples: [{ creole: "Mwen se Ayisyen.", english: "I am Haitian.", explanation: "" }, { creole: "Li se Ameriken.", english: "He is American.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Complete with the right nationality", questions: [{ creole: "Mwen soti Ayiti. Mwen se ___.", answer: "Ayisyen", translation: "I am from Haiti. I am Haitian." }] }],
+    pronunciationPractice: [{ phrase: "Mwen soti Etazini.", translation: "I am from the United States." }, { phrase: "Peyi a bèl anpil.", translation: "The country is very beautiful." }],
+  },
+
+  {
+    id: 8, lessonId: 8, category: "beginner", icon: "🏫",
     title: "In the Classroom",
-    category: "beginner",
-    icon: "🏫",
-    lessonId: 1,
-    description: "Learning about classroom objects and commands",
-    characters: [
-      { name: "LWI", avatar: "👨" },
-      { name: "MARI", avatar: "👩" }
-    ],
+    description: "A student arrives late and asks the teacher a question",
+    characters: [{ name: "Elèv", avatar: "🧑" }, { name: "Pwofesè", avatar: "👩‍🏫" }],
     conversation: [
-      {
-        speaker: "LWI",
-        creole: "Ki sa sa-a ye?",
-        english: "What is that?",
-        pronunciation: "kee sah sah-AH yeh"
-      },
-      {
-        speaker: "MARI",
-        creole: "Se yon klas. Klas-la nan yon lekòl.",
-        english: "It's a classroom. The classroom is in a school.",
-        pronunciation: "seh yohn klahs. klahs-lah nan yohn leh-KOHL"
-      },
-      {
-        speaker: "LWI",
-        creole: "Ki sa k' genyen nan klas-la?",
-        english: "What is in the classroom?",
-        pronunciation: "kee sah k gen-YEN nan klahs-lah"
-      },
-      {
-        speaker: "MARI",
-        creole: "Gen tablo, gen ban, gen yon pòt, gen fenet, gen yon drapo.",
-        english: "There's a blackboard, benches, a door, windows, and a flag.",
-        pronunciation: "gen tah-BLO, gen ban, gen yohn poht, gen feh-NET, gen yohn drah-PO"
-      },
-      {
-        speaker: "LWI",
-        creole: "Ki sa madmwazel-la ap fè?",
-        english: "What is the teacher doing?",
-        pronunciation: "kee sah mahd-mwah-ZEL-lah ap feh"
-      },
-      {
-        speaker: "MARI",
-        creole: "Li kanpe devan tablo-a. L'ap ekri sou tablo-a.",
-        english: "She's standing in front of the blackboard. She's writing on the blackboard.",
-        pronunciation: "lee kan-PEH deh-VAN tah-BLO-ah. l-ap eh-KREE soo tah-BLO-ah"
-      },
-      {
-        speaker: "LWI",
-        creole: "E elèv-yo? Sa y'ap fè?",
-        english: "And the students? What are they doing?",
-        pronunciation: "eh eh-LEV-yo? sah y-ap feh"
-      },
-      {
-        speaker: "MARI",
-        creole: "Yo chita sou ban-yo. Gen liv, gen kaye, gen kreyon.",
-        english: "They're sitting on their benches. There are books, notebooks, and pencils.",
-        pronunciation: "yo shee-TAH soo ban-yo. gen leev, gen kah-YEH, gen kreh-YON"
-      }
-    ],
-    grammar: [
-      {
-        title: "1. The Definite Article (-la / -a)",
-        explanation: "The definite article comes AFTER the noun. Its form depends on the last sound of the noun.",
-        table: {
-          headers: ["After Consonant", "After Vowel", "Example"],
-          rows: [
-            ["-la", "", "tab-la (the table)"],
-            ["", "-a", "tablo-a (the blackboard)"],
-            ["-la", "", "liv-la (the book)"],
-            ["", "-a", "kaye-a (the notebook)"]
-          ]
-        },
-        examples: [
-          {
-            creole: "Kote tab-la?",
-            english: "Where is the table?",
-            explanation: "tab ends in consonant → tab-la"
-          },
-          {
-            creole: "Li rele pitit-la.",
-            english: "He/she calls the child.",
-            explanation: "pitit ends in consonant → pitit-la"
-          },
-          {
-            creole: "Kote tablo-a?",
-            english: "Where is the blackboard?",
-            explanation: "tablo ends in vowel → tablo-a"
-          },
-          {
-            creole: "Li rele msye-a.",
-            english: "He/she calls the man.",
-            explanation: "msye ends in vowel → msye-a"
-          }
-        ]
-      },
-      {
-        title: "2. The Indefinite Article (yon)",
-        explanation: "The indefinite article 'yon' (a/an) comes BEFORE the noun. Usually pronounced as 'on'.",
-        examples: [
-          {
-            creole: "Se yon liv.",
-            english: "It's a book.",
-            explanation: "yon before noun"
-          },
-          {
-            creole: "Li kenbe yon kreyon.",
-            english: "He/she is holding a pencil.",
-            explanation: "Usually pronounced 'on kreyon'"
-          },
-          {
-            creole: "Gen yon pòt.",
-            english: "There is a door.",
-            explanation: "yon = a/an"
-          }
-        ]
-      },
-      {
-        title: "3. Plural of Nouns (-yo)",
-        explanation: "Plural is marked ONLY for specific/known nouns (those with definite article). Add -yo after the noun.",
-        table: {
-          headers: ["Singular", "Plural", "English"],
-          rows: [
-            ["liv-la", "liv-yo", "the book → the books"],
-            ["kaye-a", "kaye-yo", "the notebook → the notebooks"],
-            ["elèv-la", "elèv-yo", "the student → the students"],
-            ["pitit-la", "pitit-yo", "the child → the children"]
-          ]
-        },
-        examples: [
-          {
-            creole: "Pran liv-la.",
-            english: "Take the book.",
-            explanation: "Singular - one specific book"
-          },
-          {
-            creole: "Pran liv-yo.",
-            english: "Take the books.",
-            explanation: "Plural - specific books"
-          },
-          {
-            creole: "Gen liv.",
-            english: "There are books.",
-            explanation: "No plural marker - not specific"
-          }
-        ]
-      },
-      {
-        title: "4. Commands and Verbs",
-        explanation: "Common classroom commands using base verb forms.",
-        examples: [
-          {
-            creole: "Pran liv-la.",
-            english: "Take the book.",
-            explanation: "pran = take"
-          },
-          {
-            creole: "Louvri kaye-ou.",
-            english: "Open your notebook.",
-            explanation: "louvri = open"
-          },
-          {
-            creole: "Fèmen liv-nou.",
-            english: "Close our book.",
-            explanation: "fèmen = close"
-          },
-          {
-            creole: "Ekri non-ou.",
-            english: "Write your name.",
-            explanation: "ekri = write"
-          },
-          {
-            creole: "Kanpe.",
-            english: "Stand up.",
-            explanation: "kanpe = stand"
-          },
-          {
-            creole: "Chita.",
-            english: "Sit down.",
-            explanation: "chita = sit"
-          }
-        ]
-      }
-    ],
-    comprehensionQuestions: [
-      {
-        question: "Ki sa k' genyen nan klas-la?",
-        translation: "What is in the classroom?",
-        options: ["Tablo, ban, pòt", "Rad, soulye", "Manje, dlo", "Kay, mache"],
-        correct: "Tablo, ban, pòt"
-      },
-      {
-        question: "Ki sa madmwazel-la ap fè?",
-        translation: "What is the teacher doing?",
-        options: ["L'ap ekri", "L'ap dòmi", "L'ap manje", "L'ap danse"],
-        correct: "L'ap ekri"
-      },
-      {
-        question: "Kote elèv-yo chita?",
-        translation: "Where are the students sitting?",
-        options: ["Sou ban-yo", "Sou tab", "Sou tè", "Sou chèz"],
-        correct: "Sou ban-yo"
-      }
-    ],
-    exercises: [
-      {
-        type: "fill-blank",
-        instruction: "Add the correct article (-la, -a, yon, or -yo)",
-        questions: [
-          {
-            creole: "Kote tab___?",
-            answer: "-la",
-            translation: "Where is the table?"
-          },
-          {
-            creole: "Pran ___ liv.",
-            answer: "yon",
-            translation: "Take a book."
-          },
-          {
-            creole: "Fèmen liv___ .",
-            answer: "-yo",
-            translation: "Close the books."
-          },
-          {
-            creole: "Kote tablo___?",
-            answer: "-a",
-            translation: "Where is the blackboard?"
-          }
-        ]
-      },
-      {
-        type: "match-pairs",
-        instruction: "Match classroom objects",
-        pairs: [
-          { creole: "Tablo", english: "Blackboard" },
-          { creole: "Ban", english: "Bench" },
-          { creole: "Liv", english: "Book" },
-          { creole: "Kaye", english: "Notebook" },
-          { creole: "Kreyon", english: "Pencil" }
-        ]
-      }
+      { speaker: "Elèv",    creole: "Bonjou pwofesè. Mwen ka antre?",                         english: "Good morning teacher. May I come in?",                    pronunciation: "bon-JOO pwoh-feh-SEH. mwen kah an-TREH?" },
+      { speaker: "Pwofesè", creole: "Wi, antre. Chita nan plas ou.",                           english: "Yes, come in. Sit in your seat.",                         pronunciation: "WEE, an-TREH. shee-TAH nan PLAS oo." },
+      { speaker: "Elèv",    creole: "Mèsi. Mwen gen yon kesyon sou leson an yè.",              english: "Thank you. I have a question about yesterday's lesson.",    pronunciation: "MEHR-see. mwen gen yon keh-SYON soo leh-SON an YEH." },
+      { speaker: "Pwofesè", creole: "Poze kesyon ou. Tout moun koute.",                        english: "Ask your question. Everyone is listening.",               pronunciation: "poh-ZEH keh-SYON oo. toot MOON koo-TEH." },
+      { speaker: "Elèv",    creole: "Ki sa 'konprann' vle di an anglè?",                       english: "What does 'konprann' mean in English?",                    pronunciation: "kee SAH 'kon-PRAN' vleh DEE an an-GLEH?" },
+      { speaker: "Pwofesè", creole: "Konprann vle di 'understand'. Ou konprann kounye a?",     english: "Konprann means 'understand'. Do you understand now?",      pronunciation: "kon-PRAN vleh DEE 'understand'. oo kon-PRAN koo-NYEH ah?" },
+      { speaker: "Elèv",    creole: "Wi mwen konprann. Mèsi anpil pwofesè.",                   english: "Yes I understand. Thank you very much teacher.",           pronunciation: "WEE mwen kon-PRAN. MEHR-see an-PEEL pwoh-feh-SEH." },
+      { speaker: "Pwofesè", creole: "Trè bien. Kounye a ouvri liv ou nan paj dis.",            english: "Very good. Now open your book to page ten.",              pronunciation: "treh BYEN. koo-NYEH ah oo-VREE LEEV oo nan PAJ DEES." },
+      { speaker: "Elèv",    creole: "Eskize m, mwen pa gen liv mwen jodi a.",                  english: "Excuse me, I don't have my book today.",                  pronunciation: "es-kee-ZEH m, mwen pah gen LEEV mwen joh-DEE ah." },
+      { speaker: "Pwofesè", creole: "Pa gen pwoblèm. Pataje ak vwazen ou.",                    english: "No problem. Share with your neighbor.",                   pronunciation: "pah gen pwoh-BLEM. pah-tah-JEH ak vwah-ZEN oo." },
+      { speaker: "Elèv",    creole: "Dakò. Pwofesè, ka ou ekri sa sou tablo a?",               english: "Okay. Teacher, can you write that on the board?",          pronunciation: "dah-KO. pwoh-feh-SEH, kah oo eh-KREE sah soo tah-BLO ah?" },
+      { speaker: "Pwofesè", creole: "Wi. Gade bien epi ekri nan kaye ou.",                     english: "Yes. Watch carefully and write in your notebook.",         pronunciation: "WEE. gah-DEH BYEN eh-pee eh-KREE nan kah-YEH oo." },
     ],
     vocabulary: [
-      { creole: "Klas", english: "Classroom", pronunciation: "klahs" },
-      { creole: "Lekòl", english: "School", pronunciation: "leh-KOHL" },
-      { creole: "Tablo", english: "Blackboard", pronunciation: "tah-BLO" },
-      { creole: "Ban", english: "Bench", pronunciation: "ban" },
-      { creole: "Pòt", english: "Door", pronunciation: "poht" },
-      { creole: "Fenet", english: "Window", pronunciation: "feh-NET" },
-      { creole: "Drapo", english: "Flag", pronunciation: "drah-PO" },
-      { creole: "Biwo", english: "Desk", pronunciation: "bee-WO" },
-      { creole: "Liv", english: "Book", pronunciation: "leev" },
-      { creole: "Kaye", english: "Notebook", pronunciation: "kah-YEH" },
-      { creole: "Kreyon", english: "Pencil", pronunciation: "kreh-YON" },
-      { creole: "Plim", english: "Pen", pronunciation: "pleem" },
-      { creole: "Règ", english: "Ruler", pronunciation: "rehg" },
-      { creole: "Chifon", english: "Eraser", pronunciation: "shee-FON" },
-      { creole: "Madmwazel", english: "Teacher (female)", pronunciation: "mahd-mwah-ZEL" },
-      { creole: "Elèv", english: "Student", pronunciation: "eh-LEV" },
-      { creole: "Kanpe", english: "Stand", pronunciation: "kan-PEH" },
-      { creole: "Chita", english: "Sit", pronunciation: "shee-TAH" },
-      { creole: "Ekri", english: "Write", pronunciation: "eh-KREE" },
-      { creole: "Louvri", english: "Open", pronunciation: "loo-VREE" },
-      { creole: "Fèmen", english: "Close", pronunciation: "feh-MEN" },
-      { creole: "Pran", english: "Take", pronunciation: "pran" }
+      { creole: "Klas",          english: "Class / Classroom",  pronunciation: "KLAS" },
+      { creole: "Pwofesè",       english: "Teacher",            pronunciation: "pwoh-feh-SEH" },
+      { creole: "Elèv",          english: "Student",            pronunciation: "eh-LEV" },
+      { creole: "Tablo",         english: "Board",              pronunciation: "tah-BLO" },
+      { creole: "Liv",           english: "Book",               pronunciation: "LEEV" },
+      { creole: "Kaye",          english: "Notebook",           pronunciation: "kah-YEH" },
+      { creole: "Konprann",      english: "Understand",         pronunciation: "kon-PRAN" },
     ],
-    pronunciationPractice: [
-      { phrase: "Ki sa sa-a ye?", translation: "What is that?" },
-      { phrase: "Se yon klas", translation: "It's a classroom" },
-      { phrase: "Gen tablo", translation: "There is a blackboard" },
-      { phrase: "L'ap ekri sou tablo-a", translation: "She's writing on the blackboard" },
-      { phrase: "Yo chita sou ban-yo", translation: "They're sitting on their benches" },
-      { phrase: "Pran liv-la", translation: "Take the book" }
-    ]
-  }
+    comprehensionQuestions: [
+      { question: "Kisa elèv la pa konprann?",   translation: "What doesn't the student understand?",  options: ["Mo 'konprann'", "Alfabe a", "Nimewo yo", "Dat yo"],  correct: "Mo 'konprann'" },
+      { question: "Ki paj pwofesè di ouvri?",    translation: "What page does the teacher say to open?", options: ["Paj dis", "Paj ven", "Paj youn", "Paj sèt"],      correct: "Paj dis" },
+      { question: "Poukisa elèv la pa gen liv?", translation: "Why doesn't the student have a book?",   options: ["Li bliye l lakay", "Li pa achte l", "Li pèdi l", "Li prete l"], correct: "Li bliye l lakay" },
+    ],
+    grammar: [{ title: "Asking and answering questions in class", explanation: "Use 'Ki sa X vle di?' to ask meaning. Use 'X vle di Y' to give meaning.", examples: [{ creole: "Ki sa 'mèsi' vle di?", english: "What does 'mèsi' mean?", explanation: "Asking for meaning" }, { creole: "Mèsi vle di 'thank you'.", english: "Mèsi means 'thank you'.", explanation: "Giving meaning" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Complete the classroom phrases", questions: [{ creole: "Ouvri ___ ou nan paj dis.", answer: "liv", translation: "Open your book to page ten." }] }],
+    pronunciationPractice: [{ phrase: "Mwen pa konprann.", translation: "I don't understand." }, { phrase: "Ka ou repete sa?", translation: "Can you repeat that?" }],
+  },
+
+  {
+    id: 9, lessonId: 9, category: "beginner", icon: "📖",
+    title: "Looking Up Words",
+    description: "Two students use a dictionary together to find word meanings",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Ou gen yon diksyonè mwen ka prete?",                     english: "Do you have a dictionary I can borrow?",               pronunciation: "oo gen yon deek-syoh-NEH mwen kah preh-TEH?" },
+      { speaker: "B", creole: "Wi, men diksyonè kreyòl-anglè a. Kisa ou chèche?",      english: "Yes, here is the Creole-English dictionary. What are you looking for?", pronunciation: "WEE, men deek-syoh-NEH kreh-YOL an-GLEH ah. kee-SAH oo SHEH-sheh?" },
+      { speaker: "A", creole: "Mwen vle jwenn definisyon mo 'kominote'.",               english: "I want to find the definition of the word 'kominote'.", pronunciation: "mwen vleh JWEN deh-fee-nee-SYON MOH 'koh-mee-noh-TEH'." },
+      { speaker: "B", creole: "Chèche l anba lèt K. Alfabe a nan devan liv la.",        english: "Look for it under letter K. The alphabet is at the front of the book.", pronunciation: "SHEH-sheh l an-BAH let K. al-fah-BEH ah nan deh-VAN LEEV lah." },
+      { speaker: "A", creole: "Mwen jwenn li! Kominote vle di 'community'.",            english: "I found it! Kominote means 'community'.",               pronunciation: "mwen JWEN lee! koh-mee-noh-TEH vleh DEE 'community'." },
+      { speaker: "B", creole: "Ekri definisyon an ak yon egzanp nan kaye ou.",          english: "Write the definition with an example in your notebook.", pronunciation: "eh-KREE deh-fee-nee-SYON an ak yon eg-ZANP nan kah-YEH oo." },
+      { speaker: "A", creole: "Bon lide. Kijan ou di 'dictionary' an kreyòl?",         english: "Good idea. How do you say 'dictionary' in Creole?",    pronunciation: "bon LEE-deh. kee-JAN oo DEE 'dictionary' an kreh-YOL?" },
+      { speaker: "B", creole: "Ou di 'diksyonè'. Tradiksyon fasil.",                   english: "You say 'diksyonè'. The translation is easy.",          pronunciation: "oo DEE 'deek-syoh-NEH'. trah-deek-SYON fah-SEEL." },
+      { speaker: "A", creole: "Mwen bezwen aprann pi plis mo chak jou.",               english: "I need to learn more words every day.",                 pronunciation: "mwen beh-ZWEN ah-PRAN pee PLEES MOH shak JOO." },
+      { speaker: "B", creole: "Pratike ak kat memwa. Sa ede anpil.",                    english: "Practice with flashcards. That helps a lot.",           pronunciation: "prah-tee-KEH ak KAT meh-MWAH. SAH eh-DEH an-PEEL." },
+      { speaker: "A", creole: "Mèsi pou konsèy la. Mwen pral kòmanse jodi a.",         english: "Thank you for the advice. I will start today.",         pronunciation: "MEHR-see poo kon-SEY lah. mwen PRAL koh-mans-EH joh-DEE ah." },
+      { speaker: "B", creole: "Bon kouraj! Aprann yon lang se yon gwo siksè.",         english: "Good luck! Learning a language is a great achievement.", pronunciation: "bon koo-RAJ! ah-PRAN yon LANG seh yon GWO seek-SEH." },
+    ],
+    vocabulary: [
+      { creole: "Diksyonè",     english: "Dictionary",      pronunciation: "deek-syoh-NEH" },
+      { creole: "Definisyon",   english: "Definition",      pronunciation: "deh-fee-nee-SYON" },
+      { creole: "Tradiksyon",   english: "Translation",     pronunciation: "trah-deek-SYON" },
+      { creole: "Chèche",       english: "Look for",        pronunciation: "SHEH-sheh" },
+      { creole: "Kat memwa",    english: "Flashcard",       pronunciation: "kat meh-MWAH" },
+      { creole: "Mo",           english: "Word",            pronunciation: "MOH" },
+    ],
+    comprehensionQuestions: [
+      { question: "Ki mo A ap chèche?",     translation: "What word is A looking for?",    options: ["Kominote", "Diksyonè", "Fanmi", "Lekòl"],  correct: "Kominote" },
+      { question: "Kominote vle di kisa?",  translation: "What does kominote mean?",       options: ["Community", "Classroom", "Country", "Family"], correct: "Community" },
+      { question: "Kisa B rekòmande pou pratike?", translation: "What does B recommend to practice?", options: ["Kat memwa", "Gade televizyon", "Dòmi", "Kouri"], correct: "Kat memwa" },
+    ],
+    grammar: [{ title: "Asking for word meanings", explanation: "Use 'Ki sa X vle di?' to ask meaning. Use 'X vle di Y' to explain meaning.", examples: [{ creole: "Ki sa 'kominote' vle di?", english: "What does 'kominote' mean?", explanation: "" }, { creole: "Kominote vle di 'community'.", english: "Kominote means 'community'.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Complete with the right word", questions: [{ creole: "Mwen vle ___ definisyon mo a.", answer: "jwenn", translation: "I want to find the definition of the word." }] }],
+    pronunciationPractice: [{ phrase: "Kisan sa vle di?", translation: "What does this mean?" }, { phrase: "Mwen jwenn li!", translation: "I found it!" }],
+  },
+
+  {
+    id: 10, lessonId: 10, category: "beginner", icon: "🧠",
+    title: "Study Tips",
+    description: "Two language learners share tips for remembering vocabulary",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Kòman ou fè pou sonje anpil mo kreyòl?",              english: "How do you manage to remember so many Creole words?",    pronunciation: "koh-MAN oo feh poo son-JEH an-PEEL MOH kreh-YOL?" },
+      { speaker: "B", creole: "Mwen itilize plizyè teknik. Premye, mwen ekri chak mo.", english: "I use several techniques. First, I write each word.",   pronunciation: "mwen ee-tee-LEE-zeh plee-ZYEHR tek-NEEK. preh-MYEH, mwen eh-KREE shak MOH." },
+      { speaker: "A", creole: "Ou ekri yo nan yon kaye espesyal?",                    english: "Do you write them in a special notebook?",               pronunciation: "oo eh-KREE yo nan yon kah-YEH es-peh-SYAL?" },
+      { speaker: "B", creole: "Wi, epi mwen fè kat memwa ak imaj.",                  english: "Yes, and I make flashcards with images.",                pronunciation: "WEE, eh-pee mwen FEH kat meh-MWAH ak ee-MAJ." },
+      { speaker: "A", creole: "Sa bon. Mwen bliye mo trè vit. Sa mwen ka fè?",       english: "That's good. I forget words very quickly. What can I do?", pronunciation: "sah BON. mwen blee-YEH MOH treh VEET. sah mwen kah FEH?" },
+      { speaker: "B", creole: "Repase chak jou. Menm dis minit ase pou kòmanse.",    english: "Review every day. Even ten minutes is enough to start.",  pronunciation: "reh-pah-SEH shak JOO. menm DEES mee-NEET ah-SEH poo koh-mans-EH." },
+      { speaker: "A", creole: "Mwen ka koute mizik kreyòl tou?",                     english: "Can I also listen to Creole music?",                     pronunciation: "mwen kah koo-TEH mee-ZEEK kreh-YOL TOO?" },
+      { speaker: "B", creole: "Ekselan lide! Fim ak mizik ede ou aprann kontèks.",   english: "Excellent idea! Films and music help you learn context.",  pronunciation: "ek-seh-LAN lee-DEH! FEEM ak mee-ZEEK eh-DEH oo ah-PRAN kon-TEKS." },
+      { speaker: "A", creole: "E pale avèk moun natif? Sa ede?",                     english: "And speaking with native speakers? Does that help?",     pronunciation: "eh pah-LEH ah-VEK MOON nah-TEEF? sah eh-DEH?" },
+      { speaker: "B", creole: "Wi, se meye fason. Pa pè fè erè.",                    english: "Yes, it's the best way. Don't be afraid to make mistakes.", pronunciation: "WEE, seh meh-YEH fah-SON. pah PEH FEH eh-REH." },
+      { speaker: "A", creole: "Ou gen rezon. Mwen bezwen plis konfyans.",            english: "You're right. I need more confidence.",                  pronunciation: "oo gen reh-ZON. mwen beh-ZWEN PLEES kon-FYANS." },
+      { speaker: "B", creole: "Travay di chak jou ak pasyans. Ou pral reyisi.",      english: "Work hard every day with patience. You will succeed.",    pronunciation: "trah-VAY dee shak JOO ak pah-SYANS. oo PRAL reh-yee-SEE." },
+    ],
+    vocabulary: [
+      { creole: "Teknik",      english: "Technique",       pronunciation: "tek-NEEK" },
+      { creole: "Kat memwa",   english: "Flashcard",       pronunciation: "kat meh-MWAH" },
+      { creole: "Repase",      english: "Review",          pronunciation: "reh-pah-SEH" },
+      { creole: "Pasyans",     english: "Patience",        pronunciation: "pah-SYANS" },
+      { creole: "Erè",         english: "Mistake",         pronunciation: "eh-REH" },
+      { creole: "Konfyans",    english: "Confidence",      pronunciation: "kon-FYANS" },
+    ],
+    comprehensionQuestions: [
+      { question: "Kisa B fè pou sonje mo?",      translation: "What does B do to remember words?",   options: ["Kat memwa ak imaj", "Dòmi anpil", "Gade televizyon", "Kouri"], correct: "Kat memwa ak imaj" },
+      { question: "Konbyen minit B repase chak jou?", translation: "How many minutes does B review per day?", options: ["Dis", "Ven", "Trant", "Senkant"],       correct: "Dis" },
+      { question: "Kisa se meye fason pou aprann?", translation: "What is the best way to learn?",    options: ["Pale avèk moun natif", "Li liv sèlman", "Dòmi", "Ekri sèlman"], correct: "Pale avèk moun natif" },
+    ],
+    grammar: [{ title: "Giving advice in Creole", explanation: "Use the imperative (plain verb form) to give advice. Add 'ou ka' (you can) for suggestions.", examples: [{ creole: "Repase chak jou.", english: "Review every day.", explanation: "Direct advice" }, { creole: "Ou ka koute mizik.", english: "You can listen to music.", explanation: "Suggestion" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Complete the advice", questions: [{ creole: "___ chak jou. Menm dis minit ase.", answer: "Repase", translation: "Review every day. Even ten minutes is enough." }] }],
+    pronunciationPractice: [{ phrase: "Pa pè fè erè.", translation: "Don't be afraid to make mistakes." }, { phrase: "Ou pral reyisi.", translation: "You will succeed." }],
+  },
+
+  // ── PEOPLE (Dialogs 11–20) ──────────────────────────────────────────
+
+  {
+    id: 11, lessonId: 11, category: "beginner", icon: "👨‍👩‍👧",
+    title: "Talking About Family",
+    description: "Two friends chat about their families",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Ou gen yon gwo fanmi?",                                  english: "Do you have a big family?",                          pronunciation: "oo gen yon GWO fan-MEE?" },
+      { speaker: "B", creole: "Wi, nou se sis moun nan kay la.",                         english: "Yes, there are six people in the house.",            pronunciation: "WEE, noo seh SEES MOON nan KAY lah." },
+      { speaker: "A", creole: "Ou gen frè oswa sè?",                                    english: "Do you have brothers or sisters?",                   pronunciation: "oo gen FREH oz-WAH SEH?" },
+      { speaker: "B", creole: "Wi, mwen gen de frè ak yon sè. Mwen se granmoun yo.",    english: "Yes, I have two brothers and one sister. I am the oldest.", pronunciation: "WEE, mwen gen deh FREH ak yon SEH. mwen seh gran-MOON yo." },
+      { speaker: "A", creole: "Kote grann ak granpè ou rete?",                          english: "Where do your grandparents live?",                   pronunciation: "koh-TEH GRAN ak gran-PEH oo reh-TEH?" },
+      { speaker: "B", creole: "Yo rete andeyò, nan yon ti vil. Nou vizite yo souvan.",   english: "They live in the countryside, in a small town. We visit them often.", pronunciation: "yo reh-TEH an-deh-YO, nan yon tee VEEL. noo vee-ZEE-teh yo soo-VAN." },
+      { speaker: "A", creole: "Ou gen kouzen ak kouzin?",                               english: "Do you have cousins?",                               pronunciation: "oo gen koo-ZEN ak koo-ZEN?" },
+      { speaker: "B", creole: "Wi, anpil! Fanmi papa mwen gen anpil manm.",             english: "Yes, many! My father's family has many members.",    pronunciation: "WEE, an-PEEL! fan-MEE pah-PAH mwen gen an-PEEL MANM." },
+      { speaker: "A", creole: "Nou fete ansanm nan fèt?",                               english: "Do you celebrate together at holidays?",             pronunciation: "noo feh-TEH an-SANM nan FET?" },
+      { speaker: "B", creole: "Toujou! Nou reyini tout fanmi an nan Nwèl ak Pak.",      english: "Always! We gather the whole family at Christmas and Easter.", pronunciation: "too-JOO! noo reh-yee-NEE toot fan-MEE an nan NWEL ak PAK." },
+      { speaker: "A", creole: "Sa bèl anpil. Fanmi se richès.",                         english: "That is very beautiful. Family is wealth.",           pronunciation: "sah BEL an-PEEL. fan-MEE seh ree-SHES." },
+      { speaker: "B", creole: "Absoliman. Fanmi se tout.",                              english: "Absolutely. Family is everything.",                   pronunciation: "ab-soh-lee-MAN. fan-MEE seh TOOT." },
+    ],
+    vocabulary: [
+      { creole: "Fanmi",    english: "Family",       pronunciation: "fan-MEE" },
+      { creole: "Frè",      english: "Brother",      pronunciation: "FREH" },
+      { creole: "Sè",       english: "Sister",       pronunciation: "SEH" },
+      { creole: "Grann",    english: "Grandmother",  pronunciation: "GRAN" },
+      { creole: "Granpè",   english: "Grandfather",  pronunciation: "gran-PEH" },
+      { creole: "Kouzen",   english: "Cousin",       pronunciation: "koo-ZEN" },
+    ],
+    comprehensionQuestions: [
+      { question: "Konbyen moun ki nan kay B?",    translation: "How many people are in B's house?",  options: ["Sis", "Kat", "Uit", "Dis"],            correct: "Sis" },
+      { question: "Kote grann ak granpè B rete?",  translation: "Where do B's grandparents live?",   options: ["Andeyò", "Lavil", "Pòtoprens", "Kanada"], correct: "Andeyò" },
+      { question: "Ki fèt yo fete ansanm?",        translation: "What holidays do they celebrate together?", options: ["Nwèl ak Pak", "Fèt travay", "Jounen fanmi", "Anivèsè"], correct: "Nwèl ak Pak" },
+    ],
+    grammar: [{ title: "Family members", explanation: "In Creole, 'manman' = mother, 'papa' = father. Use 'mwen gen' (I have) for family members.", examples: [{ creole: "Mwen gen de frè.", english: "I have two brothers.", explanation: "" }, { creole: "Mwen pa gen sè.", english: "I have no sister.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Complete the family sentences", questions: [{ creole: "Mwen gen de frè ak yon ___.", answer: "sè", translation: "I have two brothers and one sister." }] }],
+    pronunciationPractice: [{ phrase: "Fanmi se richès.", translation: "Family is wealth." }, { phrase: "Nou reyini tout fanmi an.", translation: "We gather the whole family." }],
+  },
+
+  {
+    id: 12, lessonId: 12, category: "beginner", icon: "🎂",
+    title: "Happy Birthday!",
+    description: "Friends celebrate a birthday and talk about age",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Bòn fèt Marie! Ki laj ou jodi a?",                      english: "Happy birthday Marie! How old are you today?",         pronunciation: "born FET mah-REE! kee LAJ oo joh-DEE ah?" },
+      { speaker: "B", creole: "Mèsi! Mwen gen trant zan jodi a. Tan pase vit!",        english: "Thank you! I am thirty today. Time passes quickly!",   pronunciation: "MEHR-see! mwen gen TRANT ZAN joh-DEE ah. tan pah-SEH VEET!" },
+      { speaker: "A", creole: "Trant zan deja! Ou te fèt ki dat?",                     english: "Thirty already! What was your date of birth?",         pronunciation: "TRANT ZAN deh-JAH! oo teh FET kee DAT?" },
+      { speaker: "B", creole: "Mwen fèt ven Mas, mil nèfsansenwit.",                   english: "I was born on March 20th, 1998.",                      pronunciation: "mwen FET VEN MAHS, meel nef-sans-EN-weet." },
+      { speaker: "A", creole: "Ala bèl dat! Prentan toujou kòmanse.",                  english: "What a beautiful date! Spring is always beginning.",    pronunciation: "ah-LAH bel DAT! pren-TAN too-JOO koh-mans-EH." },
+      { speaker: "B", creole: "Wi! Mwen renmen sezon sa a. Ou fèt ki lè?",             english: "Yes! I love that season. When were you born?",         pronunciation: "WEE! mwen ren-MEN seh-ZON sah ah. oo FET kee LEH?" },
+      { speaker: "A", creole: "Mwen fèt Septanm. Mwen pral gen vennsenk zan bientò.", english: "I was born in September. I will turn twenty-five soon.", pronunciation: "mwen FET sep-TANM. mwen PRAL gen ven-SANK ZAN BYEN-to." },
+      { speaker: "B", creole: "Bientò! Ou pral fete kòman?",                          english: "Soon! How will you celebrate?",                        pronunciation: "BYEN-to! oo PRAL feh-TEH koh-MAN?" },
+      { speaker: "A", creole: "Mwen vle fè yon ti fèt ak fanmi ak zanmi.",             english: "I want to have a small party with family and friends.", pronunciation: "mwen vleh FEH yon tee FET ak fan-MEE ak zan-MEE." },
+      { speaker: "B", creole: "Ekselan! Mwen ka ede ou prepare manje.",               english: "Excellent! I can help you prepare food.",              pronunciation: "ek-seh-LAN! mwen kah eh-DEH oo preh-pah-REH man-JEH." },
+      { speaker: "A", creole: "Mèsi anpil! Ou toujou la pou mwen.",                   english: "Thank you very much! You are always there for me.",    pronunciation: "MEHR-see an-PEEL! oo too-JOO LAH poo mwen." },
+      { speaker: "B", creole: "Nòmal! Se sa zanmi ye. Viv ou!",                       english: "Of course! That's what friends are for. Long live you!", pronunciation: "nor-MAL! seh SAH zan-MEE YEH. VEEV oo!" },
+    ],
+    vocabulary: [
+      { creole: "Bòn fèt!",     english: "Happy birthday!",  pronunciation: "born FET" },
+      { creole: "Laj",          english: "Age",              pronunciation: "LAJ" },
+      { creole: "Fèt",          english: "Birthday",         pronunciation: "FET" },
+      { creole: "Tan pase vit", english: "Time passes fast", pronunciation: "tan pah-SEH VEET" },
+      { creole: "Fete",         english: "Celebrate",        pronunciation: "feh-TEH" },
+      { creole: "Mwen fèt…",    english: "I was born…",      pronunciation: "mwen FET" },
+    ],
+    comprehensionQuestions: [
+      { question: "Ki laj B jodi a?",            translation: "How old is B today?",         options: ["Trant", "Venn", "Karant", "Vennsenk"],     correct: "Trant" },
+      { question: "Ki mwa B fèt?",               translation: "What month was B born?",       options: ["Mas", "Janvye", "Desanm", "Oktòb"],        correct: "Mas" },
+      { question: "Kòman A vle fete anivèsè li?", translation: "How does A want to celebrate?", options: ["Ti fèt ak fanmi ak zanmi", "Grand fèt", "Repoze lakay", "Voyage"], correct: "Ti fèt ak fanmi ak zanmi" },
+    ],
+    grammar: [{ title: "Saying when you were born", explanation: "Use 'Mwen fèt + date/month/year' to say when you were born.", examples: [{ creole: "Mwen fèt Janvye.", english: "I was born in January.", explanation: "" }, { creole: "Mwen fèt mil nèfsansenwit.", english: "I was born in 1998.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Complete about age and birthday", questions: [{ creole: "Mwen gen trant ___.", answer: "ane", translation: "I am thirty years old." }] }],
+    pronunciationPractice: [{ phrase: "Bòn fèt! Ki laj ou?", translation: "Happy birthday! How old are you?" }, { phrase: "Tan pase vit.", translation: "Time passes quickly." }],
+  },
+
+  {
+    id: 13, lessonId: 13, category: "beginner", icon: "🦴",
+    title: "At the Doctor",
+    description: "A patient describes pain to their doctor",
+    characters: [{ name: "Pasyan", avatar: "🧑" }, { name: "Doktè", avatar: "👨‍⚕️" }],
+    conversation: [
+      { speaker: "Pasyan", creole: "Bonjou doktè. Mwen gen anpil doulè.",                  english: "Good morning doctor. I have a lot of pain.",              pronunciation: "bon-JOO dok-TEH. mwen gen an-PEEL doo-LEH." },
+      { speaker: "Doktè",  creole: "Ki kote ou gen doulè a?",                               english: "Where do you have the pain?",                             pronunciation: "kee KOH-teh oo gen doo-LEH ah?" },
+      { speaker: "Pasyan", creole: "Mwen gen mal tèt ak doulè nan kou mwen.",               english: "I have a headache and pain in my neck.",                  pronunciation: "mwen gen MAL TET ak doo-LEH nan KOO mwen." },
+      { speaker: "Doktè",  creole: "Depi ki lè ou gen doulè sa yo?",                        english: "Since when have you had this pain?",                      pronunciation: "deh-PEE kee LEH oo gen doo-LEH sah yo?" },
+      { speaker: "Pasyan", creole: "Depi yè swa. Mwen pa ka vire tèt mwen.",               english: "Since last night. I cannot turn my head.",                pronunciation: "deh-PEE YEH SWAH. mwen pah kah vee-REH TET mwen." },
+      { speaker: "Doktè",  creole: "Mwen pral egzamine zepòl ak do ou tou.",               english: "I will also examine your shoulders and back.",             pronunciation: "mwen PRAL eg-zah-mee-NEH zeh-POL ak DOH oo TOO." },
+      { speaker: "Pasyan", creole: "Wi dakò. Do mwen fè mal tou nan maten.",               english: "Yes okay. My back hurts too in the morning.",             pronunciation: "WEE dah-KO. DOH mwen FEH MAL too nan mah-TEN." },
+      { speaker: "Doktè",  creole: "Mete men ou la. Gen doulè la?",                         english: "Put your hand here. Is there pain there?",               pronunciation: "meh-TEH MEN oo LAH. gen doo-LEH LAH?" },
+      { speaker: "Pasyan", creole: "Ayy! Wi la a. Gen anpil doulè nan koud mwen.",         english: "Ouch! Yes there. There is a lot of pain in my elbow.",   pronunciation: "AYY! WEE LAH ah. gen an-PEEL doo-LEH nan KOOD mwen." },
+      { speaker: "Doktè",  creole: "Dakò. Ou bezwen repoze bra ou pou yon semèn.",         english: "Okay. You need to rest your arm for one week.",           pronunciation: "dah-KO. oo beh-ZWEN reh-poh-ZEH BRAH oo poo yon seh-MEN." },
+      { speaker: "Pasyan", creole: "E tèt mwen ak kou mwen?",                               english: "And my head and neck?",                                  pronunciation: "eh TET mwen ak KOO mwen?" },
+      { speaker: "Doktè",  creole: "Pran medikaman sa yo. Yo pral ede anpil.",              english: "Take these medicines. They will help a lot.",             pronunciation: "PRAN meh-dee-kah-MAN sah yo. yo PRAL eh-DEH an-PEEL." },
+    ],
+    vocabulary: [
+      { creole: "Doulè",     english: "Pain",         pronunciation: "doo-LEH" },
+      { creole: "Mal tèt",   english: "Headache",     pronunciation: "MAL TET" },
+      { creole: "Do",        english: "Back",         pronunciation: "DOH" },
+      { creole: "Kou",       english: "Neck",         pronunciation: "KOO" },
+      { creole: "Koud",      english: "Elbow",        pronunciation: "KOOD" },
+      { creole: "Medikaman", english: "Medicine",     pronunciation: "meh-dee-kah-MAN" },
+    ],
+    comprehensionQuestions: [
+      { question: "Ki kote pasyan an gen mal?",    translation: "Where does the patient have pain?",  options: ["Tèt ak kou", "Pye ak janm", "Vant ak kè", "Dan ak figi"], correct: "Tèt ak kou" },
+      { question: "Depi ki lè pasyan gen doulè?",  translation: "Since when does the patient have pain?", options: ["Yè swa", "Jodi maten", "Semèn pase", "Mwa pase"], correct: "Yè swa" },
+      { question: "Pou konbyen tan li bezwen repoze?", translation: "For how long must they rest?",   options: ["Yon semèn", "De jou", "Yon mwa", "Yon jou"],         correct: "Yon semèn" },
+    ],
+    grammar: [{ title: "Expressing pain in Creole", explanation: "Use 'Mwen gen mal + body part' for pain. Use 'X fè mal' meaning 'X hurts'.", examples: [{ creole: "Mwen gen mal tèt.", english: "I have a headache.", explanation: "" }, { creole: "Do mwen fè mal.", english: "My back hurts.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Describe the pain", questions: [{ creole: "Mwen gen mal ___ ak doulè nan kou.", answer: "tèt", translation: "I have a headache and pain in my neck." }] }],
+    pronunciationPractice: [{ phrase: "Mwen gen anpil doulè.", translation: "I have a lot of pain." }, { phrase: "Ki kote ou gen doulè a?", translation: "Where do you have the pain?" }],
+  },
+
+  {
+    id: 14, lessonId: 14, category: "beginner", icon: "🏃",
+    title: "Following Directions",
+    description: "A lost visitor asks for directions to the hospital",
+    characters: [{ name: "Vizitè", avatar: "🧑" }, { name: "Lokal", avatar: "👩" }],
+    conversation: [
+      { speaker: "Vizitè", creole: "Eskize m, ka ou ede m? Mwen pèdi.",               english: "Excuse me, can you help me? I am lost.",               pronunciation: "es-kee-ZEH m, kah oo eh-DEH m? mwen PEH-dee." },
+      { speaker: "Lokal",  creole: "Bien sûr. Ki kote ou vle ale?",                   english: "Of course. Where do you want to go?",                 pronunciation: "BYEN soor. kee KOH-teh oo vleh ah-LEH?" },
+      { speaker: "Vizitè", creole: "Mwen vle ale lopital la. Li lwen isit?",           english: "I want to go to the hospital. Is it far from here?",  pronunciation: "mwen vleh ah-LEH loh-pee-TAL lah. lee LWEN ee-SEET?" },
+      { speaker: "Lokal",  creole: "Non, pa twò lwen. Ale dwèt pandan de minit.",      english: "No, not too far. Go straight for two minutes.",       pronunciation: "NON, pah TWO LWEN. ah-LEH DWET pan-DAN deh mee-NEET." },
+      { speaker: "Vizitè", creole: "Apre sa?",                                         english: "After that?",                                         pronunciation: "ah-PREH SAH?" },
+      { speaker: "Lokal",  creole: "Apre sa vire agoch nan premye lari.",              english: "Then turn left at the first street.",                 pronunciation: "ah-PREH SAH vee-REH ah-GOSH nan preh-MYEH lah-REE." },
+      { speaker: "Vizitè", creole: "Vire agoch nan premye lari. Dakò.",               english: "Turn left at the first street. Okay.",               pronunciation: "vee-REH ah-GOSH nan preh-MYEH lah-REE. dah-KO." },
+      { speaker: "Lokal",  creole: "Kontinye mache jis ou wè yon gwo bati blan.",     english: "Keep walking until you see a large white building.",  pronunciation: "kon-tee-NYEH mah-SHEH ZHEES oo WEH yon GWO bah-TEE BLAN." },
+      { speaker: "Vizitè", creole: "Eske mwen pral travèse yon wout?",                english: "Will I cross a road?",                                pronunciation: "es-KEH mwen PRAL trah-veh-SEH yon WOOT?" },
+      { speaker: "Lokal",  creole: "Wi, travèse avèk atansyon. Trafik la pafwa move.", english: "Yes, cross carefully. The traffic is sometimes bad.", pronunciation: "WEE, trah-veh-SEH ah-VEK ah-tan-SYON. trah-FEEK lah pah-FWAH moo-VEH." },
+      { speaker: "Vizitè", creole: "Mèsi anpil. Ou trè jentiy.",                      english: "Thank you very much. You are very kind.",             pronunciation: "MEHR-see an-PEEL. oo treh zhen-TEE." },
+      { speaker: "Lokal",  creole: "Pa gen pwoblèm. Bon rive!",                        english: "No problem. Safe arrival!",                          pronunciation: "pah gen pwoh-BLEM. bon REE-veh!" },
+    ],
+    vocabulary: [
+      { creole: "Ale dwèt",    english: "Go straight",   pronunciation: "ah-LEH DWET" },
+      { creole: "Vire agoch",  english: "Turn left",     pronunciation: "vee-REH ah-GOSH" },
+      { creole: "Vire adwat",  english: "Turn right",    pronunciation: "vee-REH ah-DWAT" },
+      { creole: "Travèse",     english: "Cross",         pronunciation: "trah-veh-SEH" },
+      { creole: "Lwen",        english: "Far",           pronunciation: "LWEN" },
+      { creole: "Pre",         english: "Near",          pronunciation: "PREH" },
+    ],
+    comprehensionQuestions: [
+      { question: "Ki kote vizitè a vle ale?",     translation: "Where does the visitor want to go?",  options: ["Lopital", "Lekòl", "Bank", "Mache"],             correct: "Lopital" },
+      { question: "Ki kote li vire?",              translation: "Which way does he turn?",              options: ["Agoch", "Adwat", "Dwèt sèlman", "Tounen"],       correct: "Agoch" },
+      { question: "Kisa li pral wè lopital la?",  translation: "What will he see near the hospital?",  options: ["Yon gwo bati blan", "Yon mache", "Yon legliz", "Yon pak"], correct: "Yon gwo bati blan" },
+    ],
+    grammar: [{ title: "Giving directions", explanation: "Ale dwèt = go straight, Vire agoch = turn left, Vire adwat = turn right. Use 'jis ou wè' for 'until you see'.", examples: [{ creole: "Ale dwèt.", english: "Go straight.", explanation: "" }, { creole: "Vire agoch nan premye lari.", english: "Turn left at the first street.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Give the directions", questions: [{ creole: "Ale ___ pandan de minit.", answer: "dwèt", translation: "Go straight for two minutes." }] }],
+    pronunciationPractice: [{ phrase: "Vire agoch nan premye lari.", translation: "Turn left at the first street." }, { phrase: "Bon rive!", translation: "Safe arrival!" }],
+  },
+
+  {
+    id: 15, lessonId: 15, category: "beginner", icon: "👀",
+    title: "Describing a Person",
+    description: "Someone is trying to find their friend at a party",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Mwen pa ka jwenn zanmi mwen nan fèt la. Ka ou ede m?",  english: "I can't find my friend at the party. Can you help me?",  pronunciation: "mwen pah kah JWEN zan-MEE mwen nan FET lah. kah oo eh-DEH m?" },
+      { speaker: "B", creole: "Bien sûr. Kijan li ye? Dekri l pou mwen.",              english: "Of course. What does he look like? Describe him for me.", pronunciation: "BYEN soor. kee-JAN lee YEH? deh-KREE l poo mwen." },
+      { speaker: "A", creole: "Li gran ak mens. Li gen cheve nwa, kout.",               english: "He is tall and slim. He has short black hair.",           pronunciation: "lee GRAN ak MENS. lee gen sheh-VEH NWAH, KOOT." },
+      { speaker: "B", creole: "Li jenn oswa vye? Konbyen ane li genyen?",              english: "Is he young or old? How old is he?",                     pronunciation: "lee ZHEN oz-WAH VYEH? kon-BYEN ah-NEH lee gen-YEN?" },
+      { speaker: "A", creole: "Li jenn. Li gen anviwon vennsenk ane.",                 english: "He is young. He is about twenty-five years old.",        pronunciation: "lee ZHEN. lee gen an-vee-WON ven-SANK ah-NEH." },
+      { speaker: "B", creole: "Èske li gen bab oswa moustach?",                        english: "Does he have a beard or moustache?",                     pronunciation: "es-KEH lee gen BAB oz-WAH moos-TASH?" },
+      { speaker: "A", creole: "Wi, li gen yon ti bab. Li mete linèt tou.",             english: "Yes, he has a small beard. He also wears glasses.",       pronunciation: "WEE, lee gen yon tee BAB. lee meh-TEH lee-NET TOO." },
+      { speaker: "B", creole: "E po li? Li klè oswa nwa?",                             english: "And his skin? Is he light or dark?",                    pronunciation: "eh POH lee? lee KLEH oz-WAH NWAH?" },
+      { speaker: "A", creole: "Li klè, zye mawon, toujou souri.",                     english: "He is light-skinned, brown eyes, always smiling.",       pronunciation: "lee KLEH, ZYEH mah-WON, too-JOO soo-REE." },
+      { speaker: "B", creole: "Mwen panse mwen wè li la bò. Gade dèyè ou.",           english: "I think I saw him over there. Look behind you.",         pronunciation: "mwen PAN-seh mwen WEH lee LAH bor. gah-DEH deh-YEH oo." },
+      { speaker: "A", creole: "Wi! Se li! Mèsi anpil pou èd ou.",                     english: "Yes! That's him! Thank you very much for your help.",   pronunciation: "WEE! seh LEE! MEHR-see an-PEEL poo ED oo." },
+      { speaker: "B", creole: "De ryen. Bon fèt!",                                    english: "Don't mention it. Enjoy the party!",                    pronunciation: "deh RYEN. bon FET!" },
+    ],
+    vocabulary: [
+      { creole: "Gran",       english: "Tall",          pronunciation: "GRAN" },
+      { creole: "Mens",       english: "Slim",          pronunciation: "MENS" },
+      { creole: "Cheve nwa",  english: "Black hair",    pronunciation: "sheh-VEH NWAH" },
+      { creole: "Bab",        english: "Beard",         pronunciation: "BAB" },
+      { creole: "Linèt",      english: "Glasses",       pronunciation: "lee-NET" },
+      { creole: "Souri",      english: "Smile",         pronunciation: "soo-REE" },
+    ],
+    comprehensionQuestions: [
+      { question: "Kijan zanmi A ye?",              translation: "What does A's friend look like?",  options: ["Gran ak mens, cheve nwa kout", "Piti ak gwo, cheve long", "Vye ak blan", "Jenn ak klè"], correct: "Gran ak mens, cheve nwa kout" },
+      { question: "Eske zanmi a gen bab?",          translation: "Does the friend have a beard?",   options: ["Wi, yon ti bab", "Non, pa di tout", "Wi, yon gwo bab", "Non"],                  correct: "Wi, yon ti bab" },
+      { question: "Kisa B di pou ede A jwenn li?", translation: "What does B say to help A find him?", options: ["Gade dèyè ou", "Kouri al chèche", "Rele li", "Retounen lakay"],              correct: "Gade dèyè ou" },
+    ],
+    grammar: [{ title: "Describing people", explanation: "Use 'Li + adjective' to describe someone. Stack adjectives with 'ak' (and).", examples: [{ creole: "Li gran ak mens.", english: "He is tall and slim.", explanation: "" }, { creole: "Li gen cheve nwa kout.", english: "He has short black hair.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Describe the person", questions: [{ creole: "Li gran ak ___. Li gen cheve nwa.", answer: "mens", translation: "He is tall and slim. He has black hair." }] }],
+    pronunciationPractice: [{ phrase: "Kijan li ye? Dekri l pou mwen.", translation: "What does he look like? Describe him for me." }, { phrase: "Li gran ak mens.", translation: "He is tall and slim." }],
+  },
+
+  {
+    id: 16, lessonId: 16, category: "beginner", icon: "💭",
+    title: "Talking About a Colleague",
+    description: "Two coworkers discuss the personality of their new director",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Kòman ou jwenn nouvo direktè a?",                        english: "How do you find the new director?",                   pronunciation: "koh-MAN oo JWEN noo-VO dee-rek-TEH ah?" },
+      { speaker: "B", creole: "Li serye anpil men li jentiy ak tout moun.",             english: "He is very serious but kind to everyone.",            pronunciation: "lee seh-RYEH an-PEEL men lee zhen-TEE ak toot MOON." },
+      { speaker: "A", creole: "Li pa twò di? Mwen tande li egzijan.",                   english: "Isn't he too strict? I heard he is demanding.",        pronunciation: "lee pah TWO dee? mwen TAN-deh lee eg-zee-ZHAN." },
+      { speaker: "B", creole: "Wi, li egzijan men li jis. Li onèt toujou.",             english: "Yes, he is demanding but fair. He is always honest.",  pronunciation: "WEE, lee eg-zee-ZHAN men lee ZHEES. lee oh-NET too-JOO." },
+      { speaker: "A", creole: "E kòlèg ou yo, yo kòman?",                              english: "And your colleagues, how are they?",                  pronunciation: "eh koh-LEG oo yo, yo koh-MAN?" },
+      { speaker: "B", creole: "Gen kèk ki trè jenere ak travayè. Gen lòt ki pèrèz.",   english: "Some are very generous and hardworking. Others are lazy.", pronunciation: "gen KEK kee treh zheh-neh-REH ak trah-vah-YEH. gen LOT kee peh-REHS." },
+      { speaker: "A", creole: "E ou menm? Kòman ou dekri karaktè ou?",                 english: "And yourself? How do you describe your own character?", pronunciation: "eh oo MENM? koh-MAN oo deh-KREE kah-rak-TEH oo?" },
+      { speaker: "B", creole: "Mwen eseye rete pasyan ak modès. Men pafwa enpasyan.", english: "I try to stay patient and modest. But sometimes impatient.", pronunciation: "mwen eh-SEH-yeh reh-TEH pah-SYAN ak moh-DEHS. men pah-FWAH en-pah-SYAN." },
+      { speaker: "A", creole: "Sa nòmal. Pèsonn pafè.",                               english: "That is normal. No one is perfect.",                  pronunciation: "sah nor-MAL. pehr-SON pah-FEH." },
+      { speaker: "B", creole: "Wi. Mwen pito travay ak moun ki kwayab ak onèt.",       english: "Yes. I prefer to work with trustworthy and honest people.", pronunciation: "WEE. mwen pee-TOH trah-VAY ak MOON kee kwah-YAB ak oh-NET." },
+      { speaker: "A", creole: "Mwen dakò. Konfyans se baz tout bon relasyon.",         english: "I agree. Trust is the foundation of every good relationship.", pronunciation: "mwen dah-KO. kon-FYANS seh BAZ toot BON reh-lah-SYON." },
+      { speaker: "B", creole: "Absoliman. Sa vrè nan travay ak nan lavi pèsonèl.",     english: "Absolutely. That is true in work and in personal life.", pronunciation: "ab-soh-lee-MAN. sah VREH nan trah-VAY ak nan lah-VEE pehr-son-EL." },
+    ],
+    vocabulary: [
+      { creole: "Serye",    english: "Serious",       pronunciation: "seh-RYEH" },
+      { creole: "Jentiy",   english: "Kind",          pronunciation: "zhen-TEE" },
+      { creole: "Egzijan",  english: "Demanding",     pronunciation: "eg-zee-ZHAN" },
+      { creole: "Onèt",     english: "Honest",        pronunciation: "oh-NET" },
+      { creole: "Pèrèz",    english: "Lazy",          pronunciation: "peh-REHS" },
+      { creole: "Konfyans", english: "Trust",         pronunciation: "kon-FYANS" },
+    ],
+    comprehensionQuestions: [
+      { question: "Kijan nouvo direktè a ye?",    translation: "How is the new director?",       options: ["Serye men jentiy", "Mechan ak di", "Parese ak sòt", "Drôl ak dous"],  correct: "Serye men jentiy" },
+      { question: "Kisa B pito nan yon travayè?", translation: "What does B prefer in a worker?", options: ["Kwayab ak onèt", "Vit ak fò", "Jenn ak bèl", "Rich ak gran"],         correct: "Kwayab ak onèt" },
+      { question: "Kisa B di sou tèt li?",       translation: "What does B say about themselves?", options: ["Pasyan ak modès men pafwa enpasyan", "Toujou kontan", "Toujou serye", "Pèrèz"], correct: "Pasyan ak modès men pafwa enpasyan" },
+    ],
+    grammar: [{ title: "Describing personality with 'men' (but)", explanation: "Use 'men' (but) to contrast two traits. 'Li X men li Y' = He is X but he is Y.", examples: [{ creole: "Li egzijan men li jis.", english: "He is demanding but fair.", explanation: "" }, { creole: "Li serye men jentiy.", english: "He is serious but kind.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Complete the personality description", questions: [{ creole: "Li serye men li ___.", answer: "jentiy", translation: "He is serious but kind." }] }],
+    pronunciationPractice: [{ phrase: "Li egzijan men li jis.", translation: "He is demanding but fair." }, { phrase: "Konfyans se baz tout bon relasyon.", translation: "Trust is the foundation of every good relationship." }],
+  },
+
+  {
+    id: 17, lessonId: 17, category: "beginner", icon: "😊",
+    title: "How Are You Feeling?",
+    description: "A friend notices something is wrong and asks about emotions",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Ou pa sanble ou menm jodi a. Kijan ou santi ou?",        english: "You don't seem yourself today. How are you feeling?",   pronunciation: "oo pah san-BLEH oo MENM joh-DEE ah. kee-JAN oo san-TEE oo?" },
+      { speaker: "B", creole: "Mwen tris anpil. Mwen resevwa move nouvèl yè.",          english: "I am very sad. I received bad news yesterday.",         pronunciation: "mwen TREES an-PEEL. mwen reh-seh-VWAH moo-VEH noo-VEL YEH." },
+      { speaker: "A", creole: "Padon pou tande sa. Kisa ki te pase?",                   english: "Sorry to hear that. What happened?",                    pronunciation: "pah-DON poo TAN-deh SAH. kee-SAH kee teh pah-SEH?" },
+      { speaker: "B", creole: "Granmè mwen malad grav. Mwen enkyete anpil.",            english: "My grandmother is seriously ill. I am very worried.",   pronunciation: "gran-MEH mwen mah-LAD GRAV. mwen en-KYEH-teh an-PEEL." },
+      { speaker: "A", creole: "Mwen konprann. Sa fè mal nan kè.",                       english: "I understand. That hurts in the heart.",               pronunciation: "mwen kon-PRAN. sah FEH MAL nan KEH." },
+      { speaker: "B", creole: "Wi. Mwen santi lapenn anpil. Mwen kriye yè swa.",        english: "Yes. I feel a lot of sorrow. I cried last night.",     pronunciation: "WEE. mwen san-TEE lah-PEN an-PEEL. mwen kree-YEH YEH SWAH." },
+      { speaker: "A", creole: "Nòmal pou kriye. Sa montre ou renmen l.",                english: "It is normal to cry. That shows you love her.",         pronunciation: "nor-MAL poo kree-YEH. sah mon-TREH oo ren-MEN l." },
+      { speaker: "B", creole: "Mwen espere l va geri vit. Mwen gen espwa.",             english: "I hope she recovers quickly. I have hope.",             pronunciation: "mwen es-PEH-reh l vah gheh-REE VEET. mwen gen es-PWAH." },
+      { speaker: "A", creole: "Kenbe espwa a. Priye pou li. Sa va ede.",               english: "Hold onto hope. Pray for her. That will help.",         pronunciation: "ken-BEH es-PWAH ah. pree-YEH poo lee. sah vah eh-DEH." },
+      { speaker: "B", creole: "Mèsi pou pawòl dou yo. Mwen santi m mye kounye a.",     english: "Thank you for the kind words. I feel better now.",      pronunciation: "MEHR-see poo pah-WOL DOO yo. mwen san-TEE m MYEH koo-NYEH ah." },
+      { speaker: "A", creole: "Mwen la pou ou nenpòt ki lè ou bezwen pale.",           english: "I am here for you whenever you need to talk.",          pronunciation: "mwen LAH poo oo nen-POR-t kee LEH oo beh-ZWEN pah-LEH." },
+      { speaker: "B", creole: "Mèsi zanmi. Ou jentiy anpil.",                          english: "Thank you friend. You are very kind.",                  pronunciation: "MEHR-see zan-MEE. oo zhen-TEE an-PEEL." },
+    ],
+    vocabulary: [
+      { creole: "Tris",       english: "Sad",       pronunciation: "TREES" },
+      { creole: "Enkyete",    english: "Worried",   pronunciation: "en-KYEH-teh" },
+      { creole: "Espwa",      english: "Hope",      pronunciation: "es-PWAH" },
+      { creole: "Lapenn",     english: "Sorrow",    pronunciation: "lah-PEN" },
+      { creole: "Kriye",      english: "Cry",       pronunciation: "kree-YEH" },
+      { creole: "Santi",      english: "Feel",      pronunciation: "san-TEE" },
+    ],
+    comprehensionQuestions: [
+      { question: "Poukisa B tris?",              translation: "Why is B sad?",                options: ["Granmè l malad", "Li pèdi travay", "Li pa gen manje", "Li fatige"],  correct: "Granmè l malad" },
+      { question: "Kisa B fè yè swa?",           translation: "What did B do last night?",    options: ["Li kriye", "Li dòmi", "Li fè fèt", "Li travay"],                     correct: "Li kriye" },
+      { question: "Kisa A di pou ede B santi l mye?", translation: "What does A say to help B feel better?", options: ["Kenbe espwa a", "Bliye tout", "Al lakay", "Dòmi"],   correct: "Kenbe espwa a" },
+    ],
+    grammar: [{ title: "Expressing emotions", explanation: "Use 'Mwen santi + emotion' to express feelings. Use 'Mwen + emotion' for direct states.", examples: [{ creole: "Mwen tris.", english: "I am sad.", explanation: "Direct emotion" }, { creole: "Mwen santi lapenn.", english: "I feel sorrow.", explanation: "Using 'santi' = feel" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Express the feeling", questions: [{ creole: "Mwen ___ anpil. Move nouvèl te vini.", answer: "tris", translation: "I am very sad. Bad news came." }] }],
+    pronunciationPractice: [{ phrase: "Kijan ou santi ou?", translation: "How are you feeling?" }, { phrase: "Mwen santi m mye kounye a.", translation: "I feel better now." }],
+  },
+
+  {
+    id: 18, lessonId: 18, category: "beginner", icon: "🏥",
+    title: "Feeling Sick",
+    description: "A friend is sick and receives advice to see a doctor",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Ou pa wè bien. Kisa ou gen?",                        english: "You don't look well. What is wrong with you?",         pronunciation: "oo pah WEH BYEN. kee-SAH oo GEN?" },
+      { speaker: "B", creole: "Mwen malad. Mwen gen lafyèv ak touse.",              english: "I am sick. I have a fever and a cough.",               pronunciation: "mwen mah-LAD. mwen gen lah-FYEV ak TOO-seh." },
+      { speaker: "A", creole: "Ou pran medikaman deja?",                            english: "Have you taken medicine already?",                     pronunciation: "oo PRAN meh-dee-kah-MAN deh-JAH?" },
+      { speaker: "B", creole: "Non, mwen pa gen medikaman lakay.",                  english: "No, I don't have medicine at home.",                   pronunciation: "NON, mwen pah gen meh-dee-kah-MAN lah-KAY." },
+      { speaker: "A", creole: "Ou bezwen ale kay doktè. Sa grav?",                 english: "You need to go to the doctor. Is it serious?",         pronunciation: "oo beh-ZWEN ah-LEH KAY dok-TEH. sah GRAV?" },
+      { speaker: "B", creole: "Mwen pa konnen. Mal tèt mwen fò anpil.",            english: "I don't know. My headache is very strong.",            pronunciation: "mwen pah kon-NEN. MAL TET mwen FOR an-PEEL." },
+      { speaker: "A", creole: "Ou gen doulè nan vant tou?",                        english: "Do you have stomach pain too?",                       pronunciation: "oo gen doo-LEH nan VANT TOO?" },
+      { speaker: "B", creole: "Wi, yon ti kras. Mwen pa manje depi yè.",           english: "Yes, a little. I haven't eaten since yesterday.",      pronunciation: "WEE, yon tee KRAS. mwen pah man-JEH deh-PEE YEH." },
+      { speaker: "A", creole: "Sa pa bon. Kò ou bezwen manje pou geri.",           english: "That is not good. Your body needs food to heal.",      pronunciation: "sah pah BON. KOR oo beh-ZWEN man-JEH poo gheh-REE." },
+      { speaker: "B", creole: "Ou gen rezon. Mwen pral al doktè aprèmidi.",        english: "You are right. I will go to the doctor this afternoon.", pronunciation: "oo gen reh-ZON. mwen PRAL al dok-TEH ah-preh-mee-DEE." },
+      { speaker: "A", creole: "Bon. Mwen ka mennen ou si ou bezwen.",              english: "Good. I can take you if you need.",                    pronunciation: "BON. mwen kah men-NEN oo see oo beh-ZWEN." },
+      { speaker: "B", creole: "Mèsi anpil. Ou bon zanmi.",                         english: "Thank you very much. You are a good friend.",          pronunciation: "MEHR-see an-PEEL. oo BON zan-MEE." },
+    ],
+    vocabulary: [
+      { creole: "Malad",     english: "Sick",      pronunciation: "mah-LAD" },
+      { creole: "Lafyèv",    english: "Fever",     pronunciation: "lah-FYEV" },
+      { creole: "Touse",     english: "Cough",     pronunciation: "TOO-seh" },
+      { creole: "Doktè",     english: "Doctor",    pronunciation: "dok-TEH" },
+      { creole: "Geri",      english: "Heal",      pronunciation: "gheh-REE" },
+      { creole: "Mal tèt",   english: "Headache",  pronunciation: "MAL TET" },
+    ],
+    comprehensionQuestions: [
+      { question: "Kisa B gen kòm sentòm?",        translation: "What symptoms does B have?",      options: ["Lafyèv ak touse", "Mal vant sèlman", "Blese pye", "Grip"],  correct: "Lafyèv ak touse" },
+      { question: "Depi ki lè B pa manje?",        translation: "Since when hasn't B eaten?",      options: ["Depi yè", "Depi maten an", "Depi semèn pase", "Depi de jou"], correct: "Depi yè" },
+      { question: "Ki lè B pral al doktè?",        translation: "When will B go to the doctor?",   options: ["Aprèmidi", "Demen", "Nan maten", "Jedi"],                    correct: "Aprèmidi" },
+    ],
+    grammar: [{ title: "Describing illness in Creole", explanation: "Use 'Mwen gen + illness/symptom' to say what you have. Use 'Mwen malad' to say you're sick.", examples: [{ creole: "Mwen gen lafyèv.", english: "I have a fever.", explanation: "" }, { creole: "Mwen gen mal tèt.", english: "I have a headache.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Describe the illness", questions: [{ creole: "Mwen malad. Mwen gen ___ ak touse.", answer: "lafyèv", translation: "I am sick. I have a fever and a cough." }] }],
+    pronunciationPractice: [{ phrase: "Mwen malad. Mwen gen lafyèv.", translation: "I am sick. I have a fever." }, { phrase: "Ou bezwen ale kay doktè.", translation: "You need to go to the doctor." }],
+  },
+
+  {
+    id: 19, lessonId: 19, category: "beginner", icon: "❤️",
+    title: "Meeting Someone Special",
+    description: "A tells a friend about someone they have feelings for",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Mwen vle pale ou de yon moun espesyal.",                 english: "I want to tell you about a special person.",            pronunciation: "mwen vleh pah-LEH oo deh yon MOON es-peh-SYAL." },
+      { speaker: "B", creole: "Vre? Kiyès? Di m tout bagay!",                          english: "Really? Who? Tell me everything!",                      pronunciation: "VREH? kee-YES? dee m toot bah-GAY!" },
+      { speaker: "A", creole: "Mwen rankontre yon fi trè bèl nan fèt la samdi.",        english: "I met a very beautiful girl at the party Saturday.",    pronunciation: "mwen ran-kon-TREH yon FEE treh BEL nan FET lah sam-DEE." },
+      { speaker: "B", creole: "Wow! Kòman li rele? Ou pale avèk li?",                  english: "Wow! What is her name? Did you talk with her?",        pronunciation: "WOW! koh-MAN lee reh-LEH? oo pah-LEH ah-VEK lee?" },
+      { speaker: "A", creole: "Wi, nou pale lontan. Li rele Sophie. Li entèlijan ak jentiy.", english: "Yes, we talked for a long time. Her name is Sophie. She is intelligent and kind.", pronunciation: "WEE, noo pah-LEH lon-TAN. lee reh-LEH SOHFEE. lee en-teh-lee-ZHAN ak zhen-TEE." },
+      { speaker: "B", creole: "Ou renmen li deja? Kèlè ou te konnen l?",              english: "You like her already? How long have you known her?",   pronunciation: "oo ren-MEN lee deh-JAH? kel-LEH oo teh kon-NEN l?" },
+      { speaker: "A", creole: "Sèlman depi samdi. Men mwen santi yon bagay espesyal.", english: "Only since Saturday. But I feel something special.",    pronunciation: "sel-MAN deh-PEE sam-DEE. men mwen san-TEE yon bah-GAY es-peh-SYAL." },
+      { speaker: "B", creole: "Ou envite l sòti ak ou?",                              english: "Did you invite her to go out with you?",               pronunciation: "oo en-vee-TEH l sor-TEE ak oo?" },
+      { speaker: "A", creole: "Pa ankò. Mwen timid yon ti kras.",                      english: "Not yet. I am a little shy.",                          pronunciation: "pah an-KOR. mwen tee-MEED yon tee KRAS." },
+      { speaker: "B", creole: "Ale di l! Lavi kout. Pa pè. Di l ou renmen l.",         english: "Go tell her! Life is short. Don't be afraid. Tell her you like her.", pronunciation: "ah-LEH dee l! lah-VEE KOOT. pah PEH. dee l oo ren-MEN l." },
+      { speaker: "A", creole: "Ou gen rezon. Mwen pral rele l aswè a.",               english: "You are right. I will call her tonight.",              pronunciation: "oo gen reh-ZON. mwen PRAL reh-LEH l ah-SWEH ah." },
+      { speaker: "B", creole: "Bon kouraj! Di m kòman sa pase.",                       english: "Good luck! Tell me how it goes.",                      pronunciation: "bon koo-RAJ! dee m koh-MAN SAH pah-SEH." },
+    ],
+    vocabulary: [
+      { creole: "Renmen",    english: "Love / Like",     pronunciation: "ren-MEN" },
+      { creole: "Menaj",     english: "Boyfriend/girl",  pronunciation: "meh-NAJ" },
+      { creole: "Timid",     english: "Shy",             pronunciation: "tee-MEED" },
+      { creole: "Espesyal",  english: "Special",         pronunciation: "es-peh-SYAL" },
+      { creole: "Santi",     english: "Feel",            pronunciation: "san-TEE" },
+      { creole: "Lavi kout", english: "Life is short",   pronunciation: "lah-VEE KOOT" },
+    ],
+    comprehensionQuestions: [
+      { question: "Kote A rankontre Sophie?",         translation: "Where did A meet Sophie?",      options: ["Nan fèt la samdi", "Nan lekòl", "Nan travay", "Nan mache"],   correct: "Nan fèt la samdi" },
+      { question: "Poukisa A pa ankò envite l?",      translation: "Why hasn't A invited her yet?", options: ["Li timid", "Li pa renmen l", "Li pa konn adrès li", "Li malad"], correct: "Li timid" },
+      { question: "Kisa B rekòmande A fè?",           translation: "What does B recommend A do?",   options: ["Ale di l", "Tann pi lontan", "Bliye l", "Ekri l yon lèt"],     correct: "Ale di l" },
+    ],
+    grammar: [{ title: "Talking about feelings for someone", explanation: "Use 'Mwen renmen + person' to say you like/love someone. Use 'Mwen santi yon bagay' for 'I feel something'.", examples: [{ creole: "Mwen renmen ou.", english: "I love/like you.", explanation: "" }, { creole: "Mwen santi yon bagay espesyal.", english: "I feel something special.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Complete the romance sentence", questions: [{ creole: "Mwen renmen ___ trè jentiy la.", answer: "fi", translation: "I like the very kind girl." }] }],
+    pronunciationPractice: [{ phrase: "Mwen santi yon bagay espesyal.", translation: "I feel something special." }, { phrase: "Bon kouraj!", translation: "Good luck!" }],
+  },
+
+  {
+    id: 20, lessonId: 20, category: "beginner", icon: "🌱",
+    title: "Childhood Memories",
+    description: "Two friends share memories of growing up",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Ou sonje lè ou te timoun? Ou te fè kisa?",              english: "Do you remember when you were a child? What did you do?", pronunciation: "oo son-JEH leh oo teh tee-MOON? oo teh FEH kee-SAH?" },
+      { speaker: "B", creole: "Wi! Mwen te jwe anpil ak zanmi nan katye a.",           english: "Yes! I used to play a lot with friends in the neighborhood.", pronunciation: "WEE! mwen teh JZWEH an-PEEL ak zan-MEE nan kah-TYEH ah." },
+      { speaker: "A", creole: "Ou te ale nan ki lekòl?",                              english: "What school did you go to?",                            pronunciation: "oo teh ah-LEH nan kee leh-KOL?" },
+      { speaker: "B", creole: "Mwen te ale Lekòl Nasyonal Sent Mari.",                english: "I went to the National School Sainte Marie.",           pronunciation: "mwen teh ah-LEH leh-KOL nas-yo-NAL SENT mah-REE." },
+      { speaker: "A", creole: "Ou te renmen lekòl?",                                  english: "Did you like school?",                                 pronunciation: "oo teh ren-MEN leh-KOL?" },
+      { speaker: "B", creole: "Pafwa wi, pafwa non. Mwen te renmen rekrè anpil.",     english: "Sometimes yes, sometimes no. I really liked recess.",  pronunciation: "pah-FWAH WEE, pah-FWAH NON. mwen teh ren-MEN reh-kreh-YA-syon an-PEEL." },
+      { speaker: "A", creole: "Kisa ou te reve fè lè ou tap grandi?",                english: "What did you dream of doing as you were growing up?",  pronunciation: "kee-SAH oo teh reh-VEH FEH leh oo tap gran-DEE?" },
+      { speaker: "B", creole: "Mwen te vle vin doktè pou ede malad nan kominote a.", english: "I wanted to become a doctor to help sick people in the community.", pronunciation: "mwen teh vleh VEN dok-TEH poo eh-DEH mah-LAD nan koh-mee-noh-TEH ah." },
+      { speaker: "A", creole: "Epi kounye a ou se doktè vre!",                       english: "And now you actually are a doctor!",                   pronunciation: "eh-pee koo-NYEH ah oo seh dok-TEH VREH!" },
+      { speaker: "B", creole: "Wi! Rèv mwen te reyalize. Travay di ak pasyans peye.", english: "Yes! My dream came true. Hard work and patience pay off.", pronunciation: "WEE! REV mwen teh reh-yah-lee-ZEH. trah-VAY dee ak pah-SYANS peh-YEH." },
+      { speaker: "A", creole: "Ou yon egzanp pou jèn yo nan kominote nou.",           english: "You are an example for the youth in our community.",   pronunciation: "oo yon eg-ZANP poo ZHEN yo nan koh-mee-noh-TEH noo." },
+      { speaker: "B", creole: "Mèsi. Mwen espere enspire yo pou reyalize rèv yo.",   english: "Thank you. I hope to inspire them to realize their dreams.", pronunciation: "MEHR-see. mwen es-PEH-reh en-spee-REH yo poo reh-yah-lee-ZEH REV yo." },
+    ],
+    vocabulary: [
+      { creole: "Timoun",    english: "Child",         pronunciation: "tee-MOON" },
+      { creole: "Grandi",    english: "Grow up",       pronunciation: "gran-DEE" },
+      { creole: "Rèv",       english: "Dream",         pronunciation: "REV" },
+      { creole: "Reyizi",    english: "Succeed",       pronunciation: "reh-yee-SEE" },
+      { creole: "Sonje",     english: "Remember",      pronunciation: "son-JEH" },
+      { creole: "Kominote",  english: "Community",     pronunciation: "koh-mee-noh-TEH" },
+    ],
+    comprehensionQuestions: [
+      { question: "Kisa B te renmen piti?",        translation: "What did B love as a child?",   options: ["Rekrè", "Kalkil", "Lekti", "Desen"],             correct: "Rekrè" },
+      { question: "Kisa B te reve vin?",           translation: "What did B dream of becoming?", options: ["Doktè", "Pwofesè", "Avoka", "Chantan"],          correct: "Doktè" },
+      { question: "Kisa ki ede B reyalize rèv li?", translation: "What helped B realize their dream?", options: ["Travay di ak pasyans", "Lajan anpil", "Chans", "Koneksyon"], correct: "Travay di ak pasyans" },
+    ],
+    grammar: [{ title: "Talking about the past with 'te'", explanation: "In Creole, add 'te' before the verb to talk about the past. 'Mwen ale' = I go. 'Mwen te ale' = I went.", examples: [{ creole: "Mwen te ale lekòl.", english: "I went to school.", explanation: "Past tense with 'te'" }, { creole: "Mwen te jwe ak zanmi.", english: "I used to play with friends.", explanation: "Past habit with 'te'" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Put the verb in the past", questions: [{ creole: "Mwen ___ renmen rekrè.", answer: "te", translation: "I used to love recess." }] }],
+    pronunciationPractice: [{ phrase: "Ou sonje lè ou te timoun?", translation: "Do you remember when you were a child?" }, { phrase: "Rèv mwen te reyalize.", translation: "My dream came true." }],
+  },
+
+  // ── HOME & DAILY LIFE (Dialogs 21–30) ─────────────────────────────────
+
+  {
+    id: 21, lessonId: 21, category: "beginner", icon: "🍽️",
+    title: "What Are We Eating?",
+    description: "Someone comes home hungry and asks what is being cooked",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Mwen grangou anpil. Kisa ou kwit jodi a?",               english: "I am very hungry. What did you cook today?",            pronunciation: "mwen gran-GOO an-PEEL. kee-SAH oo KWEET joh-DEE ah?" },
+      { speaker: "B", creole: "Mwen kwit diri ak pwa nwa ak poul bouyi.",               english: "I cooked rice with black beans and boiled chicken.",     pronunciation: "mwen KWEET dee-REE ak PWAH NWAH ak POOL boo-YEE." },
+      { speaker: "A", creole: "Mmm! Sa santi bon anpil. Ou mete epis?",                 english: "Mmm! That smells very good. Did you put spices?",       pronunciation: "mmm! sah san-TEE BON an-PEEL. oo meh-TEH eh-PEES?" },
+      { speaker: "B", creole: "Wi, mwen mete piman, pwa ak tout bèl epis.",             english: "Yes, I put peppers, peas and all good spices.",          pronunciation: "WEE, mwen meh-TEH pee-MAN, PWAH ak toot BEL eh-PEES." },
+      { speaker: "A", creole: "Ou ka sèvi mwen yon gwo pòsyon tanpri?",                english: "Can you serve me a large portion please?",               pronunciation: "oo kah seh-VEE mwen yon GWO por-SYON tan-PREE?" },
+      { speaker: "B", creole: "Bien sûr! Ou vle ji oswa dlo avèk manje a?",            english: "Of course! Do you want juice or water with the food?",  pronunciation: "BYEN soor! oo vleh ZHEE oz-WAH DLO ah-VEK man-JEH ah?" },
+      { speaker: "A", creole: "Ji papay tanpri. Ou gen desè tou?",                     english: "Papaya juice please. Do you have dessert too?",          pronunciation: "ZHEE pah-PAY tan-PREE. oo gen deh-SEH TOO?" },
+      { speaker: "B", creole: "Wi, mwen gen bannann peze ak yon ti siwo.",              english: "Yes, I have fried plantains with a little syrup.",       pronunciation: "WEE, mwen gen bah-NAN peh-ZEH ak yon tee SEE-woh." },
+      { speaker: "A", creole: "Pafè! Ou toujou fè bon manje.",                         english: "Perfect! You always make good food.",                    pronunciation: "pah-FEH! oo too-JOO FEH BON man-JEH." },
+      { speaker: "B", creole: "Mèsi. Manje a prèt. Vini chita manje.",                 english: "Thank you. The food is ready. Come sit and eat.",        pronunciation: "MEHR-see. man-JEH ah PRET. vee-NEE shee-TAH man-JEH." },
+      { speaker: "A", creole: "Bon apeti pou nou tout!",                               english: "Enjoy the meal everyone!",                               pronunciation: "bon ah-peh-TEE poo noo TOOT!" },
+      { speaker: "B", creole: "Bon apeti! Manje manje ou.",                            english: "Enjoy your meal! Eat your food.",                        pronunciation: "bon ah-peh-TEE! man-JEH man-JEH oo." },
+    ],
+    vocabulary: [
+      { creole: "Grangou",    english: "Hungry",       pronunciation: "gran-GOO" },
+      { creole: "Diri",       english: "Rice",         pronunciation: "dee-REE" },
+      { creole: "Pwa",        english: "Beans",        pronunciation: "PWAH" },
+      { creole: "Poul",       english: "Chicken",      pronunciation: "POOL" },
+      { creole: "Bon apeti",  english: "Enjoy your meal", pronunciation: "bon ah-peh-TEE" },
+      { creole: "Epis",       english: "Spices",       pronunciation: "eh-PEES" },
+    ],
+    comprehensionQuestions: [
+      { question: "Kisa B kwit jodi a?",            translation: "What did B cook today?",       options: ["Diri ak pwa ak poul", "Pwason ak legim", "Soup joumou", "Griyo"], correct: "Diri ak pwa ak poul" },
+      { question: "Kisa A vle bwè?",               translation: "What does A want to drink?",   options: ["Ji papay", "Dlo sèlman", "Kafe", "Te"],                           correct: "Ji papay" },
+      { question: "Ki desè B gen?",                translation: "What dessert does B have?",     options: ["Bannann peze ak siwo", "Mango", "Fri", "Gato"],                   correct: "Bannann peze ak siwo" },
+    ],
+    grammar: [{ title: "Food vocabulary and meals", explanation: "Diri ak pwa is a staple Haitian dish (rice and beans). Use 'mwen grangou' for 'I am hungry' and 'mwen swaf' for 'I am thirsty'.", examples: [{ creole: "Mwen grangou.", english: "I am hungry.", explanation: "" }, { creole: "Bon apeti!", english: "Enjoy your meal!", explanation: "Said before eating" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Complete the food sentences", questions: [{ creole: "Mwen kwit diri ak ___ ak poul.", answer: "pwa", translation: "I cooked rice with beans and chicken." }] }],
+    pronunciationPractice: [{ phrase: "Mwen grangou anpil.", translation: "I am very hungry." }, { phrase: "Bon apeti pou nou tout!", translation: "Enjoy the meal everyone!" }],
+  },
+
+  {
+    id: 22, lessonId: 22, category: "beginner", icon: "🍳",
+    title: "Let's Cook Together",
+    description: "Two people collaborate in the kitchen to prepare a meal",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Mwen ka ede ou kwit manje?",                        english: "Can I help you cook?",                               pronunciation: "mwen kah eh-DEH oo KWEET man-JEH?" },
+      { speaker: "B", creole: "Wi! Kòmanse lave legim yo pou mwen tanpri.",        english: "Yes! Start washing the vegetables for me please.",   pronunciation: "WEE! koh-mans-EH lah-VEH leh-GEEM yo poo mwen tan-PREE." },
+      { speaker: "A", creole: "Ak plezi. Mwen bezwen koupe yo apre?",             english: "With pleasure. Do I need to cut them after?",        pronunciation: "ak pleh-ZEE. mwen beh-ZWEN koo-PEH yo ah-PREH?" },
+      { speaker: "B", creole: "Wi, koupe karòt yo an ti moso. Kouto a sou tab la.", english: "Yes, cut the carrots into small pieces. The knife is on the table.", pronunciation: "WEE, koo-PEH kah-ROT yo an tee MOH-so. koo-TOH ah soo TAB lah." },
+      { speaker: "A", creole: "Kasewòl la sou recho a. Mwen mete lwil?",           english: "The pot is on the stove. Do I add oil?",            pronunciation: "kah-seh-WOL lah soo reh-SHO ah. mwen meh-TEH LWEEL?" },
+      { speaker: "B", creole: "Pa ankò. Tann dlo a bouyi an premye.",             english: "Not yet. Wait for the water to boil first.",         pronunciation: "pah an-KOR. TAN DLO ah boo-YEE an preh-MYEH." },
+      { speaker: "A", creole: "Dakò. Mwen ka melanje sòs la?",                   english: "Okay. Can I mix the sauce?",                         pronunciation: "dah-KO. mwen kah meh-lan-JEH SOS lah?" },
+      { speaker: "B", creole: "Wi, melanje l bien ak yon kiyè.",                  english: "Yes, mix it well with a spoon.",                     pronunciation: "WEE, meh-lan-JEH l BYEN ak yon kee-YEH." },
+      { speaker: "A", creole: "Sa santi bon deja! Konbyen tan li bezwen kwit?",   english: "It already smells good! How long does it need to cook?", pronunciation: "sah san-TEE BON deh-JAH! kon-BYEN TAN lee beh-ZWEN KWEET?" },
+      { speaker: "B", creole: "Anviwon trant minit sou ti dife.",                english: "About thirty minutes on low heat.",                  pronunciation: "an-vee-WON TRANT mee-NEET soo tee dee-FEH." },
+      { speaker: "A", creole: "Mwen pral siye tab la pandan n ap tann.",         english: "I will wipe the table while we wait.",               pronunciation: "mwen PRAL see-YEH TAB lah pan-DAN n ap TAN." },
+      { speaker: "B", creole: "Mèsi pou èd ou. Nou yon bon ekip.",              english: "Thank you for your help. We are a good team.",       pronunciation: "MEHR-see poo ED oo. noo yon BON eh-KEEP." },
+    ],
+    vocabulary: [
+      { creole: "Kwit",      english: "Cook",       pronunciation: "KWEET" },
+      { creole: "Lave",      english: "Wash",       pronunciation: "lah-VEH" },
+      { creole: "Koupe",     english: "Cut",        pronunciation: "koo-PEH" },
+      { creole: "Melanje",   english: "Mix",        pronunciation: "meh-lan-JEH" },
+      { creole: "Bouyi",     english: "Boil",       pronunciation: "boo-YEE" },
+      { creole: "Kasewòl",   english: "Pot",        pronunciation: "kah-seh-WOL" },
+    ],
+    comprehensionQuestions: [
+      { question: "Ki premye bagay A fè?",        translation: "What is the first thing A does?",   options: ["Lave legim yo", "Koupe vyann", "Mete lwil", "Melanje sòs"],  correct: "Lave legim yo" },
+      { question: "Ki kote kouto a ye?",          translation: "Where is the knife?",               options: ["Sou tab la", "Nan tirwa", "Sou etajè", "Nan kizin"],           correct: "Sou tab la" },
+      { question: "Konbyen tan manje a bezwen kwit?", translation: "How long does the food need to cook?", options: ["Trant minit", "Yon èdtan", "Dis minit", "De èdtan"],  correct: "Trant minit" },
+    ],
+    grammar: [{ title: "Kitchen verbs", explanation: "Key kitchen verbs: lave (wash), koupe (cut), bouyi (boil), fri (fry), melanje (mix), sèvi (serve).", examples: [{ creole: "Koupe legim yo.", english: "Cut the vegetables.", explanation: "Imperative form" }, { creole: "Melanje sòs la bien.", english: "Mix the sauce well.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Complete the cooking instruction", questions: [{ creole: "Tann dlo a ___ an premye.", answer: "bouyi", translation: "Wait for the water to boil first." }] }],
+    pronunciationPractice: [{ phrase: "Kòmanse lave legim yo.", translation: "Start washing the vegetables." }, { phrase: "Nou yon bon ekip!", translation: "We are a good team!" }],
+  },
+
+  {
+    id: 23, lessonId: 23, category: "beginner", icon: "🛏️",
+    title: "Getting Ready in the Morning",
+    description: "One person wakes up late and rushes to get ready",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Reveye! Li prèske uit è deja!",                      english: "Wake up! It's almost eight o'clock already!",            pronunciation: "reh-VEH-yeh! lee PRES-keh WEET eh deh-JAH!" },
+      { speaker: "B", creole: "Ayy! Mwen dòmi twò lontan. Mwen an reta.",          english: "Ouch! I slept too long. I am late.",                     pronunciation: "AYY! mwen DOR-mee TWO lon-TAN. mwen an reh-TAH." },
+      { speaker: "A", creole: "Ale pran douch vit. Savon ak chanpou nan beny an.", english: "Go shower quickly. Soap and shampoo are in the bathroom.", pronunciation: "ah-LEH PRAN DOOSH VEET. sah-VON ak shan-POO nan BEN-y an." },
+      { speaker: "B", creole: "Mwen pa ka jwenn twal mwen. Kote li ye?",           english: "I cannot find my towel. Where is it?",                   pronunciation: "mwen pah kah JWEN TWAL mwen. koh-TEH lee YEH?" },
+      { speaker: "A", creole: "Li sou amwa a. Bwòs dan ou sou lavabo a.",         english: "It is on the wardrobe. Your toothbrush is on the sink.", pronunciation: "lee soo ah-MWAH ah. BWOS DAN oo soo lah-vah-BOH ah." },
+      { speaker: "B", creole: "Mèsi. Eske ou wè linèt mwen kote?",               english: "Thank you. Did you see where my glasses are?",           pronunciation: "MEHR-see. es-KEH oo WEH lee-NET mwen koh-TEH?" },
+      { speaker: "A", creole: "Yo sou kabann ou a, bò zòrye a.",                  english: "They are on your bed, near the pillow.",                  pronunciation: "yo soo kah-BAN oo ah, bor zor-YEH ah." },
+      { speaker: "B", creole: "Pafè. Mwen pral abiye vit. Ou gen krem pou mwen?", english: "Perfect. I will get dressed quickly. Do you have cream for me?", pronunciation: "pah-FEH. mwen PRAL ah-bee-YEH VEET. oo gen KREM poo mwen?" },
+      { speaker: "A", creole: "Men krem nan. Epi pafòm lan sou etajè a.",         english: "Here is the cream. And the perfume is on the shelf.",    pronunciation: "men KREM nan. eh-pee pah-FORM lan soo eh-tah-ZHEH ah." },
+      { speaker: "B", creole: "Mèsi. Mwen prèt. Kòman mwen sanble?",              english: "Thanks. I am ready. How do I look?",                     pronunciation: "MEHR-see. mwen PRET. koh-MAN mwen san-BLEH?" },
+      { speaker: "A", creole: "Ou bèl! Ale vit kounye a.",                        english: "You look beautiful! Go quickly now.",                    pronunciation: "oo BEL! ah-LEH VEET koo-NYEH ah." },
+      { speaker: "B", creole: "Mèsi. Orevwa! Mwen pral kouri.",                   english: "Thanks. Goodbye! I am going to run.",                    pronunciation: "MEHR-see. oh-reh-VWAH! mwen PRAL koo-REE." },
+    ],
+    vocabulary: [
+      { creole: "Douch",     english: "Shower",      pronunciation: "DOOSH" },
+      { creole: "Savon",     english: "Soap",        pronunciation: "sah-VON" },
+      { creole: "Twal",      english: "Towel",       pronunciation: "TWAL" },
+      { creole: "Bwòs dan",  english: "Toothbrush",  pronunciation: "BWOS DAN" },
+      { creole: "Linèt",     english: "Glasses",     pronunciation: "lee-NET" },
+      { creole: "Abiye",     english: "Get dressed", pronunciation: "ah-bee-YEH" },
+    ],
+    comprehensionQuestions: [
+      { question: "Ki lè B ta dwe leve?",        translation: "When should B have gotten up?",  options: ["Anvan uit è", "A dis è", "A midi", "A sis è"],              correct: "Anvan uit è" },
+      { question: "Kote twal B ye?",             translation: "Where is B's towel?",            options: ["Sou amwa a", "Sou kabann", "Nan sak", "Bò lavabo"],         correct: "Sou amwa a" },
+      { question: "Kote linèt B ye?",            translation: "Where are B's glasses?",         options: ["Sou kabann bò zòrye", "Sou tab", "Nan sak", "Sou etajè"],  correct: "Sou kabann bò zòrye" },
+    ],
+    grammar: [{ title: "Morning routine vocabulary", explanation: "Pran douch = take a shower. Bwose dan = brush teeth. Mete rad = get dressed. These are common morning routine phrases.", examples: [{ creole: "Pran douch vit.", english: "Take a shower quickly.", explanation: "" }, { creole: "Mwen prèt.", english: "I am ready.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Morning routine order", questions: [{ creole: "Pran ___, apre bwose dan.", answer: "douch", translation: "Take a shower, then brush teeth." }] }],
+    pronunciationPractice: [{ phrase: "Ale pran douch vit!", translation: "Go take a shower quickly!" }, { phrase: "Mwen an reta.", translation: "I am late." }],
+  },
+
+  {
+    id: 24, lessonId: 24, category: "beginner", icon: "🛋️",
+    title: "Relaxing at Home",
+    description: "Two family members settle in the living room to watch a movie",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Kote ou te ye? Mwen t ap tann ou nan salon an.",    english: "Where were you? I was waiting for you in the living room.", pronunciation: "koh-TEH oo teh YEH? mwen t ap TAN oo nan sah-LON an." },
+      { speaker: "B", creole: "Padon. Mwen te gade televizyon nan chanm mwen.",    english: "Sorry. I was watching television in my room.",             pronunciation: "pah-DON. mwen teh gah-DEH teh-leh-vee-ZYON nan SHANM mwen." },
+      { speaker: "A", creole: "Vini chita sou kanapo a ak mwen. Ann gade yon fim.", english: "Come sit on the sofa with me. Let's watch a movie.",      pronunciation: "vee-NEE shee-TAH soo kah-nah-PO ah ak mwen. AN gah-DEH yon FEEM." },
+      { speaker: "B", creole: "Dakò! Men bay m woulo a. Mwen pral chèche bon fim.", english: "Okay! But give me the remote. I will find a good movie.", pronunciation: "dah-KO! men BAY m woo-LOH ah. mwen PRAL SHEH-sheh BON FEEM." },
+      { speaker: "A", creole: "Men li. Vire lannp lan tou. Li twò klè.",           english: "Here it is. Turn off the lamp too. It's too bright.",      pronunciation: "men LEE. vee-REH LAMP lan TOO. lee TWO KLEH." },
+      { speaker: "B", creole: "Wi. Rido a ouvè. Mwen pral fèmen l pou enstale nou.", english: "Yes. The curtain is open. I will close it to settle us in.", pronunciation: "WEE. ree-DOH ah oo-VEH. mwen PRAL FEH-men l poo en-stah-LEH noo." },
+      { speaker: "A", creole: "Sa bon. Ou vle mwen fè yon ti kafe?",               english: "That is good. Do you want me to make a little coffee?",   pronunciation: "sah BON. oo vleh mwen FEH yon tee kah-FEH?" },
+      { speaker: "B", creole: "Wi tanpri! Ak yon ti sik tanpri.",                  english: "Yes please! With a little sugar please.",                  pronunciation: "WEE tan-PREE! ak yon tee SEEK tan-PREE." },
+      { speaker: "A", creole: "Men kafe ou. Gade tablo sou mi a. Manman ranje l.", english: "Here is your coffee. Look at the painting on the wall. Mom hung it.", pronunciation: "men kah-FEH oo. gah-DEH tah-BLO soo MEE ah. man-MAN ran-JEH l." },
+      { speaker: "B", creole: "Li bèl anpil. Salon an dekore ak gou.",             english: "It is very beautiful. The living room is decorated with taste.", pronunciation: "lee BEL an-PEEL. sah-LON an deh-koh-REH ak GOO." },
+      { speaker: "A", creole: "Wi, manman toujou ranje kay la bien.",              english: "Yes, mom always arranges the house well.",                  pronunciation: "WEE, man-MAN too-JOO ran-JEH KAY lah BYEN." },
+      { speaker: "B", creole: "Ann repoze kounye a. Fim nan ap kòmanse.",          english: "Let's relax now. The movie is starting.",                  pronunciation: "AN reh-poh-ZEH koo-NYEH ah. FEEM nan ap koh-mans-EH." },
+    ],
+    vocabulary: [
+      { creole: "Salon",      english: "Living room", pronunciation: "sah-LON" },
+      { creole: "Kanapo",     english: "Sofa",        pronunciation: "kah-nah-PO" },
+      { creole: "Televizyon", english: "Television",  pronunciation: "teh-leh-vee-ZYON" },
+      { creole: "Rido",       english: "Curtain",     pronunciation: "ree-DOH" },
+      { creole: "Woulo",      english: "Remote",      pronunciation: "woo-LOH" },
+      { creole: "Repoze",     english: "Relax",       pronunciation: "reh-poh-ZEH" },
+    ],
+    comprehensionQuestions: [
+      { question: "Kote B te ye?",               translation: "Where was B?",                options: ["Nan chanm li ap gade televizyon", "Nan kizin", "Deyò", "Nan travay"], correct: "Nan chanm li ap gade televizyon" },
+      { question: "Kisa yo pral fè ansanm?",     translation: "What will they do together?",  options: ["Gade yon fim", "Manje", "Jwe jwèt", "Travay"],                     correct: "Gade yon fim" },
+      { question: "Kisa A fè pou B?",            translation: "What does A make for B?",      options: ["Yon ti kafe", "Manje", "Te", "Ji"],                               correct: "Yon ti kafe" },
+    ],
+    grammar: [{ title: "Suggesting activities with 'Ann'", explanation: "'Ann + verb' means 'Let's + verb'. It is used to suggest doing something together.", examples: [{ creole: "Ann gade yon fim.", english: "Let's watch a movie.", explanation: "" }, { creole: "Ann manje.", english: "Let's eat.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Make a suggestion", questions: [{ creole: "___ repoze kounye a.", answer: "Ann", translation: "Let's relax now." }] }],
+    pronunciationPractice: [{ phrase: "Ann gade yon fim.", translation: "Let's watch a movie." }, { phrase: "Salon an dekore ak gou.", translation: "The living room is decorated with taste." }],
+  },
+
+  {
+    id: 25, lessonId: 25, category: "beginner", icon: "🌅",
+    title: "My Daily Schedule",
+    description: "Two friends compare their daily routines",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Ki lè ou reveye chak maten?",                           english: "What time do you wake up every morning?",            pronunciation: "kee LEH oo reh-VEH-yeh shak mah-TEN?" },
+      { speaker: "B", creole: "Mwen reveye a sis è. Se yon abitid mwen.",               english: "I wake up at six. It is a habit of mine.",           pronunciation: "mwen reh-VEH-yeh ah SEES eh. seh yon ah-bee-TEED mwen." },
+      { speaker: "A", creole: "Sa bonè! Mwen pa ka leve anvan sèt è.",                  english: "That is early! I cannot get up before seven.",       pronunciation: "sah boh-NEH! mwen pah kah leh-VEH an-VAN SET eh." },
+      { speaker: "B", creole: "Mwen benyen, bwose dan, apre manje maten.",              english: "I shower, brush my teeth, then eat breakfast.",      pronunciation: "mwen ben-YEN, BWOH-seh DAN, ah-PREH man-JEH mah-TEN." },
+      { speaker: "A", creole: "Ou manje kisa pou maten?",                               english: "What do you eat for breakfast?",                     pronunciation: "oo man-JEH kee-SAH poo mah-TEN?" },
+      { speaker: "B", creole: "Pen ak bè ak yon gwo tas kafe. Answit mwen ale travay.", english: "Bread with butter and a big cup of coffee. Then I go to work.", pronunciation: "PEN ak BEH ak yon GWO TAS kah-FEH. an-SWEET mwen ah-LEH trah-VAY." },
+      { speaker: "A", creole: "Ki lè ou retounen lakay?",                               english: "What time do you return home?",                      pronunciation: "kee LEH oo reh-too-NEN lah-KAY?" },
+      { speaker: "B", creole: "Mwen retounen a sis è aswè. Fatige men kontan.",         english: "I return at six in the evening. Tired but happy.",   pronunciation: "mwen reh-too-NEN ah SEES eh ah-SWEH. fah-tee-GEH men kon-TAN." },
+      { speaker: "A", creole: "Apre travay, ou fè kisa?",                               english: "After work, what do you do?",                       pronunciation: "ah-PREH trah-VAY, oo FEH kee-SAH?" },
+      { speaker: "B", creole: "Mwen prepare manje, repoze, li yon ti kras, apre dòmi.", english: "I prepare food, rest, read a little, then sleep.",  pronunciation: "mwen preh-pah-REH man-JEH, reh-poh-ZEH, LEE yon tee KRAS, ah-PREH DOR-mee." },
+      { speaker: "A", creole: "Ou pa sòti rankontre zanmi nan aswè?",                  english: "Don't you go out to meet friends in the evening?",   pronunciation: "oo pah sor-TEE ran-kon-TREH zan-MEE nan ah-SWEH?" },
+      { speaker: "B", creole: "Pafwa vandredi sèlman. Semèn lan mwen repoze.",          english: "Sometimes only on Fridays. During the week I rest.", pronunciation: "pah-FWAH van-dreh-DEE sel-MAN. seh-MEN lan mwen reh-poh-ZEH." },
+    ],
+    vocabulary: [
+      { creole: "Reveye",      english: "Wake up",    pronunciation: "reh-VEH-yeh" },
+      { creole: "Benyen",      english: "Shower",     pronunciation: "ben-YEN" },
+      { creole: "Bwose dan",   english: "Brush teeth", pronunciation: "BWOH-seh DAN" },
+      { creole: "Manje maten", english: "Breakfast",  pronunciation: "man-JEH mah-TEN" },
+      { creole: "Fatige",      english: "Tired",      pronunciation: "fah-tee-GEH" },
+      { creole: "Dòmi",        english: "Sleep",      pronunciation: "DOR-mee" },
+    ],
+    comprehensionQuestions: [
+      { question: "Ki lè B reveye chak maten?",     translation: "What time does B wake up?",     options: ["Sis è", "Sèt è", "Uit è", "Senk è"],           correct: "Sis è" },
+      { question: "Kisa B manje pou maten?",        translation: "What does B eat for breakfast?", options: ["Pen ak bè ak kafe", "Diri ak pwa", "Ze ak pen", "Mango"], correct: "Pen ak bè ak kafe" },
+      { question: "Ki jou B sòti rankontre zanmi?", translation: "What day does B go out with friends?", options: ["Vandredi", "Lendi", "Jedi", "Dimanch"],   correct: "Vandredi" },
+    ],
+    grammar: [{ title: "Describing daily routines", explanation: "Use time markers: 'a X è' (at X o'clock), 'apre' (after), 'answit' (then), 'anvan' (before).", examples: [{ creole: "Mwen leve a sis è.", english: "I get up at six o'clock.", explanation: "" }, { creole: "Apre manje, mwen al travay.", english: "After eating, I go to work.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Order the daily routine", questions: [{ creole: "Mwen benyen, ___ dan, apre manje.", answer: "bwose", translation: "I shower, brush teeth, then eat." }] }],
+    pronunciationPractice: [{ phrase: "Mwen reveye a sis è chak maten.", translation: "I wake up at six every morning." }, { phrase: "Fatige men kontan.", translation: "Tired but happy." }],
+  },
+
+  {
+    id: 26, lessonId: 26, category: "beginner", icon: "👕",
+    title: "Getting Dressed for a Party",
+    description: "Two friends help each other choose an outfit for a party",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Mwen pa konnen kisa pou mwen mete pou fèt la.",      english: "I don't know what to wear for the party.",            pronunciation: "mwen pah kon-NEN kee-SAH poo mwen meh-TEH poo FET lah." },
+      { speaker: "B", creole: "Kisa ou gen nan amwa ou? Ann gade ansanm.",          english: "What do you have in your wardrobe? Let's look together.", pronunciation: "kee-SAH oo gen nan ah-MWAH oo? AN gah-DEH an-SANM." },
+      { speaker: "A", creole: "Men ròb nwa sa a. Ou panse li bon?",                english: "Here is this black dress. Do you think it is good?",   pronunciation: "men RORB NWAH sah ah. oo PAN-seh lee BON?" },
+      { speaker: "B", creole: "Li bèl anpil! Kisa ou pral mete sou pye ou?",      english: "It is very beautiful! What will you put on your feet?", pronunciation: "lee BEL an-PEEL! kee-SAH oo PRAL meh-TEH soo PYEH oo?" },
+      { speaker: "A", creole: "Soulye woz sa yo oswa sapat nwa yo?",              english: "These pink shoes or the black sandals?",               pronunciation: "soo-LYEH WOZ sah yo oz-WAH sah-PAT NWAH yo?" },
+      { speaker: "B", creole: "Soulye woz yo pi bèl ak ròb nwa a.",              english: "The pink shoes are more beautiful with the black dress.", pronunciation: "soo-LYEH WOZ yo pee BEL ak RORB NWAH ah." },
+      { speaker: "A", creole: "Ou gen rezon. Mwen pral mete sentiron nwa tou.",  english: "You are right. I will also put on a black belt.",      pronunciation: "oo gen reh-ZON. mwen PRAL meh-TEH sen-tee-RON NWAH TOO." },
+      { speaker: "B", creole: "Pafè. Ou vle mete chapo oswa echarpe?",           english: "Perfect. Do you want to wear a hat or scarf?",         pronunciation: "pah-FEH. oo vleh meh-TEH shah-PO oz-WAH eh-SHARP?" },
+      { speaker: "A", creole: "Non, mwen pral kite cheve mwen lib.",             english: "No, I will leave my hair free.",                       pronunciation: "NON, mwen PRAL kee-TEH sheh-VEH mwen LEEB." },
+      { speaker: "B", creole: "Trè bien. Ou pral bèl anpil nan fèt la.",         english: "Very good. You will look very beautiful at the party.", pronunciation: "treh BYEN. oo PRAL BEL an-PEEL nan FET lah." },
+      { speaker: "A", creole: "Mèsi! Kisa ou pral mete ou menm?",               english: "Thank you! What are you going to wear yourself?",      pronunciation: "MEHR-see! kee-SAH oo PRAL meh-TEH oo MENM?" },
+      { speaker: "B", creole: "Mwen pral mete kostim nwa mwen ak kravat ble.",   english: "I will wear my black suit with a blue tie.",           pronunciation: "mwen PRAL meh-TEH kos-TEEM NWAH mwen ak krah-VET BLEH." },
+    ],
+    vocabulary: [
+      { creole: "Ròb",      english: "Dress",     pronunciation: "RORB" },
+      { creole: "Soulye",   english: "Shoes",     pronunciation: "soo-LYEH" },
+      { creole: "Sentiron", english: "Belt",      pronunciation: "sen-tee-RON" },
+      { creole: "Kostim",   english: "Suit",      pronunciation: "kos-TEEM" },
+      { creole: "Kravat",   english: "Tie",       pronunciation: "krah-VET" },
+      { creole: "Mete",     english: "Put on / Wear", pronunciation: "meh-TEH" },
+    ],
+    comprehensionQuestions: [
+      { question: "Ki rad A chwazi?",           translation: "What outfit does A choose?",      options: ["Ròb nwa ak soulye woz", "Jipon ble", "Pantalon blan", "Mayo wouj"],    correct: "Ròb nwa ak soulye woz" },
+      { question: "Kisa B pral mete?",          translation: "What will B wear?",               options: ["Kostim nwa ak kravat ble", "Ròb wouj", "Jipon vèt", "Pantalon jòn"],  correct: "Kostim nwa ak kravat ble" },
+      { question: "Kisa A pa vle mete?",        translation: "What does A not want to wear?",   options: ["Chapo oswa echarpe", "Soulye", "Sentiron", "Ròb"],                      correct: "Chapo oswa echarpe" },
+    ],
+    grammar: [{ title: "Clothing vocabulary and colors", explanation: "Combine clothing + color: ròb nwa = black dress, soulye woz = pink shoes, kostim ble = blue suit.", examples: [{ creole: "Mwen mete ròb nwa.", english: "I am wearing a black dress.", explanation: "" }, { creole: "Li mete soulye woz.", english: "She is wearing pink shoes.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Describe the outfit", questions: [{ creole: "Mwen pral mete ___ nwa mwen.", answer: "kostim", translation: "I will wear my black suit." }] }],
+    pronunciationPractice: [{ phrase: "Kisa ou pral mete pou fèt la?", translation: "What will you wear to the party?" }, { phrase: "Ou pral bèl anpil!", translation: "You will look very beautiful!" }],
+  },
+
+  {
+    id: 27, lessonId: 27, category: "beginner", icon: "🌤️",
+    title: "Talking About the Weather",
+    description: "One person asks about the weather before going out",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Kijan tan an ye jodi a? Mwen pa sòti ankò.",         english: "How is the weather today? I haven't gone out yet.",     pronunciation: "kee-JAN tan AN YEH joh-DEE ah? mwen pah sor-TEE an-KOR." },
+      { speaker: "B", creole: "Fè cho anpil! Solèy la briye fò depi maten.",       english: "It is very hot! The sun has been shining hard since morning.", pronunciation: "FEH SHO an-PEEL! soh-LAY lah bree-YEH FOR deh-PEE mah-TEN." },
+      { speaker: "A", creole: "Prewizyon météo a di kisa pou aprèmidi?",           english: "What does the weather forecast say for the afternoon?",  pronunciation: "preh-wee-ZYON meh-teh-OH ah dee kee-SAH poo ah-preh-mee-DEE?" },
+      { speaker: "B", creole: "Yo di lapli ka vini aswè. Gen nwaj nan sid.",       english: "They say rain might come in the evening. There are clouds in the south.", pronunciation: "yo dee lah-PLEE kah vee-NEE ah-SWEH. gen NWAJ nan SEED." },
+      { speaker: "A", creole: "Mwen bezwen sòti achte manje. Mwen pral pran parapli.", english: "I need to go out to buy food. I will take an umbrella.", pronunciation: "mwen beh-ZWEN sor-TEE ash-TEH man-JEH. mwen PRAL PRAN pah-rah-PLEE." },
+      { speaker: "B", creole: "Bon lide. Sèzon lapli a kòmanse. Toujou pran parapli.", english: "Good idea. The rainy season is starting. Always take an umbrella.", pronunciation: "BON lee-DEH. seh-ZON lah-PLEE ah koh-mans-EH. too-JOO PRAN pah-rah-PLEE." },
+      { speaker: "A", creole: "Ou sonje lane pase? Te gen inondasyon nan katye nou.", english: "Do you remember last year? There were floods in our neighborhood.", pronunciation: "oo son-JEH LAH-neh pah-SEH? teh gen ee-non-dah-SYON nan kah-TYEH noo." },
+      { speaker: "B", creole: "Wi! Siklòn lan te fò anpil. Dommaj anpil kay.",     english: "Yes! The hurricane was very strong. Many houses damaged.",  pronunciation: "WEE! see-KLON lan teh FOR an-PEEL. doh-MAJ an-PEEL KAY." },
+      { speaker: "A", creole: "Tan an Ayiti ka danjere. Nou dwe prepare.",         english: "The weather in Haiti can be dangerous. We must prepare.", pronunciation: "TAN an ah-YEE-tee kah dan-ZHEH-reh. noo DWEH preh-pah-REH." },
+      { speaker: "B", creole: "Wi, men lè solèy la la, peyi a trè bèl.",           english: "Yes, but when the sun is out, the country is very beautiful.", pronunciation: "WEE, men leh soh-LAY lah LAH, peh-YEE ah treh BEL." },
+      { speaker: "A", creole: "Vre. Lanati Ayiti ekstraodinè.",                    english: "True. Haiti's nature is extraordinary.",                  pronunciation: "VREH. lah-nah-TEE ah-YEE-tee ek-strah-or-dee-NEH." },
+      { speaker: "B", creole: "Wi. Nou gen chans viv nan yon bèl peyi.",           english: "Yes. We are lucky to live in a beautiful country.",       pronunciation: "WEE. noo gen SHANS VEEV nan yon BEL peh-YEE." },
+    ],
+    vocabulary: [
+      { creole: "Tan",       english: "Weather",         pronunciation: "TAN" },
+      { creole: "Cho",       english: "Hot",             pronunciation: "SHO" },
+      { creole: "Lapli",     english: "Rain",            pronunciation: "lah-PLEE" },
+      { creole: "Solèy",     english: "Sun",             pronunciation: "soh-LAY" },
+      { creole: "Siklòn",    english: "Hurricane",       pronunciation: "see-KLON" },
+      { creole: "Prewizyon", english: "Forecast",        pronunciation: "preh-wee-ZYON" },
+    ],
+    comprehensionQuestions: [
+      { question: "Kijan tan an ye jodi a?",      translation: "How is the weather today?",    options: ["Fè cho anpil", "Fè frèt", "Gen lapli", "Gen nèj"],        correct: "Fè cho anpil" },
+      { question: "Kisa prewizyon di pou aswè?",  translation: "What does the forecast say for evening?", options: ["Lapli ka vini", "Solèy pral briye", "Gen van", "Fè frèt"], correct: "Lapli ka vini" },
+      { question: "Poukisa A pral pran parapli?", translation: "Why will A take an umbrella?", options: ["Lapli ka vini aswè", "Li pè solèy", "Fè frèt", "Gen tanpèt"], correct: "Lapli ka vini aswè" },
+    ],
+    grammar: [{ title: "Weather expressions", explanation: "Use 'Fè + adjective' for weather. 'Gen + noun' for weather phenomena.", examples: [{ creole: "Fè cho.", english: "It is hot.", explanation: "" }, { creole: "Gen lapli.", english: "There is rain.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Describe the weather", questions: [{ creole: "___ cho anpil jodi a.", answer: "Fè", translation: "It is very hot today." }] }],
+    pronunciationPractice: [{ phrase: "Kijan tan an ye jodi a?", translation: "How is the weather today?" }, { phrase: "Gen lapli ka vini aswè.", translation: "There might be rain tonight." }],
+  },
+
+  {
+    id: 28, lessonId: 28, category: "beginner", icon: "🐾",
+    title: "Animals on the Farm",
+    description: "A visitor asks a farmer about the animals they keep",
+    characters: [{ name: "Vizitè", avatar: "🧑" }, { name: "Peyzan", avatar: "🌾" }],
+    conversation: [
+      { speaker: "Vizitè", creole: "Ou gen bèt nan jaden ou?",                              english: "Do you have animals on your farm?",                    pronunciation: "oo gen BET nan zhah-DEN oo?" },
+      { speaker: "Peyzan", creole: "Wi! Mwen gen poul, kochon, kabrit ak yon bèf.",         english: "Yes! I have chickens, pigs, goats, and a cow.",        pronunciation: "WEE! mwen gen POOL, koh-SHON, kah-BREET ak yon BEF." },
+      { speaker: "Vizitè", creole: "Ou gen konbyen poul?",                                  english: "How many chickens do you have?",                       pronunciation: "oo gen kon-BYEN POOL?" },
+      { speaker: "Peyzan", creole: "Mwen gen ven poul ak twa kòk.",                         english: "I have twenty hens and three roosters.",               pronunciation: "mwen gen VEN POOL ak TWAH KOR-k." },
+      { speaker: "Vizitè", creole: "Ou vann ze poul yo?",                                   english: "Do you sell the chicken eggs?",                        pronunciation: "oo VAN ZEH POOL yo?" },
+      { speaker: "Peyzan", creole: "Wi, mwen vann yo nan mache chak semèn.",                english: "Yes, I sell them at the market every week.",           pronunciation: "WEE, mwen VAN yo nan mah-SHEH shak seh-MEN." },
+      { speaker: "Vizitè", creole: "Ou gen chen oswa chat nan kay ou?",                     english: "Do you have a dog or cat at your house?",             pronunciation: "oo gen SHEN oz-WAH SHAT nan KAY oo?" },
+      { speaker: "Peyzan", creole: "Mwen gen yon gwo chen ki veye jaden an lannwit.",       english: "I have a big dog that guards the garden at night.",   pronunciation: "mwen gen yon GWO SHEN kee VEH-yeh zhah-DEN an lan-NWEET." },
+      { speaker: "Vizitè", creole: "Mwen pè chen. Ou pa pè lè li jape?",                   english: "I am afraid of dogs. Aren't you scared when it barks?", pronunciation: "mwen PEH SHEN. oo pah PEH leh lee ZHAH-peh?" },
+      { speaker: "Peyzan", creole: "Non, li jantiy ak moun li konnen. Li pè etranje.",      english: "No, he is kind to people he knows. He is only afraid of strangers.", pronunciation: "NON, lee zhan-TEE ak MOON lee kon-NEN. lee PEH eh-tran-JEH." },
+      { speaker: "Vizitè", creole: "E sèpan? Ou janm wè yo nan jaden an?",                english: "And snakes? Do you ever see them in the garden?",     pronunciation: "eh seh-PAN? oo JANM WEH yo nan zhah-DEN an?" },
+      { speaker: "Peyzan", creole: "Pafwa wi. Men yo kouri lè yo wè moun.",                english: "Sometimes yes. But they run when they see people.",   pronunciation: "pah-FWAH WEE. men yo koo-REE leh yo WEH MOON." },
+    ],
+    vocabulary: [
+      { creole: "Bèt",    english: "Animal",   pronunciation: "BET" },
+      { creole: "Poul",   english: "Chicken",  pronunciation: "POOL" },
+      { creole: "Kochon", english: "Pig",      pronunciation: "koh-SHON" },
+      { creole: "Kabrit", english: "Goat",     pronunciation: "kah-BREET" },
+      { creole: "Bèf",    english: "Cow",      pronunciation: "BEF" },
+      { creole: "Chen",   english: "Dog",      pronunciation: "SHEN" },
+    ],
+    comprehensionQuestions: [
+      { question: "Ki bèt peyzan an gen?",            translation: "What animals does the farmer have?",  options: ["Poul, kochon, kabrit, bèf", "Mouton, chwal, kanna", "Lapen, ra, sourit", "Zwazo, pwason, krab"], correct: "Poul, kochon, kabrit, bèf" },
+      { question: "Ki kote peyzan a vann ze poul?",   translation: "Where does the farmer sell eggs?",    options: ["Nan mache", "Nan lekòl", "Nan legliz", "Nan otèl"],                                            correct: "Nan mache" },
+      { question: "Poukisa chen an jape?",            translation: "Why does the dog bark?",              options: ["Lè li wè etranje", "Toujou", "Pou manje", "Pou dòmi"],                                        correct: "Lè li wè etranje" },
+    ],
+    grammar: [{ title: "Farm animals in Creole", explanation: "Common farm animals: poul (chicken), kochon (pig), kabrit (goat), bèf (cow), chwal (horse), mouton (sheep).", examples: [{ creole: "Mwen gen kabrit.", english: "I have a goat.", explanation: "" }, { creole: "Li vann ze poul.", english: "He sells chicken eggs.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Name the animal", questions: [{ creole: "Mwen gen poul, ___, ak kabrit.", answer: "kochon", translation: "I have chickens, pigs, and goats." }] }],
+    pronunciationPractice: [{ phrase: "Mwen gen poul ak kochon.", translation: "I have chickens and pigs." }, { phrase: "Li veye jaden an lannwit.", translation: "He guards the garden at night." }],
+  },
+
+  {
+    id: 29, lessonId: 29, category: "beginner", icon: "🏙️",
+    title: "Exploring the City",
+    description: "A newcomer asks a local about places in the city",
+    characters: [{ name: "Nouvo", avatar: "🧑" }, { name: "Lokal", avatar: "👩" }],
+    conversation: [
+      { speaker: "Nouvo", creole: "Ou ka montre m kote diferan plas nan vil la?",        english: "Can you show me different places in the city?",          pronunciation: "oo kah mon-TREH m koh-TEH dee-feh-RAN PLAS nan VEEL lah?" },
+      { speaker: "Lokal", creole: "Bien sûr! Sa ou bezwen? Bank, lopital, lekòl?",      english: "Of course! What do you need? Bank, hospital, school?",  pronunciation: "BYEN soor! sah oo beh-ZWEN? BANK, loh-pee-TAL, leh-KOL?" },
+      { speaker: "Nouvo", creole: "Mwen bezwen ale bank an premye pou retire lajan.",   english: "I need to go to the bank first to withdraw money.",      pronunciation: "mwen beh-ZWEN ah-LEH BANK an PREH-myeh poo reh-tee-REH lah-JAN." },
+      { speaker: "Lokal", creole: "Bank la nan sant vil la. Se dis minit pati isit.",   english: "The bank is downtown. It is ten minutes from here.",     pronunciation: "BANK lah nan SANT VEEL lah. seh DEES mee-NEET pah-TEE ee-SEET." },
+      { speaker: "Nouvo", creole: "Apre bank la, mwen vle ale mache achte manje.",      english: "After the bank, I want to go to the market to buy food.", pronunciation: "ah-PREH BANK lah, mwen vleh ah-LEH mah-SHEH ash-TEH man-JEH." },
+      { speaker: "Lokal", creole: "Mache a bò legliz la. Ou ka mache al la.",           english: "The market is near the church. You can walk there.",      pronunciation: "mah-SHEH ah bor leh-GLEEZ lah. oo kah mah-SHEH al LAH." },
+      { speaker: "Nouvo", creole: "Eske gen yon bon restoran pre mache a?",             english: "Is there a good restaurant near the market?",            pronunciation: "es-KEH gen yon BON res-toh-RAN PREH mah-SHEH ah?" },
+      { speaker: "Lokal", creole: "Wi! Gen yon restoran ki fè trè bon griyo.",          english: "Yes! There is a restaurant that makes very good grilled pork.", pronunciation: "WEE! gen yon res-toh-RAN kee FEH treh BON gree-YO." },
+      { speaker: "Nouvo", creole: "Pafè! E si mwen bezwen medikaman, kote?",            english: "Perfect! And if I need medicine, where?",                pronunciation: "pah-FEH! eh see mwen beh-ZWEN meh-dee-kah-MAN, koh-TEH?" },
+      { speaker: "Lokal", creole: "Famasi a se jis bò estasyon gaz la.",               english: "The pharmacy is right next to the gas station.",         pronunciation: "fah-mah-ZEE ah seh ZHEES bor es-tah-SYON GAZ lah." },
+      { speaker: "Nouvo", creole: "Mèsi pou tout enfòmasyon sa yo. Ou konn vil la bien.", english: "Thank you for all this information. You know the city well.", pronunciation: "MEHR-see poo toot en-for-mah-SYON sah yo. oo KON VEEL lah BYEN." },
+      { speaker: "Lokal", creole: "Wi, mwen rete isit depi mwen te timoun.",            english: "Yes, I have lived here since I was a child.",            pronunciation: "WEE, mwen reh-TEH ee-SEET deh-PEE mwen teh tee-MOON." },
+    ],
+    vocabulary: [
+      { creole: "Bank",      english: "Bank",         pronunciation: "BANK" },
+      { creole: "Mache",     english: "Market",       pronunciation: "mah-SHEH" },
+      { creole: "Legliz",    english: "Church",       pronunciation: "leh-GLEEZ" },
+      { creole: "Famasi",    english: "Pharmacy",     pronunciation: "fah-mah-ZEE" },
+      { creole: "Restoran",  english: "Restaurant",   pronunciation: "res-toh-RAN" },
+      { creole: "Sant vil",  english: "Downtown",     pronunciation: "SANT VEEL" },
+    ],
+    comprehensionQuestions: [
+      { question: "Ki kote bank la ye?",          translation: "Where is the bank?",            options: ["Nan sant vil la", "Bò mache a", "Pre legliz", "Nan banliy"], correct: "Nan sant vil la" },
+      { question: "Kote famasi a ye?",            translation: "Where is the pharmacy?",        options: ["Bò estasyon gaz la", "Pre bank la", "Nan mache a", "Bò legliz"], correct: "Bò estasyon gaz la" },
+      { question: "Ki bon manje restoran an fè?", translation: "What good food does the restaurant make?", options: ["Griyo", "Diri ak pwa", "Soup joumou", "Ze bouyi"], correct: "Griyo" },
+    ],
+    grammar: [{ title: "Giving location in Creole", explanation: "Use 'X nan/bò Y' for 'X is near/at Y'. Use 'Pre' for near, 'lwen' for far.", examples: [{ creole: "Bank la nan sant vil la.", english: "The bank is downtown.", explanation: "" }, { creole: "Famasi a bò estasyon gaz la.", english: "The pharmacy is next to the gas station.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Describe city locations", questions: [{ creole: "Mache a ___ legliz la.", answer: "bò", translation: "The market is near the church." }] }],
+    pronunciationPractice: [{ phrase: "Ki kote bank la ye?", translation: "Where is the bank?" }, { phrase: "Ou konn vil la bien.", translation: "You know the city well." }],
+  },
+
+  {
+    id: 30, lessonId: 30, category: "beginner", icon: "🌿",
+    title: "A Visit to the Countryside",
+    description: "One person encourages another to visit the Haitian countryside",
+    characters: [{ name: "A", avatar: "🧑" }, { name: "B", avatar: "👩" }],
+    conversation: [
+      { speaker: "A", creole: "Ou te janm vizite andeyò Ayiti?",                       english: "Have you ever visited the Haitian countryside?",         pronunciation: "oo teh JANM vee-ZEE-teh an-deh-YO ah-YEE-tee?" },
+      { speaker: "B", creole: "Wi! Mwen vizite fanmi mwen nan Jakmèl chak ane.",       english: "Yes! I visit my family in Jacmel every year.",          pronunciation: "WEE! mwen vee-ZEE-teh fan-MEE mwen nan jak-MEL shak ah-NEH." },
+      { speaker: "A", creole: "Kijan andeyò a konpare ak lavil la pou ou?",            english: "How does the countryside compare to the city for you?", pronunciation: "kee-JAN an-deh-YO ah kon-pah-REH ak lah-VEEL lah poo oo?" },
+      { speaker: "B", creole: "Andeyò lè a pi pwòp. Gen mwens bri ak estres.",        english: "In the countryside the air is cleaner. There is less noise and stress.", pronunciation: "an-deh-YO LEH ah pee PWOP. gen MWEN BREE ak es-TRES." },
+      { speaker: "A", creole: "Ou wè bèt ak pye bwa diferan andeyò?",                english: "Do you see different animals and trees in the countryside?", pronunciation: "oo WEH BET ak PYEH BWAH dee-feh-RAN an-deh-YO?" },
+      { speaker: "B", creole: "Wi! Gen kaskat, rivyè, forè ak zwazo tout koulè.",     english: "Yes! There are waterfalls, rivers, forests, and birds of all colors.", pronunciation: "WEE! gen kas-KAT, reev-YEH, foh-REH ak zwah-ZO toot koo-LEH." },
+      { speaker: "A", creole: "Sa sanble paradi vreman. Mwen ta renmen ale.",          english: "That truly sounds like paradise. I would love to go.",   pronunciation: "sah san-BLEH pah-rah-DEE vreh-MAN. mwen tah ren-MEN ah-LEH." },
+      { speaker: "B", creole: "Ou dwe ale! Peyzan yo jentiy ak akeyan anpil.",        english: "You must go! The farmers are very kind and welcoming.",  pronunciation: "oo DWEH ah-LEH! peh-YI-zan yo zhen-TEE ak ah-keh-YAN an-PEEL." },
+      { speaker: "A", creole: "Manje andeyò a gen pi bon gou tou?",                   english: "Does countryside food taste better too?",                pronunciation: "man-JEH an-deh-YO ah gen pee BON GOO TOO?" },
+      { speaker: "B", creole: "Absoliman! Legim fre, poul lokal, dlo sous frèt.",     english: "Absolutely! Fresh vegetables, local chicken, cold spring water.", pronunciation: "ab-soh-lee-MAN! leh-GEEM FREH, POOL loh-KAL, DLO SOOS FRET." },
+      { speaker: "A", creole: "Mwen pral planifye yon vwayaj la semèn pwochen.",      english: "I will plan a trip there next week.",                    pronunciation: "mwen PRAL plah-nee-FYEH yon vwah-YAJ lah seh-MEN pwoh-SHEN." },
+      { speaker: "B", creole: "Ekselan! Mwen ka gide ou. Sa pral bèl anpil.",         english: "Excellent! I can guide you. It will be very beautiful.",  pronunciation: "ek-seh-LAN! mwen kah ghee-DEH oo. sah PRAL BEL an-PEEL." },
+    ],
+    vocabulary: [
+      { creole: "Andeyò",   english: "Countryside",  pronunciation: "an-deh-YO" },
+      { creole: "Kaskat",   english: "Waterfall",    pronunciation: "kas-KAT" },
+      { creole: "Rivyè",    english: "River",        pronunciation: "reev-YEH" },
+      { creole: "Forè",     english: "Forest",       pronunciation: "foh-REH" },
+      { creole: "Peyzan",   english: "Farmer",       pronunciation: "peh-YI-zan" },
+      { creole: "Legim fre", english: "Fresh vegetables", pronunciation: "leh-GEEM FREH" },
+    ],
+    comprehensionQuestions: [
+      { question: "Ki kote B vizite chak ane?",          translation: "Where does B visit every year?",   options: ["Jakmèl", "Pòtoprens", "Kanada", "Okay"],           correct: "Jakmèl" },
+      { question: "Kisa ki diferan andeyò ak lavil?",    translation: "What is different in the countryside vs city?", options: ["Lè a pi pwòp, mwens bri", "Pi cho", "Gen plis machin", "Pi chè"], correct: "Lè a pi pwòp, mwens bri" },
+      { question: "Kisa B ofri fè pou A?",              translation: "What does B offer to do for A?",   options: ["Gide ou", "Prete lajan", "Fè manje", "Ranje kay"], correct: "Gide ou" },
+    ],
+    grammar: [{ title: "Comparing with 'pi' (more)", explanation: "Use 'pi + adjective' for comparisons. 'Pi bon' = better. 'Pi bèl' = more beautiful. 'Pi vit' = faster.", examples: [{ creole: "Andeyò a pi kalm.", english: "The countryside is calmer.", explanation: "" }, { creole: "Manje a gen pi bon gou.", english: "The food tastes better.", explanation: "" }] }],
+    exercises: [{ type: "fill-blank", instruction: "Make comparisons", questions: [{ creole: "Andeyò lè a ___ pwòp pase lavil.", answer: "pi", translation: "In the countryside the air is cleaner than the city." }] }],
+    pronunciationPractice: [{ phrase: "Sa sanble paradi vreman.", translation: "That truly sounds like paradise." }, { phrase: "Ou dwe ale!", translation: "You must go!" }],
+  },
+
 ];
