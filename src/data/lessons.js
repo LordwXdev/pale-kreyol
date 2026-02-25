@@ -1,8 +1,3 @@
-// src/data/lessons.js
-// STAGE 1 — BEGINNER | Lessons 1–30
-// 25–30 vocabulary words per lesson
-// Replace your existing lessons.js export with this content
-
 export const lessons = [
 
   // ══════════════════════════════════════════════
@@ -1157,11 +1152,6 @@ export const lessons = [
       { creole: "Vil pwovens",  english: "Provincial town",          pronunciation: "VEEL pwoh-VENS" },
     ]
   },
- // src/data/lessons.js (append after lesson 30)
-// STAGE 1 — BEGINNER | Lessons 31–60
-// Sections 4–6: Everyday Verbs, Practical Life, Grammar Foundation
-// 25–30 vocabulary words per lesson
-
   // ══════════════════════════════════════════════
   // SECTION 4 — EVERYDAY VERBS (Lessons 31–40)
   // ══════════════════════════════════════════════
@@ -2313,11 +2303,6 @@ export const lessons = [
       { creole: "Bèl pawòl",      english: "Kind words",           pronunciation: "BEL pah-WOL" },
     ]
   }, 
-    // src/data/lessons.js (append after lesson 60)
-// STAGE 2 — ELEMENTARY | Lessons 61–90
-// Sections 7–9: Daily Life & Routines, Haiti Culture & Society, Expanded Grammar
-// 25–30 vocabulary words per lesson
-
   // ══════════════════════════════════════════════
   // SECTION 7 — DAILY LIFE & ROUTINES (Lessons 61–70)
   // ══════════════════════════════════════════════
