@@ -2233,8 +2233,6 @@ export const dialogs = [
     exercises: [{ type: "fill-blank", instruction: "Complete the proverb", questions: [{ creole: "Dèyè mòn gen ___.", answer: "mòn", translation: "Beyond mountains there are mountains." }, { creole: "Sak ___ pa kanpe.", answer: "vid", translation: "An empty sack cannot stand." }] }],
     pronunciationPractice: [{ phrase: "Dèyè mòn gen mòn.", translation: "Beyond mountains there are mountains." }, { phrase: "Men anpil, chay pa lou.", translation: "Many hands, the load is not heavy." }],
   },
-  // STAGE 2 — ELEMENTARY | Dialogs 61–75
-// Sections 7–8: Daily Life & Routines, Haiti Culture & Society
 
   {
     id: 61, lessonId: 61, category: "elementary", icon: "🌅",
@@ -3085,9 +3083,6 @@ export const dialogs = [
     exercises: [{ type: "fill-blank", instruction: "Express the emotion", questions: [{ creole: "Mwen santi mwen ___ paske ou la pou mwen.", answer: "kontan", translation: "I feel happy because you are here for me." }] }],
     pronunciationPractice: [{ phrase: "Ou pa ka vide yon veso ki vid.", translation: "You can't pour from an empty vessel." }, { phrase: "Mande èd se yon kouraj.", translation: "Asking for help is courage." }],
   },
-  // STAGE 2 — ELEMENTARY | Dialogs 85–90
-// Section 9: Expanded Grammar (continued)
-
   {
     id: 85, lessonId: 85, category: "elementary", icon: "🔀",
     title: "What If? Exploring Possibilities",
