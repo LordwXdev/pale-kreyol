@@ -2303,10 +2303,6 @@ export const lessons = [
       { creole: "Bèl pawòl",      english: "Kind words",           pronunciation: "BEL pah-WOL" },
     ]
   }, 
-  // ══════════════════════════════════════════════
-  // SECTION 7 — DAILY LIFE & ROUTINES (Lessons 61–70)
-  // ══════════════════════════════════════════════
-
   {
     id: 61,
     title: "Morning Routines",
@@ -2664,11 +2660,6 @@ export const lessons = [
       { creole: "Lalin",             english: "Moon",                     pronunciation: "lah-LEEN" },
     ]
   },
-
-  // ══════════════════════════════════════════════
-  // SECTION 8 — HAITI CULTURE & SOCIETY (Lessons 71–80)
-  // ══════════════════════════════════════════════
-
   {
     id: 71,
     title: "Haitian History and Identity",
@@ -3028,11 +3019,6 @@ export const lessons = [
       { creole: "Disinfomasyon",     english: "Misinformation",           pronunciation: "dees-en-for-mah-SYON" },
     ]
   },
-
-  // ══════════════════════════════════════════════
-  // SECTION 9 — EXPANDED GRAMMAR (Lessons 81–90)
-  // ══════════════════════════════════════════════
-
   {
     id: 81,
     title: "Comparatives and Superlatives",
@@ -3391,14 +3377,6 @@ export const lessons = [
       { creole: "Sifas",             english: "Surface / Area",           pronunciation: "see-FAS" },
     ]
   },
-  // STAGE 2 — ELEMENTARY (continued) | Lessons 91–102
-// Section 10: Intermediate Conversation & Expression
-// 25–30 vocabulary words per lesson
-
-  // ══════════════════════════════════════════════
-  // SECTION 10 — INTERMEDIATE CONVERSATION & EXPRESSION (Lessons 91–102)
-  // ══════════════════════════════════════════════
-
   {
     id: 91,
     title: "Giving and Receiving Compliments",
