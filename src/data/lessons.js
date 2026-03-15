@@ -1,9 +1,5 @@
 export const lessons = [
 
-  // ══════════════════════════════════════════════
-  // SECTION 1 — BASICS & SURVIVAL (Lessons 1–10)
-  // ══════════════════════════════════════════════
-
   {
     id: 1,
     title: "Greetings and Farewells",
@@ -384,10 +380,6 @@ export const lessons = [
       { creole: "Pale avèk moun",  english: "Talk with people",         pronunciation: "pah-LEH ah-VEK MOON" },
     ]
   },
-
-  // ══════════════════════════════════════════════
-  // SECTION 2 — PEOPLE (Lessons 11–20)
-  // ══════════════════════════════════════════════
 
   {
     id: 11,
@@ -1152,9 +1144,6 @@ export const lessons = [
       { creole: "Vil pwovens",  english: "Provincial town",          pronunciation: "VEEL pwoh-VENS" },
     ]
   },
-  // ══════════════════════════════════════════════
-  // SECTION 4 — EVERYDAY VERBS (Lessons 31–40)
-  // ══════════════════════════════════════════════
 
   {
     id: 31,
@@ -1535,10 +1524,6 @@ export const lessons = [
       { creole: "Trahison",      english: "Betray",               pronunciation: "trah-ee-SON" },
     ]
   },
-
-  // ══════════════════════════════════════════════
-  // SECTION 5 — PRACTICAL LIFE (Lessons 41–50)
-  // ══════════════════════════════════════════════
 
   {
     id: 41,
@@ -2265,7 +2250,6 @@ export const lessons = [
       { creole: "Manke",         english: "Lack / Not enough",    pronunciation: "man-KEH" },
     ]
   },
-
   {
     id: 60,
     title: "Common Expressions and Proverbs",
