@@ -1861,8 +1861,6 @@ export const dialogs = [
     exercises: [{ type: "fill-blank", instruction: "Give the emergency command", questions: [{ creole: "___ nan bilding lan kounye a!", answer: "Sòti", translation: "Get out of the building now!" }] }],
     pronunciationPractice: [{ phrase: "Tranbleman tè! Sòti kounye a!", translation: "Earthquake! Get out now!" }, { phrase: "Rele 114 pou rapòte sitiyasyon an.", translation: "Call 114 to report the situation." }],
   },
-// STAGE 1 — BEGINNER | Dialogs 51–60
-// Section 6: Grammar Foundation
 
   {
     id: 51, lessonId: 51, category: "beginner", icon: "👤",
