@@ -175,13 +175,13 @@ export const resendVerificationEmail = async (user) => {
 export const logout = () => signOut(auth);
 
 // ---------------------------
-// AUTH SUBSCRIBE
+// AUTH SUBSCRIBE //
 // ---------------------------
 export const subscribeToAuth = (callback) =>
   onAuthStateChanged(auth, callback);
 
 // ---------------------------
-// PHONE VERIFICATION
+// PHONE VERIFICATION //
 // ---------------------------
 let recaptchaVerifier;
 
