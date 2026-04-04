@@ -169,9 +169,6 @@ export const resendVerificationEmail = async (user) => {
   }
 };
 
-// ---------------------------
-// LOGOUT
-// ---------------------------
 export const logout = () => signOut(auth);
 
 // ---------------------------
