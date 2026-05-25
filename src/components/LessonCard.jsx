@@ -8,6 +8,7 @@ export default function LessonCard({ lesson, onClick, completed }) {
       onClick={onClick}
       className="w-full bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all flex items-center justify-between group"
     >
+      
       <div className="flex items-center gap-3">
         <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl ${completed ? 'bg-green-100' : 'bg-blue-100'}`}>
           {lesson.icon}
