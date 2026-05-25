@@ -42,7 +42,7 @@ export default function Navigation({ currentView, setCurrentView, setQuizMode, i
             );
           })}
 
-          {/* Admin tab — only visible to admins */}
+          {/* Admin tab — visible to admins only */}
           {isAdmin && (
             <button
               onClick={() => handleNavClick("admin")}
