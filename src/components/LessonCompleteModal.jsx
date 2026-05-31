@@ -8,8 +8,8 @@ export default function LessonCompleteModal({
   score,
   totalQuestions,
   newBadges = [],
-  onContinue,       // go to lessons list
-  onPracticeDialog, // go straight to the linked dialog
+  onContinue,     
+  onPracticeDialog, 
   onClose,
 }) {
   const [show, setShow] = useState(false);
