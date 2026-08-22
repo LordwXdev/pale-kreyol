@@ -644,6 +644,7 @@ export const lessons = [
       { creole: "Santiman",           english: "Feeling",              pronunciation: "san-tee-MAN" },
       { creole: "Emosyon",            english: "Emotion",              pronunciation: "eh-moh-SYON" },
       { creole: "Kè mwen",            english: "My heart",             pronunciation: "keh MWEN" },
+      { creole: "eksite",             english: "excitement",           prononciation: "eksita" },
     ]
   },
 
